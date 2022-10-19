@@ -13,7 +13,7 @@ Encore
     // directory where compiled assets will be stored
     .setOutputPath('public/build/')
     // public path used by the web server to access the output path
-    .setPublicPath(Encore.isProduction() ? '/build' : ('https://' + process.env.WEBPACK_DEV_SERVER_HOST + '/dev-build'))
+    .setPublicPath(Encore.isProduction() ? '/build' : ('https://' + process.env.WEBPACK_DEV_SERVER_HOST + '/dev-server'))
     // only needed for CDN's or sub-directory deploy
     .setManifestKeyPrefix('build/')
 
