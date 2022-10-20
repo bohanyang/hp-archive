@@ -12,7 +12,7 @@ trait ArrayTinyIntEnum
 
     private static array $valueMap;
 
-    private function getValueMap(): array
+    protected function getValueMap(): array
     {
         if (! isset(self::$valueMap)) {
             self::$valueMap = [null, ...$this->getEnums()];

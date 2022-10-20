@@ -4,29 +4,30 @@ declare(strict_types=1);
 
 namespace App\ApiResource;
 
+use ApiPlatform\Metadata\CollectionOperationInterface;
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProviderInterface;
-use Doctrine\DBAL\Connection;
+use App\Repository\DoctrineRepository;
 
 use function is_int;
+use function iterator_to_array;
 
 class OrderProvider implements ProviderInterface
 {
-    public function __construct(private Connection $connection)
+    public function __construct(private DoctrineRepository $repository)
     {
     }
 
     public function provide(Operation $operation, array $uriVariables = [], array $context = []): object|array|null
     {
-        if (! isset($uriVariables['id']) || ! is_int($uriVariables['id'])) {
+        if ($operation instanceof CollectionOperationInterface) {
+            return iterator_to_array($this->repository->listOrders());
+        }
+
+        if (! isset($uriVariables['id']) || ! is_int($uriVariables['id']) || 0 >= $uriVariables['id']) {
             return null;
         }
 
-        $q = $this->connection->createQueryBuilder();
-        $q->select('id', 'name', 'status')->from('orders')->where(
-            $q->expr()->eq('id', $q->createPositionalParameter($uriVariables['id'])),
-        )->setMaxResults(1);
-
-        return $q->executeQuery()->fetchAssociative() ?: null;
+        return $this->repository->getOrderById($uriVariables['id']);
     }
 }

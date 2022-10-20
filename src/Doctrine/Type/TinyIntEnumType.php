@@ -7,7 +7,6 @@ namespace App\Doctrine\Type;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\ConversionException;
 
-use function is_int;
 use function sprintf;
 
 abstract class TinyIntEnumType extends TinyIntType
@@ -16,19 +15,19 @@ abstract class TinyIntEnumType extends TinyIntType
 
     abstract protected function valueToId($value): ?int;
 
-    abstract protected function idToValue(int $id);
+    abstract protected function getValueMap(): array;
 
-    public function convertToPHPValue($value, AbstractPlatform $platform): mixed
+    public function convertToPHPValueSQL($sqlExpr, $platform)
     {
-        if ($value === null) {
-            return null;
+        $sql = 'CASE ';
+
+        foreach ($this->getValueMap() as $id => $value) {
+            $sql .= "WHEN {$sqlExpr} = {$platform->quoteStringLiteral($id)} THEN {$platform->quoteStringLiteral($value)} ";
         }
 
-        if (is_int($value) && null !== $phpValue = $this->idToValue($value)) {
-            return $phpValue;
-        }
+        $sql .= 'END';
 
-        throw ConversionException::conversionFailed($value, $this->getName());
+        return $sql;
     }
 
     public function convertToDatabaseValue($value, AbstractPlatform $platform): mixed

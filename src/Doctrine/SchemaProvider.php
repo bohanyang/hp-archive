@@ -12,6 +12,8 @@ use Doctrine\Migrations\Provider\SchemaProvider as SchemaProviderInterface;
 
 class SchemaProvider implements SchemaProviderInterface
 {
+    private Schema $schema;
+
     public function __construct(
         private Connection $connection,
     ) {
@@ -19,17 +21,21 @@ class SchemaProvider implements SchemaProviderInterface
 
     public function createSchema(): Schema
     {
-        $schemaManager = $this->connection->createSchemaManager();
-        $schema        = new Schema([], [], $schemaManager->createSchemaConfig());
-
-        foreach ($this->getTableSchemaProviders() as $tableSchemaProvider) {
-            $tableSchemaProvider($schema);
+        if (isset($this->schema)) {
+            return $this->schema;
         }
 
-        return $schema;
+        $schemaManager = $this->connection->createSchemaManager();
+        $schema        = new Schema(schemaConfig: $schemaManager->createSchemaConfig());
+
+        foreach ($this->getTableProviders() as $tableProvider) {
+            $tableProvider($schema);
+        }
+
+        return $this->schema = $schema;
     }
 
-    private function getTableSchemaProviders(): iterable
+    private function getTableProviders(): iterable
     {
         yield static function (Schema $schema): void {
             $table = $schema->createTable('orders');
@@ -37,6 +43,12 @@ class SchemaProvider implements SchemaProviderInterface
             $table->addColumn('name', Types::STRING, ['length' => 255]);
             $table->addColumn('status', OrderStatusType::NAME, OrderStatusType::DEFAULT_OPTIONS);
             $table->setPrimaryKey(['id']);
+            $table->addIndex(['status']);
         };
+    }
+
+    public function createQuery(): Query
+    {
+        return new Query($this->connection, $this->createSchema());
     }
 }

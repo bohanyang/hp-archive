@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\ApiResource;
 
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
 
 #[ApiResource(
@@ -11,15 +14,16 @@ use ApiPlatform\Metadata\Post;
     processor: OrderProcessor::class,
     operations: [
         new Get('/orders/{id}'),
+        new GetCollection('/orders'),
         new Post('/orders', input: NewOrder::class),
     ],
 )]
 class Order
 {
     public function __construct(
-        public int $id,
-        public string $name,
-        public string $status,
+        public readonly int $id,
+        public readonly string $name,
+        public readonly string $status,
     ) {
     }
 }
