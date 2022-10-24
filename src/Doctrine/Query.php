@@ -8,7 +8,7 @@ use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\DBAL\Result;
-use Doctrine\DBAL\Schema\Schema;
+use Doctrine\DBAL\Schema\SchemaException;
 use Doctrine\DBAL\Schema\Table;
 use Doctrine\DBAL\Types\Type;
 use ErrorException;
@@ -36,17 +36,27 @@ class Query
 
     private AbstractPlatform $platform;
 
+    private Result $result;
+
     private array $selects = [];
 
     /** @var Type[] */
     private array $resultTypeMap = [];
 
-    /** @var Table[] */
-    private array $refTableMap = [];
+    /** @var string[] */
+    private array $resultTableAliasMap = [];
+
+    /** @var string[] */
+    private array $resultColumnAliasMap = [];
+
+    private int $resultAliasCounter = 0;
+
+    /** @var Table[] Tracking table alias for reference in expressions */
+    private array $selectTableMap = [];
 
     public function __construct(
         private Connection $connection,
-        private Schema $schema,
+        private SchemaProvider $schema,
     ) {
         $this->builder  = $this->connection->createQueryBuilder();
         $this->platform = $this->connection->getDatabasePlatform();
@@ -60,9 +70,16 @@ class Query
 
         $values = [];
         foreach ($data as $key => $value) {
-            $values[$key] = $this->builder->createPositionalParameter(
+            try {
+                $column = $table->getColumn($key);
+            } catch (SchemaException) {
+                // ignore unknown columns
+                continue;
+            }
+
+            $values[$column->getQuotedName($this->platform)] = $this->builder->createPositionalParameter(
                 $value,
-                $table->getColumn($key)->getType(),
+                $column->getType(),
             );
         }
 
@@ -71,35 +88,110 @@ class Query
         return $this;
     }
 
-    public function selectFrom(string|array $from, string ...$args)
+    private function getResultAlias(): string
+    {
+        return 'c' . $this->resultAliasCounter++;
+    }
+
+    public function selectFrom(string|array $from, string ...$selects)
     {
         [$fromTable, $fromAlias] = is_string($from) ? [$from, null] : $from;
 
-        $ref   = $fromAlias ?? $fromTable;
         $table = $this->schema->getTable($fromTable);
-
-        $this->refTableMap[$ref] = $table;
-
         $this->builder->from($fromTable, $fromAlias);
 
-        foreach ($args as $select => $column) {
-            $alias = is_string($select) ? $select : $column;
+        $fromAlias ??= $fromTable;
 
-            $this->resultTypeMap[$alias] = $type = $table->getColumn($column)->getType();
-
-            $this->selects[] = $type->convertToPHPValueSQL("{$ref}.{$column}", $this->platform) . ' ' . $this->platform->quoteSingleIdentifier($alias);
-        }
+        $this->selectTableMap[$fromAlias] = $table;
+        $this->addSelects($fromAlias, $selects);
 
         return $this;
     }
 
-    public function executeQuery(): Result
+    public function join(string $fromAlias, string $joinTable, string $joinAlias, string $on, string ...$selects)
     {
+        $table = $this->schema->getTable($joinTable);
+        $this->builder->join($fromAlias, $joinTable, $joinAlias, $on);
+
+        $this->selectTableMap[$joinAlias] = $table;
+        $this->addSelects($joinAlias, $selects);
+
+        return $this;
+    }
+
+    private function addSelects(string $tableAlias, array $selects)
+    {
+        $table = $this->selectTableMap[$tableAlias];
+
+        foreach ($selects as $columnAlias => $column) {
+            $columnAlias = is_string($columnAlias)
+                // Named parameter: `$this->selectFrom('table', alias1: 'column1')`
+                ? $columnAlias
+                // Positional parameter: `$this->selectFrom('table', 'column1', 'column2')`
+                : $column;
+
+            $column      = $table->getColumn($column);
+            $resultAlias = $this->getResultAlias();
+
+            $this->resultTypeMap[$resultAlias]        = $type = $column->getType();
+            $this->resultTableAliasMap[$resultAlias]  = $tableAlias;
+            $this->resultColumnAliasMap[$resultAlias] = $columnAlias;
+
+            $this->selects[] =
+                $type->convertToPHPValueSQL(
+                    $tableAlias . '.' . $column->getQuotedName($this->platform),
+                    $this->platform,
+                )
+                . ' ' . $this->platform->quoteSingleIdentifier($resultAlias);
+        }
+    }
+
+    private function getQueryResult(): Result
+    {
+        if (isset($this->result)) {
+            return $this->result;
+        }
+
         if ($this->selects !== []) {
             $this->builder->select(...$this->selects);
         }
 
-        return $this->builder->executeQuery();
+        return $this->result = $this->builder->executeQuery();
+    }
+
+    private function convertResultValues(array $result): array
+    {
+        foreach ($result as $resultAlias => $value) {
+            $value = $this->resultTypeMap[$resultAlias]
+                ->convertToPHPValue($value, $this->platform);
+
+            $tableAlias  = $this->resultTableAliasMap[$resultAlias];
+            $columnAlias = $this->resultColumnAliasMap[$resultAlias];
+
+            $row[$tableAlias][$columnAlias] = $value;
+        }
+
+        return $row;
+    }
+
+    public function fetchAssociative(): array|false
+    {
+        if (false !== $row = $this->getQueryResult()->fetchAssociative()) {
+            return $this->convertResultValues($row);
+        }
+
+        return $row;
+    }
+
+    public function fetchAllAssociative(): array
+    {
+        $rows = $this->getQueryResult()->fetchAllAssociative();
+
+        foreach ($rows as $i => $row) {
+            $rows[$i] = $this->convertResultValues($row);
+        }
+
+        return $rows;
     }
 
     public function getBuilder(): QueryBuilder
@@ -110,15 +202,17 @@ class Query
     public function comparison(string $x, string $operator, $y): string
     {
         try {
-            [$ref, $column] = explode('.', $x);
+            [$tableAlias, $column] = explode('.', $x);
         } catch (ErrorException) {
             throw new InvalidArgumentException(
-                'The left hand side of a comparison should be like "<table or alias>.<column>".',
+                'The left hand side of a comparison should be like "<tableAlias>.<column>".',
             );
         }
 
-        return $x . ' ' . $operator . ' ' . $this->builder
-            ->createPositionalParameter($y, $this->refTableMap[$ref]->getColumn($column)->getType());
+        $column = $this->selectTableMap[$tableAlias]->getColumn($column);
+
+        return "{$tableAlias}.{$column->getQuotedName($this->platform)} {$operator} "
+            . $this->builder->createPositionalParameter($y, $column->getType());
     }
 
     public function eq(string $x, $y): string

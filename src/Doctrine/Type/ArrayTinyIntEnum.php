@@ -33,7 +33,7 @@ trait ArrayTinyIntEnum
         return self::$idMap;
     }
 
-    protected function valueToId($value): ?int
+    public function valueToId($value): ?int
     {
         return $this->getIdMap()[$value] ?? null;
     }

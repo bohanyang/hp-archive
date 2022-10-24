@@ -4,11 +4,19 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-use App\Doctrine\Type\OrderStatusType;
+use App\Doctrine\OracleSessionInitSubscriber;
+use App\Doctrine\Type\BingMarketType;
+use App\Doctrine\Type\JsonTextType;
+use App\Doctrine\Type\ObjectIdType;
 use Symfony\Config\DoctrineConfig;
 use Symfony\Config\FrameworkConfig;
 
 return static function (ContainerConfigurator $containerConfigurator, DoctrineConfig $doctrine, FrameworkConfig $framework): void {
+    $services = $containerConfigurator->services();
+    $services
+        ->set('oracle.listener', OracleSessionInitSubscriber::class)
+        ->tag('doctrine.event_listener', ['event' => 'postConnect']);
+
     $dbal = $doctrine->dbal();
 
     $connection = $dbal->connection('default');
@@ -17,7 +25,9 @@ return static function (ContainerConfigurator $containerConfigurator, DoctrineCo
     // either here or in the DATABASE_URL env var (see .env file)
     // $connection->serverVersion('13');
 
-    $dbal->type(OrderStatusType::NAME, OrderStatusType::class);
+    $dbal->type(BingMarketType::NAME, BingMarketType::class);
+    $dbal->type(JsonTextType::NAME, JsonTextType::class);
+    $dbal->type(ObjectIdType::NAME, ObjectIdType::class);
 
     if ('test' === $containerConfigurator->env()) {
         $connection

@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace App\Repository;
 
-use App\ApiResource\Order;
+use App\ApiResource\Image;
+use App\ApiResource\Record;
 use App\Doctrine\SchemaProvider;
-use Iterator;
+use DateTimeImmutable;
 
 class DoctrineRepository
 {
@@ -15,40 +16,95 @@ class DoctrineRepository
     ) {
     }
 
-    public function createOrder(Order $order): void
+    public function createImage(Image $image): void
     {
-        $this->schemaProvider->createQuery()->insert('orders', [
-            'id' => $order->id,
-            'name' => $order->name,
-            'status' => $order->status,
-        ])->executeStatement();
+        $this->schemaProvider->createQuery()
+            ->insert('images', (array) $image)
+            ->executeStatement();
     }
 
-    public function getOrderById(int $id): ?Order
+    public function createRecord(Record $record): void
+    {
+        $this->schemaProvider->createQuery()
+            ->insert('records', (array) $record)
+            ->executeStatement();
+    }
+
+    public function getImage(string $name): ?Image
     {
         $q = $this->schemaProvider->createQuery();
 
-        $q->selectFrom('orders', 'id', 'name', 'status')
-            ->where($q->eq('orders.id', $id))
+        $q->selectFrom('images', 'id', 'name', 'urlbase', 'copyright', 'downloadable', 'video', 'debutOn')
+            ->where($q->eq('images.name', $name))
             ->setMaxResults(1);
 
-        if (false === $data = $q->executeQuery()->fetchAssociative()) {
+        if (false === $data = $q->fetchAssociative()) {
             return null;
         }
 
-        return new Order($data['id'], $data['name'], $data['status']);
+        return new Image(...$data['images']);
     }
 
-    public function listOrders(): Iterator
+    public function getImageById(string $id): ?Image
     {
         $q = $this->schemaProvider->createQuery();
 
-        $result = $q->selectFrom('orders', 'id', 'name', 'status')
-            ->where($q->neq('orders.status', 'pending'))
-            ->executeQuery();
+        $q->selectFrom('images', 'id', 'name', 'urlbase', 'copyright', 'downloadable', 'video', 'debutOn')
+            ->where($q->eq('images.id', $id))
+            ->setMaxResults(1);
 
-        while ($data = $result->fetchAssociative()) {
-            yield new Order($data['id'], $data['name'], $data['status']);
+        if (false === $data = $q->fetchAssociative()) {
+            return null;
         }
+
+        return new Image(...$data['images']);
+    }
+
+    public function getRecord(string $market, DateTimeImmutable $date): ?Record
+    {
+        $q = $this->schemaProvider->createQuery();
+
+        $q->selectFrom(
+            'records',
+            'id',
+            'date',
+            'market',
+            'title',
+            'keyword',
+            'headline',
+            'description',
+            'quickfact',
+            'hotspots',
+            'messages',
+            'coverstory',
+        )
+        ->join(
+            'records',
+            'images',
+            'images',
+            'records.image_id = images.id',
+            'id',
+            'name',
+            'urlbase',
+            'copyright',
+            'downloadable',
+            'video',
+            'debutOn',
+        )
+        ->where(
+            $q->eq('records.market', $market),
+            $q->eq('records.date', $date),
+        )
+        ->setMaxResults(1);
+
+        if (false === $data = $q->fetchAssociative()) {
+            return null;
+        }
+
+        $record          = $data['records'];
+        $record['image'] = new Image(...$data['images']);
+        $record          = new Record(...$record);
+
+        return $record;
     }
 }

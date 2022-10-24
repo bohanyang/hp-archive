@@ -12,7 +12,7 @@ return static function (DoctrineMigrationsConfig $migrations): void {
     $migrations
         // namespace is arbitrary but should be different from App\Migrations
         // as migrations classes should NOT be autoloaded
-        ->migrationsPath('DoctrineMigrations', param('kernel.project_dir') . '/migrations')
+        ->migrationsPath('DoctrineMigrations', param('kernel.project_dir') . '/' . env('DATABASE_URL')->url()->key('scheme')->string() . '_migrations')
         ->enableProfiler(param('kernel.debug'))
         ->transactional(false)
         ->services(SchemaProviderInterface::class, SchemaProvider::class);

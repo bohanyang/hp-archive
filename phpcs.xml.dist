@@ -62,4 +62,10 @@
     <rule ref="SlevomatCodingStandard.TypeHints.UnionTypeHintFormat">
         <exclude name="SlevomatCodingStandard.TypeHints.UnionTypeHintFormat.DisallowedShortNullable" />
     </rule>
+    <rule ref="Squiz.PHP.LowercasePHPFunctions">
+        <exclude name="Squiz.PHP.LowercasePHPFunctions.CallUppercase" />
+    </rule>
+    <rule ref="Squiz.Arrays.ArrayDeclaration">
+        <exclude name="Squiz.Arrays.ArrayDeclaration.KeySpecified" />
+    </rule>
 </ruleset>
