@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-use App\Doctrine\OracleSessionInitSubscriber;
 use App\Doctrine\Type\BingMarketType;
 use App\Doctrine\Type\JsonTextType;
 use App\Doctrine\Type\ObjectIdType;
@@ -12,11 +11,6 @@ use Symfony\Config\DoctrineConfig;
 use Symfony\Config\FrameworkConfig;
 
 return static function (ContainerConfigurator $containerConfigurator, DoctrineConfig $doctrine, FrameworkConfig $framework): void {
-    $services = $containerConfigurator->services();
-    $services
-        ->set('oracle.listener', OracleSessionInitSubscriber::class)
-        ->tag('doctrine.event_listener', ['event' => 'postConnect']);
-
     $dbal = $doctrine->dbal();
 
     $connection = $dbal->connection('default');

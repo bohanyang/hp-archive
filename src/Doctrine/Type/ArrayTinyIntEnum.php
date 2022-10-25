@@ -38,7 +38,7 @@ trait ArrayTinyIntEnum
         return $this->getIdMap()[$value] ?? null;
     }
 
-    protected function idToValue(int $id)
+    protected function idToValue(int $id): mixed
     {
         return $this->getValueMap()[$id] ?? null;
     }

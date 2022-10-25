@@ -17,7 +17,7 @@ abstract class TinyIntEnumType extends TinyIntType
 
     abstract protected function getValueMap(): array;
 
-    public function convertToPHPValueSQL($sqlExpr, $platform)
+    public function convertToPHPValueSQL($sqlExpr, $platform): string
     {
         $sql = 'CASE ';
 

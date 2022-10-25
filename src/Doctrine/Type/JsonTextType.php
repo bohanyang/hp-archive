@@ -23,17 +23,17 @@ class JsonTextType extends Type
 {
     public const NAME = 'json_text';
 
-    public function getName()
+    public function getName(): string
     {
         return self::NAME;
     }
 
-    public function getSQLDeclaration(array $column, AbstractPlatform $platform)
+    public function getSQLDeclaration(array $column, AbstractPlatform $platform): string
     {
         return $platform->getStringTypeDeclarationSQL($column);
     }
 
-    public function convertToDatabaseValue($value, AbstractPlatform $platform)
+    public function convertToDatabaseValue($value, AbstractPlatform $platform): mixed
     {
         if ($value === null) {
             return null;
@@ -46,7 +46,7 @@ class JsonTextType extends Type
         }
     }
 
-    public function convertToPHPValue($value, AbstractPlatform $platform)
+    public function convertToPHPValue($value, AbstractPlatform $platform): mixed
     {
         if ($value === null || $value === '') {
             return null;
@@ -63,7 +63,7 @@ class JsonTextType extends Type
         }
     }
 
-    public function requiresSQLCommentHint(AbstractPlatform $platform)
+    public function requiresSQLCommentHint(AbstractPlatform $platform): bool
     {
         return true;
     }

@@ -25,22 +25,22 @@ class ObjectIdType extends Type
 
     public const NAME = 'object_id';
 
-    public function getName()
+    public function getName(): string
     {
         return self::NAME;
     }
 
-    public function getBindingType()
+    public function getBindingType(): int
     {
         return ParameterType::BINARY;
     }
 
-    public function getSQLDeclaration(array $column, AbstractPlatform $platform)
+    public function getSQLDeclaration(array $column, AbstractPlatform $platform): string
     {
         return $platform->getBinaryTypeDeclarationSQL($column);
     }
 
-    public function convertToPHPValueSQL($sqlExpr, $platform)
+    public function convertToPHPValueSQL($sqlExpr, $platform): string
     {
         if ($platform instanceof OraclePlatform) {
             return 'LOWER(RAWTOHEX(' . $sqlExpr . '))';
@@ -60,7 +60,7 @@ class ObjectIdType extends Type
         throw new ConversionException('Unsupported database platform: ' . get_debug_type($platform));
     }
 
-    public function convertToDatabaseValue($value, AbstractPlatform $platform)
+    public function convertToDatabaseValue($value, AbstractPlatform $platform): mixed
     {
         if ($value === null) {
             return null;
@@ -69,7 +69,7 @@ class ObjectIdType extends Type
         return hex2bin($value);
     }
 
-    public function requiresSQLCommentHint(AbstractPlatform $platform)
+    public function requiresSQLCommentHint(AbstractPlatform $platform): bool
     {
         return true;
     }
