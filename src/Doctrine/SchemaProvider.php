@@ -4,13 +4,11 @@ declare(strict_types=1);
 
 namespace App\Doctrine;
 
-use App\Doctrine\Type\BingMarketType;
-use App\Doctrine\Type\JsonTextType;
-use App\Doctrine\Type\ObjectIdType;
+use App\Doctrine\Contract\TableProvider;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Schema\Schema;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\Migrations\Provider\SchemaProvider as SchemaProviderInterface;
+use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
 
 class SchemaProvider implements SchemaProviderInterface
 {
@@ -18,10 +16,18 @@ class SchemaProvider implements SchemaProviderInterface
 
     private array $tables = [];
 
+    /** @param TableProvider[] $tableProviders */
     public function __construct(
         private Connection $connection,
+        #[TaggedIterator('app.doctrine.table_provider')]
+        private iterable $tableProviders,
     ) {
         $this->createSchema();
+    }
+
+    public function getConnection(): Connection
+    {
+        return $this->connection;
     }
 
     public function createSchema(): Schema
@@ -31,53 +37,16 @@ class SchemaProvider implements SchemaProviderInterface
         }
 
         $schemaManager = $this->connection->createSchemaManager();
-        $schema        = new Schema(schemaConfig: $schemaManager->createSchemaConfig());
 
-        foreach ($this->getTableProviders() as $tableName => $tableProvider) {
-            $this->tables[$tableName] = $tableProvider($schema);
+        $schema = new Schema(schemaConfig: $schemaManager->createSchemaConfig());
+
+        foreach ($this->tableProviders as $tableProvider) {
+            $table = $tableProvider($schema);
+
+            $this->tables[$table->name] = $table;
         }
 
         return $this->schema = $schema;
-    }
-
-    private function getTableProviders(): iterable
-    {
-        yield 'images' => static function (Schema $schema): Table {
-            $table = $schema->createTable('images');
-            $table->addColumn('id', ObjectIdType::NAME, ObjectIdType::DEFAULT_OPTIONS);
-            $table->addColumn('name', Types::STRING, ['length' => 255]);
-            $table->addColumn('debut_on', Types::DATE_IMMUTABLE);
-            $table->addColumn('urlbase', Types::STRING, ['length' => 255]);
-            $table->addColumn('copyright', Types::STRING, ['length' => 255]);
-            $table->addColumn('downloadable', Types::BOOLEAN);
-            $table->addColumn('video', JsonTextType::NAME, ['length' => 2000, 'notnull' => false]);
-            $table->setPrimaryKey(['id']);
-            $table->addUniqueIndex(['name']);
-            $table->addIndex(['debut_on']);
-
-            return new Table($table, ['debutOn' => 'debut_on']);
-        };
-
-        yield 'records' => static function (Schema $schema): Table {
-            $table = $schema->createTable('records');
-            $table->addColumn('id', ObjectIdType::NAME, ObjectIdType::DEFAULT_OPTIONS);
-            $table->addColumn('image_id', ObjectIdType::NAME, ObjectIdType::DEFAULT_OPTIONS);
-            $table->addColumn('date', Types::DATE_IMMUTABLE);
-            $table->addColumn('market', BingMarketType::NAME, BingMarketType::DEFAULT_OPTIONS);
-            $table->addColumn('title', Types::STRING, ['length' => 255]);
-            $table->addColumn('keyword', Types::STRING, ['length' => 255]);
-            $table->addColumn('headline', Types::STRING, ['length' => 255, 'notnull' => false]);
-            $table->addColumn('description', Types::STRING, ['length' => 1000, 'notnull' => false]);
-            $table->addColumn('quickfact', Types::STRING, ['length' => 255, 'notnull' => false]);
-            $table->addColumn('hotspots', JsonTextType::NAME, ['length' => 2000, 'notnull' => false]);
-            $table->addColumn('messages', JsonTextType::NAME, ['length' => 2000, 'notnull' => false]);
-            $table->addColumn('coverstory', JsonTextType::NAME, ['length' => 2000, 'notnull' => false]);
-            $table->setPrimaryKey(['id']);
-            $table->addUniqueIndex(['date', 'market']);
-            $table->addForeignKeyConstraint('images', ['image_id'], ['id']);
-
-            return new Table($table, ['imageId' => 'image_id']);
-        };
     }
 
     public function createQuery(): Query

@@ -8,10 +8,11 @@ use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\DBAL\Result;
+use Doctrine\DBAL\Schema\Column;
 use Doctrine\DBAL\Schema\SchemaException;
-use Doctrine\DBAL\Schema\Table;
 use Doctrine\DBAL\Types\Type;
 use ErrorException;
+use Generator;
 use InvalidArgumentException;
 
 use function explode;
@@ -22,6 +23,8 @@ use function is_string;
  * @method $this andWhere($where)
  * @method $this orWhere($where)
  * @method $this setMaxResults(int|null $maxResults)
+ * @method $this orderBy(string $sort, string|null $order = null)
+ * @method $this update(string|null $update = null, string|null $alias = null)
  */
 class Query
 {
@@ -95,15 +98,7 @@ class Query
 
     public function selectFrom(string|array $from, string ...$selects)
     {
-        [$fromTable, $fromAlias] = is_string($from) ? [$from, null] : $from;
-
-        $table = $this->schema->getTable($fromTable);
-        $this->builder->from($fromTable, $fromAlias);
-
-        $fromAlias ??= $fromTable;
-
-        $this->selectTableMap[$fromAlias] = $table;
-        $this->addSelects($fromAlias, $selects);
+        $this->addSelects($this->addFrom($from), $selects);
 
         return $this;
     }
@@ -119,18 +114,63 @@ class Query
         return $this;
     }
 
+    public function update(string|array $from, array $data = [])
+    {
+        $fromAlias = $this->addFrom($from);
+
+        foreach ($data as $column => $value) {
+            $this->builder->set(...$this->bind($fromAlias, $column, $value));
+        }
+
+        return $this;
+    }
+
+    /** @return string The from alias */
+    private function addFrom(string|array $from): string
+    {
+        [$fromTable, $fromAlias] = is_string($from) ? [$from, null] : $from;
+
+        $table = $this->schema->getTable($fromTable);
+        $this->builder->from($fromTable, $fromAlias);
+
+        $fromAlias ??= $fromTable;
+
+        $this->selectTableMap[$fromAlias] = $table;
+
+        return $fromAlias;
+    }
+
+    /** @return Column[] */
+    private function getSelectColumns(Table $table, array $selects): Generator
+    {
+        if ($selects === []) {
+            return yield from $table->getColumns();
+        }
+
+        if ($selects[0] === '*') {
+            foreach ($table->getColumns() as $columnAlias => $column) {
+                yield ($selects[$columnAlias] ?? $columnAlias) => $column;
+            }
+
+            return;
+        }
+
+        foreach ($selects as $alias => $name) {
+            yield $alias => $table->getColumn($name);
+        }
+    }
+
     private function addSelects(string $tableAlias, array $selects)
     {
-        $table = $this->selectTableMap[$tableAlias];
+        $columns = $this->getSelectColumns($this->selectTableMap[$tableAlias], $selects);
 
-        foreach ($selects as $columnAlias => $column) {
+        foreach ($columns as $columnAlias => $column) {
             $columnAlias = is_string($columnAlias)
                 // Named parameter: `$this->selectFrom('table', alias1: 'column1')`
                 ? $columnAlias
                 // Positional parameter: `$this->selectFrom('table', 'column1', 'column2')`
-                : $column;
+                : $selects[$columnAlias];
 
-            $column      = $table->getColumn($column);
             $resultAlias = $this->getResultAlias();
 
             $this->resultTypeMap[$resultAlias]        = $type = $column->getType();
@@ -209,10 +249,17 @@ class Query
             );
         }
 
+        return implode(" {$operator} ", $this->bind($tableAlias, $column, $y));
+    }
+
+    public function bind(string $tableAlias, string $column, $value): array
+    {
         $column = $this->selectTableMap[$tableAlias]->getColumn($column);
 
-        return "{$tableAlias}.{$column->getQuotedName($this->platform)} {$operator} "
-            . $this->builder->createPositionalParameter($y, $column->getType());
+        return [
+            "{$tableAlias}.{$column->getQuotedName($this->platform)}",
+            $this->builder->createPositionalParameter($value, $column->getType()),
+        ];
     }
 
     public function eq(string $x, $y): string

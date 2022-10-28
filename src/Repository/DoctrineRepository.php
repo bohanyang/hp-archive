@@ -8,6 +8,7 @@ use App\ApiResource\Image;
 use App\ApiResource\Record;
 use App\Doctrine\SchemaProvider;
 use DateTimeImmutable;
+use Generator;
 
 class DoctrineRepository
 {
@@ -16,14 +17,27 @@ class DoctrineRepository
     ) {
     }
 
-    public function createImage(Image $image): void
+    public function getSchemaProvider(): SchemaProvider
+    {
+        return $this->schemaProvider;
+    }
+
+    public function createImage(Image|array $image): void
     {
         $this->schemaProvider->createQuery()
             ->insert('images', (array) $image)
             ->executeStatement();
     }
 
-    public function createRecord(Record $record): void
+    public function updateImage(Image $image): void
+    {
+        $q = $this->schemaProvider->createQuery();
+        $q->update('images', $image->getDataForUpdate())
+            ->where($q->eq('images.name', $image->name))
+            ->executeStatement();
+    }
+
+    public function createRecord(Record|array $record): void
     {
         $this->schemaProvider->createQuery()
             ->insert('records', (array) $record)
@@ -34,23 +48,8 @@ class DoctrineRepository
     {
         $q = $this->schemaProvider->createQuery();
 
-        $q->selectFrom('images', 'id', 'name', 'urlbase', 'copyright', 'downloadable', 'video', 'debutOn')
+        $q->selectFrom('images')
             ->where($q->eq('images.name', $name))
-            ->setMaxResults(1);
-
-        if (false === $data = $q->fetchAssociative()) {
-            return null;
-        }
-
-        return new Image(...$data['images']);
-    }
-
-    public function getImageById(string $id): ?Image
-    {
-        $q = $this->schemaProvider->createQuery();
-
-        $q->selectFrom('images', 'id', 'name', 'urlbase', 'copyright', 'downloadable', 'video', 'debutOn')
-            ->where($q->eq('images.id', $id))
             ->setMaxResults(1);
 
         if (false === $data = $q->fetchAssociative()) {
@@ -64,38 +63,10 @@ class DoctrineRepository
     {
         $q = $this->schemaProvider->createQuery();
 
-        $q->selectFrom(
-            'records',
-            'id',
-            'date',
-            'market',
-            'title',
-            'keyword',
-            'headline',
-            'description',
-            'quickfact',
-            'hotspots',
-            'messages',
-            'coverstory',
-        )
-        ->join(
-            'records',
-            'images',
-            'images',
-            'records.image_id = images.id',
-            'id',
-            'name',
-            'urlbase',
-            'copyright',
-            'downloadable',
-            'video',
-            'debutOn',
-        )
-        ->where(
-            $q->eq('records.market', $market),
-            $q->eq('records.date', $date),
-        )
-        ->setMaxResults(1);
+        $q->selectFrom('records')
+            ->join('records', 'images', 'images', 'records.image_id = images.id')
+            ->where($q->eq('records.market', $market), $q->eq('records.date', $date))
+            ->setMaxResults(1);
 
         if (false === $data = $q->fetchAssociative()) {
             return null;
@@ -106,5 +77,31 @@ class DoctrineRepository
         $record          = new Record(...$record);
 
         return $record;
+    }
+
+    /** @return array */
+    public function exportImages(): Generator
+    {
+        $q = $this->schemaProvider
+            ->createQuery()
+            ->selectFrom('images')
+            ->orderBy('id');
+
+        while ($data = $q->fetchAssociative()) {
+            yield $data['images'];
+        }
+    }
+
+    /** @return array */
+    public function exportRecords(): Generator
+    {
+        $q = $this->schemaProvider
+            ->createQuery()
+            ->selectFrom('records')
+            ->orderBy('id');
+
+        while ($data = $q->fetchAssociative()) {
+            yield $data['records'];
+        }
     }
 }

@@ -11,6 +11,13 @@ use ApiPlatform\Metadata\Link;
 use ApiPlatform\Metadata\Post;
 use DateTimeImmutable;
 
+use function parse_str;
+use function parse_url;
+use function urldecode;
+use function urlencode;
+
+use const PHP_URL_QUERY;
+
 #[ApiResource(
     provider: RecordProvider::class,
     processor: StateProcessor::class,
@@ -28,16 +35,14 @@ use DateTimeImmutable;
 )]
 class Record
 {
-    public readonly string $imageId;
-
     public function __construct(
         public readonly string $id,
         #[ApiProperty(readableLink: true)]
-        public readonly Image $image,
+        public Image $image,
         public readonly DateTimeImmutable $date,
         public readonly string $market,
         public readonly string $title,
-        public readonly string $keyword,
+        public readonly ?string $keyword = null,
         public readonly ?string $headline = null,
         public readonly ?string $description = null,
         public readonly ?string $quickfact = null,
@@ -46,11 +51,62 @@ class Record
         public readonly ?array $coverstory = null,
         ...$args,
     ) {
-        $this->imageId = $image->id;
     }
 
     public function getDateString(): string
     {
         return $this->date->format('Ymd');
+    }
+
+    public static function createFromLeanCloud(array $data): array
+    {
+        return [
+            'id' => $data['objectId'],
+            'image_id' => $data['image']['objectId'],
+            'date' => DateTimeImmutable::createFromFormat('Ymd\TH:i:s.vp', $data['date'] . 'T00:00:00.000Z'),
+            'market' => $data['market'],
+            'title' => $data['info'],
+            'keyword' => isset($data['link']) ? self::extractKeyword($data['link']) : null,
+            'hotspots' => ($data['hs'] ?? []) === [] ? null : $data['hs'],
+            'messages' => ($data['msg'] ?? []) === [] ? null : $data['msg'],
+            'coverstory' => ($data['cs'] ?? []) === [] ? null : $data['cs'],
+        ];
+    }
+
+    public function toLeanCloud(): array
+    {
+        return [
+            'objectId' => $this->id,
+            'image' => ['__type' => 'Pointer', 'className' => 'Image', 'objectId' => $this->image->id],
+            'date' => $this->date->format('Ymd'),
+            'market' => $this->market,
+            'info' => $this->title,
+            'link' => null === $this->keyword ? null : 'https://www.bing.com/search?q=' . urlencode($this->keyword),
+            'hs' => $this->hotspots,
+            'msg' => $this->messages,
+            'cs' => $this->coverstory,
+        ];
+    }
+
+    /** Parse an URL of web search engine and extract keyword from its query string */
+    private static function extractKeyword(string $url): ?string
+    {
+        $query = parse_url($url, PHP_URL_QUERY);
+
+        if (! $query) {
+            return null;
+        }
+
+        parse_str($query, $query);
+
+        $fields = ['q', 'wd'];
+
+        foreach ($fields as $field) {
+            if (isset($query[$field]) && $query[$field] !== '') {
+                return urldecode($query[$field]);
+            }
+        }
+
+        return null;
     }
 }

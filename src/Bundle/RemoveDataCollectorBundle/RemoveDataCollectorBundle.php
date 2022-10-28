@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\DependencyInjection\RemoveDataCollectorBundle;
+namespace App\Bundle\RemoveDataCollectorBundle;
 
+use App\Bundle\RemoveDataCollectorBundle\DependencyInjection\RemoveDataCollectorCompilerPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

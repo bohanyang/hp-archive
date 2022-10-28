@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-use App\Doctrine\Type\BingMarketType;
-use App\Doctrine\Type\JsonTextType;
-use App\Doctrine\Type\ObjectIdType;
 use Symfony\Config\DoctrineConfig;
 use Symfony\Config\FrameworkConfig;
 
@@ -19,9 +16,8 @@ return static function (ContainerConfigurator $containerConfigurator, DoctrineCo
     // either here or in the DATABASE_URL env var (see .env file)
     // $connection->serverVersion('13');
 
-    $dbal->type(BingMarketType::NAME, BingMarketType::class);
-    $dbal->type(JsonTextType::NAME, JsonTextType::class);
-    $dbal->type(ObjectIdType::NAME, ObjectIdType::class);
+    $connection = $dbal->connection('source');
+    $connection->url(env('SOURCE_DATABASE_URL')->resolve());
 
     if ('test' === $containerConfigurator->env()) {
         $connection
