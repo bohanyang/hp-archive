@@ -2,7 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Doctrine\Type;
+namespace App\Bundle\AppBundle\Doctrine\Type;
+
+use App\Bundle\CoreBundle\Doctrine\Type\ArrayTinyIntEnum;
+use App\Bundle\CoreBundle\Doctrine\Type\TinyIntEnumType;
 
 class BingMarketType extends TinyIntEnumType
 {

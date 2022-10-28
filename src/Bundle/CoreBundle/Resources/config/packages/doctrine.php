@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-use App\Doctrine\Type\BingMarketType;
-use App\Doctrine\Type\JsonTextType;
-use App\Doctrine\Type\ObjectIdType;
+use App\Bundle\AppBundle\Doctrine\Type\BingMarketType;
+use App\Bundle\AppBundle\Doctrine\Type\JsonTextType;
+use App\Bundle\AppBundle\Doctrine\Type\ObjectIdType;
 use Symfony\Config\DoctrineConfig;
 
 return static function (DoctrineConfig $doctrine): void {

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Doctrine;
+namespace App\Bundle\CoreBundle\Doctrine;
 
-use App\Doctrine\Contract\TableProvider;
+use App\Bundle\CoreBundle\Doctrine\Contract\TableProvider;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\Provider\SchemaProvider as SchemaProviderInterface;
@@ -19,7 +19,7 @@ class SchemaProvider implements SchemaProviderInterface
     /** @param TableProvider[] $tableProviders */
     public function __construct(
         private Connection $connection,
-        #[TaggedIterator('app.doctrine.table_provider')]
+        #[TaggedIterator('core.doctrine.table_provider')]
         private iterable $tableProviders,
     ) {
         $this->createSchema();

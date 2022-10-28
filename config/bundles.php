@@ -17,5 +17,6 @@ return [
     Symfony\Bundle\SecurityBundle\SecurityBundle::class => ['all' => true],
     Twig\Extra\TwigExtraBundle\TwigExtraBundle::class => ['all' => true],
     Fidry\PsyshBundle\PsyshBundle::class => ['dev' => true, 'test' => true],
+    App\Bundle\CoreBundle\CoreBundle::class => ['all' => true],
     App\Bundle\AppBundle\AppBundle::class => ['all' => true],
 ];

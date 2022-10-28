@@ -6,7 +6,7 @@ namespace App\ApiResource;
 
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProviderInterface;
-use App\Doctrine\Type\BingMarketType;
+use App\Bundle\AppBundle\Doctrine\Type\BingMarketType;
 use App\Repository\DoctrineRepository;
 use DateTimeImmutable;
 use Doctrine\DBAL\Types\Type;

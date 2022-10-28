@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Doctrine\Contract;
+namespace App\Bundle\CoreBundle\Doctrine\Contract;
 
-use App\Doctrine\Table;
+use App\Bundle\CoreBundle\Doctrine\Table;
 use Doctrine\DBAL\Schema\Schema;
 
 interface TableProvider

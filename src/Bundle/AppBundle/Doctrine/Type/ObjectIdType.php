@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Doctrine\Type;
+namespace App\Bundle\AppBundle\Doctrine\Type;
 
 use Doctrine\DBAL\ParameterType;
 use Doctrine\DBAL\Platforms\AbstractMySQLPlatform;

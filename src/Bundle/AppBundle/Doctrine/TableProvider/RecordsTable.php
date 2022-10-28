@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Doctrine\TableProvider;
+namespace App\Bundle\AppBundle\Doctrine\TableProvider;
 
-use App\Doctrine\Contract\TableProvider;
-use App\Doctrine\Table;
-use App\Doctrine\Type\BingMarketType;
-use App\Doctrine\Type\JsonTextType;
-use App\Doctrine\Type\ObjectIdType;
+use App\Bundle\AppBundle\Doctrine\Type\BingMarketType;
+use App\Bundle\AppBundle\Doctrine\Type\JsonTextType;
+use App\Bundle\AppBundle\Doctrine\Type\ObjectIdType;
+use App\Bundle\CoreBundle\Doctrine\Contract\TableProvider;
+use App\Bundle\CoreBundle\Doctrine\Table;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\DBAL\Types\Types;
 

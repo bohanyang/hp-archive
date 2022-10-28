@@ -6,7 +6,7 @@ namespace App\Repository;
 
 use App\ApiResource\Image;
 use App\ApiResource\Record;
-use App\Doctrine\SchemaProvider;
+use App\Bundle\CoreBundle\Doctrine\SchemaProvider;
 use DateTimeImmutable;
 use Generator;
 

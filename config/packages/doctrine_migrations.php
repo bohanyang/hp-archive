@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-use App\Doctrine\SchemaProvider;
+use App\Bundle\CoreBundle\Doctrine\SchemaProvider;
 use Doctrine\Migrations\Provider\SchemaProvider as SchemaProviderInterface;
 use Symfony\Config\DoctrineMigrationsConfig;
 

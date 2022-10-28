@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Doctrine\Type;
+namespace App\Bundle\CoreBundle\Doctrine\Type;
 
 use function array_flip;
 

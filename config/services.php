@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
 use App\Command\ImportFromSqlCommand;
-use App\Doctrine\Contract\TableProvider;
-use App\Doctrine\SchemaProvider;
+use App\Bundle\CoreBundle\Doctrine\Contract\TableProvider;
+use App\Bundle\CoreBundle\Doctrine\SchemaProvider;
 use App\LeanCloud;
 use App\Repository\DoctrineRepository;
 use Doctrine\DBAL\Connection;
@@ -18,10 +18,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->defaults()
         ->autowire()
         ->autoconfigure();
-
-    $services
-        ->instanceof(TableProvider::class)
-        ->tag('app.doctrine.table_provider');
 
     $services
         ->load('App\\', __DIR__ . '/../src/')
