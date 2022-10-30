@@ -16,6 +16,7 @@ use Generator;
 use InvalidArgumentException;
 
 use function explode;
+use function implode;
 use function is_string;
 
 /**
@@ -24,7 +25,6 @@ use function is_string;
  * @method $this orWhere($where)
  * @method $this setMaxResults(int|null $maxResults)
  * @method $this orderBy(string $sort, string|null $order = null)
- * @method $this update(string|null $update = null, string|null $alias = null)
  */
 class Query
 {
@@ -98,7 +98,7 @@ class Query
 
     public function selectFrom(string|array $from, string ...$selects)
     {
-        $this->addSelects($this->addFrom($from), $selects);
+        $this->addSelects($this->addFrom($from, [$this->builder, 'from']), $selects);
 
         return $this;
     }
@@ -114,9 +114,20 @@ class Query
         return $this;
     }
 
+    public function leftJoin(string $fromAlias, string $joinTable, string $joinAlias, string $on, string ...$selects)
+    {
+        $table = $this->schema->getTable($joinTable);
+        $this->builder->leftJoin($fromAlias, $joinTable, $joinAlias, $on);
+
+        $this->selectTableMap[$joinAlias] = $table;
+        $this->addSelects($joinAlias, $selects);
+
+        return $this;
+    }
+
     public function update(string|array $from, array $data = [])
     {
-        $fromAlias = $this->addFrom($from);
+        $fromAlias = $this->addFrom($from, [$this->builder, 'update']);
 
         foreach ($data as $column => $value) {
             $this->builder->set(...$this->bind($fromAlias, $column, $value));
@@ -126,12 +137,12 @@ class Query
     }
 
     /** @return string The from alias */
-    private function addFrom(string|array $from): string
+    private function addFrom(string|array $from, callable $builderCall): string
     {
         [$fromTable, $fromAlias] = is_string($from) ? [$from, null] : $from;
 
         $table = $this->schema->getTable($fromTable);
-        $this->builder->from($fromTable, $fromAlias);
+        $builderCall($fromTable, $fromAlias);
 
         $fromAlias ??= $fromTable;
 
@@ -199,6 +210,15 @@ class Query
         return $this->result = $this->builder->executeQuery();
     }
 
+    public function getSQL(): string
+    {
+        if ($this->selects !== []) {
+            $this->builder->select(...$this->selects);
+        }
+
+        return $this->builder->getSQL();
+    }
+
     private function convertResultValues(array $result): array
     {
         foreach ($result as $resultAlias => $value) {
@@ -242,7 +262,7 @@ class Query
     public function comparison(string $x, string $operator, $y): string
     {
         try {
-            [$tableAlias, $column] = explode('.', $x);
+            [$tableAlias, $column] = explode('.', $x, 2);
         } catch (ErrorException) {
             throw new InvalidArgumentException(
                 'The left hand side of a comparison should be like "<tableAlias>.<column>".',
@@ -299,8 +319,8 @@ class Query
 
     public function __call($name, $arguments)
     {
-        $this->builder->{$name}(...$arguments);
+        $returnValue = $this->builder->{$name}(...$arguments);
 
-        return $this;
+        return $returnValue === $this->builder ? $this : $returnValue;
     }
 }
