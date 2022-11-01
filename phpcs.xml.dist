@@ -13,6 +13,7 @@
 
     <rule ref="Doctrine" />
 
+    <file>lib</file>
     <file>src</file>
     <file>config</file>
 
@@ -59,6 +60,9 @@
     <rule ref="SlevomatCodingStandard.Classes.SuperfluousInterfaceNaming">
         <exclude name="SlevomatCodingStandard.Classes.SuperfluousInterfaceNaming.SuperfluousSuffix" />
     </rule>
+    <rule ref="SlevomatCodingStandard.Classes.SuperfluousTraitNaming">
+        <exclude name="SlevomatCodingStandard.Classes.SuperfluousTraitNaming.SuperfluousSuffix" />
+    </rule>
     <rule ref="SlevomatCodingStandard.TypeHints.UnionTypeHintFormat">
         <exclude name="SlevomatCodingStandard.TypeHints.UnionTypeHintFormat.DisallowedShortNullable" />
     </rule>
@@ -70,5 +74,8 @@
     </rule>
     <rule ref="SlevomatCodingStandard.Commenting.InlineDocCommentDeclaration">
         <exclude name="SlevomatCodingStandard.Commenting.InlineDocCommentDeclaration.InvalidFormat" />
+    </rule>
+    <rule ref="SlevomatCodingStandard.Commenting.ForbiddenAnnotations">
+        <exclude name="SlevomatCodingStandard.Commenting.ForbiddenAnnotations.AnnotationForbidden" />
     </rule>
 </ruleset>

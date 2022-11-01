@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-use App\Bundle\CoreBundle\Doctrine\SchemaProvider;
-use Doctrine\Migrations\Provider\SchemaProvider as SchemaProviderInterface;
 use Symfony\Config\DoctrineMigrationsConfig;
 
 return static function (DoctrineMigrationsConfig $migrations): void {
@@ -14,6 +12,5 @@ return static function (DoctrineMigrationsConfig $migrations): void {
         // as migrations classes should NOT be autoloaded
         ->migrationsPath('DoctrineMigrations', param('kernel.project_dir') . '/' . env('DATABASE_URL')->resolve()->url()->key('scheme')->string() . '_migrations')
         ->enableProfiler(param('kernel.debug'))
-        ->transactional(false)
-        ->services(SchemaProviderInterface::class, SchemaProvider::class);
+        ->transactional(false);
 };

@@ -1,0 +1,36 @@
+resources:
+  Manyou\BingHomepage\Image:
+    provider: App\Bundle\ApiPlatform\ImageProvider
+    processor: App\Bundle\ApiPlatform\StateProcessor
+    operations:
+      - class: ApiPlatform\Metadata\Get
+        uriTemplate: /images/{name}
+        uriVariables: [name]
+        requirements:
+          name: \w+
+      - class: ApiPlatform\Metadata\Post
+        uriTemplate: /images
+
+  Manyou\BingHomepage\Record:
+    provider: App\Bundle\ApiPlatform\RecordProvider
+    processor: App\Bundle\ApiPlatform\StateProcessor
+    operations:
+      - class: ApiPlatform\Metadata\Get
+        uriTemplate: /records/{market}/{date}
+        uriVariables:
+          market:
+            fromClass: Manyou\BingHomepage\Record
+            identifiers: [market]
+          date:
+            fromClass: Manyou\BingHomepage\Record
+            identifiers: [dateString]
+        requirements:
+          market: "[a-z]{2}-[A-Z]{2}"
+          date: \d{8}
+      - class: ApiPlatform\Metadata\Post
+        uriTemplate: /records
+
+properties:
+  Manyou\BingHomepage\Record: 
+    image:
+      readableLink: true

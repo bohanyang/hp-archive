@@ -10,6 +10,7 @@
         "api-platform/core": "^3.0",
         "doctrine/annotations": "^1.0",
         "doctrine/doctrine-migrations-bundle": "^3.2",
+        "manyou/promise-http-client": "dev-bing",
         "manyou/workerman-symfony-runtime": "dev-main",
         "phpdocumentor/reflection-docblock": "^5.3",
         "phpstan/phpdoc-parser": "^1.11",
@@ -37,9 +38,13 @@
     },
     "require-dev": {
         "doctrine/coding-standard": "^10.0",
+        "phpunit/phpunit": "^9.5",
+        "symfony/browser-kit": "6.1.*",
+        "symfony/css-selector": "6.1.*",
         "symfony/debug-bundle": "6.1.*",
         "symfony/maker-bundle": "^1.47",
         "symfony/monolog-bundle": "^3.0",
+        "symfony/phpunit-bridge": "^6.1",
         "symfony/stopwatch": "6.1.*",
         "symfony/web-profiler-bundle": "6.1.*",
         "theofidry/psysh-bundle": "^4.5"
@@ -59,7 +64,10 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "src/"
+            "App\\": "src/",
+            "Manyou\\BingHomepage\\": "lib/BingHomepage/",
+            "Manyou\\Mango\\": "lib/Mango/",
+            "Manyou\\RemoveDataCollectorBundle\\": "lib/RemoveDataCollectorBundle/"
         }
     },
     "autoload-dev": {
@@ -96,5 +104,14 @@
             "allow-contrib": false,
             "require": "6.1.*"
         }
-    }
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "./lib/PromiseHttpClient",
+            "options": {
+                "symlink": true
+            }
+        }
+    ]
 }

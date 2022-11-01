@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Messenger;
 
-use App\ApiResource\Record;
+use Manyou\BingHomepage\Record;
 
 class SaveRecord
 {

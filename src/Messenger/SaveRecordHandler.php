@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Messenger;
 
-use App\ApiResource\Image;
+use App\Bundle\Repository\DoctrineRepository;
 use App\LeanCloud;
-use App\Repository\DoctrineRepository;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
+use Manyou\BingHomepage\Image;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]

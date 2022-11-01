@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 return [
-    App\Bundle\RemoveDataCollectorBundle\RemoveDataCollectorBundle::class => ['dev' => true],
     Symfony\Bundle\FrameworkBundle\FrameworkBundle::class => ['all' => true],
     Symfony\Bundle\TwigBundle\TwigBundle::class => ['all' => true],
     Symfony\Bundle\WebProfilerBundle\WebProfilerBundle::class => ['dev' => true, 'test' => true],
@@ -17,6 +16,7 @@ return [
     Symfony\Bundle\SecurityBundle\SecurityBundle::class => ['all' => true],
     Twig\Extra\TwigExtraBundle\TwigExtraBundle::class => ['all' => true],
     Fidry\PsyshBundle\PsyshBundle::class => ['dev' => true, 'test' => true],
-    App\Bundle\CoreBundle\CoreBundle::class => ['all' => true],
-    App\Bundle\AppBundle\AppBundle::class => ['all' => true],
+    Manyou\RemoveDataCollectorBundle\RemoveDataCollectorBundle::class => ['dev' => true],
+    Manyou\Mango\Bundle\MangoBundle::class => ['all' => true],
+    App\Bundle\AppBundle::class => ['all' => true],
 ];

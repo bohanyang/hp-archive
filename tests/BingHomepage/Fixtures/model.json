@@ -1,0 +1,739 @@
+{
+  "IsEnSearch": false,
+  "Scripts": [
+    {
+      "Path": "/rp/78shcDtY-677KEi6MZXdO7yMdwI.br.js",
+      "Postloaded": true
+    },
+    {
+      "Path": "/rp/3AZIPZ2MfNsxLzrQYFye-Mo5zs0.br.js",
+      "Postloaded": true
+    }
+  ],
+  "Styles": [
+    {
+      "Path": "/rp/53HfcuUISVV2g1jm7-wYmrbnvpE.br.css",
+      "Postloaded": false
+    },
+    {
+      "Path": "/rp/irvxjuVty_QuTocKHoNB33wvIxE.br.css",
+      "Postloaded": false
+    },
+    {
+      "Path": "/rp/3i3qCUUPbUv8zTpsoEO_bsXGpAA.br.css",
+      "Postloaded": true
+    },
+    {
+      "Path": "/rp/MK63RfEkxMvanFCbj2E44vfAiKI.br.css",
+      "Postloaded": false
+    }
+  ],
+  "CustomFields": null,
+  "ClientSettings": {
+    "Pn": {
+      "Cn": 6,
+      "St": 0,
+      "Qs": 0,
+      "Prod": "P"
+    },
+    "Sc": {
+      "Cn": 6,
+      "St": 0,
+      "Qs": 0,
+      "Prod": "H"
+    },
+    "Qz": {
+      "Cn": 6,
+      "St": 0,
+      "Qs": 0,
+      "Prod": "T"
+    },
+    "Ap": true,
+    "Mute": true,
+    "Lad": "2022-10-30T00:00:00Z",
+    "Iotd": 0,
+    "Gwb": 0,
+    "Dft": null,
+    "Mvs": 0,
+    "Flt": 0,
+    "Imp": 55
+  },
+  "MediaContents": [
+    {
+      "ImageContent": {
+        "Description": "陆地上最大的食肉动物漫步在冰天雪地的北极。北极熊一生中大部分时间都是在海冰上度过，跟踪它们最喜欢的猎物——海豹。极好的御寒能力使北极熊特别适合在冰上生活，因此它们也特别容易受到全球变暖的影响。北极熊的生存困境成为每年11月第一周“北极熊周”的焦点，让人们得以关注到这些生活在大多数人视线之外的动物。",
+        "Image": {
+          "Url": "/th?id=OHR.SealRiver_ZH-CN6334858649_1920x1080.jpg&rf=LaDigue_1920x1080.jpg",
+          "Wallpaper": "/th?id=OHR.SealRiver_ZH-CN6334858649_1920x1200.jpg&rf=LaDigue_1920x1200.jpg",
+          "Downloadable": true
+        },
+        "Headline": "北极之王",
+        "Title": "哈德逊湾边缘的北极熊，加拿大",
+        "Copyright": "© Sean Crane/Minden Pictures",
+        "SocialGood": null,
+        "MapLink": {
+          "Url": "",
+          "Link": ""
+        },
+        "QuickFact": {
+          "MainText": "由于气候变化导致栖息地减少，北极熊被列为易危物种。",
+          "LinkUrl": "",
+          "LinkText": ""
+        },
+        "TriviaUrl": "/search?q=Bing+homepage+quiz&filters=WQOskey:\"HPQuiz_20221030_SealRiver\"&FORM=HPQUIZ",
+        "BackstageUrl": "/search?q=%e5%8c%97%e6%9e%81%e7%86%8a&form=hpcapt&filters=HpDate:\"20221029_1600\"",
+        "TriviaId": "HPQuiz_20221030_SealRiver"
+      },
+      "AudioContent": null,
+      "VideoContent": null,
+      "Ssd": "20221029_1600",
+      "FullDateString": "10月 30, 2022"
+    },
+    {
+      "ImageContent": {
+        "Description": "像万圣节的幽灵一样漂在海中，今天照片里的“海洋天使”是目前已知的大约3000种海蛞蝓中的一种。海蛞蝓广泛分布于世界各地的海域中，是一种软体动物。今天，是国际海蛞蝓日，也是海蛞蝓的第一权威专家特里·戈斯兰纳的生日。他发现了全球近一半的海蛞蝓种类，写了150篇有关海蛞蝓的学术论文，并亲自命名了大约350种海蛞蝓。今天，让我们把目光聚焦在海洋天使身上的同时，也对特里说一声“生日快乐”吧！",
+        "Image": {
+          "Url": "/th?id=OHR.SeaAngel_ZH-CN6176844066_1920x1080.jpg&rf=LaDigue_1920x1080.jpg",
+          "Wallpaper": "/th?id=OHR.SeaAngel_ZH-CN6176844066_1920x1200.jpg&rf=LaDigue_1920x1200.jpg",
+          "Downloadable": true
+        },
+        "Headline": "海洋天使",
+        "Title": "海洋天使",
+        "Copyright": "© Alexander Semenov Images/Shutterstock",
+        "SocialGood": null,
+        "MapLink": {
+          "Url": "",
+          "Link": ""
+        },
+        "QuickFact": {
+          "MainText": "海洋天使呈胶状且透明，体型非常小，最大的种类也只有5厘米长。",
+          "LinkUrl": "",
+          "LinkText": ""
+        },
+        "TriviaUrl": "/search?q=Bing+homepage+quiz&filters=WQOskey:\"HPQuiz_20221029_SeaAngel\"&FORM=HPQUIZ",
+        "BackstageUrl": "/search?q=%e6%b5%b7%e6%b4%8b%e5%a4%a9%e4%bd%bf&form=hpcapt&filters=HpDate:\"20221028_1600\"",
+        "TriviaId": "HPQuiz_20221029_SeaAngel"
+      },
+      "AudioContent": null,
+      "VideoContent": null,
+      "Ssd": "20221028_1600",
+      "FullDateString": "10月 29, 2022"
+    },
+    {
+      "ImageContent": {
+        "Description": "如果日内瓦湖上空乌云密布的景象让你的心情阴郁沉闷，那么你便可以体会玛丽·雪莱在构思《弗兰肯斯坦》时的心境了，这个故事后来也成为了她的开创性著作。虽然玛丽·雪莱曾写过一些历史小说和旅游书籍，但还是这个描写怪诞生物的恐怖故事让她声名大噪。",
+        "Image": {
+          "Url": "/th?id=OHR.FrankensteinFriday_ZH-CN5814917673_1920x1080.jpg&rf=LaDigue_1920x1080.jpg",
+          "Wallpaper": "/th?id=OHR.FrankensteinFriday_ZH-CN5814917673_1920x1200.jpg&rf=LaDigue_1920x1200.jpg",
+          "Downloadable": true
+        },
+        "Headline": "一个黑暗的暴风雨之夜",
+        "Title": "洛桑日内瓦湖上空的暴风雨，瑞典",
+        "Copyright": "© Suradech Singhanat/Shutterstock",
+        "SocialGood": null,
+        "MapLink": {
+          "Url": "",
+          "Link": ""
+        },
+        "QuickFact": {
+          "MainText": "来自新泽西州的瑞安·麦克洛斯基在1997年设立了弗兰肯斯坦星期五，来纪念这个角色、这本书及其作者。",
+          "LinkUrl": "",
+          "LinkText": ""
+        },
+        "TriviaUrl": "/search?q=Bing+homepage+quiz&filters=WQOskey:\"HPQuiz_20221028_FrankensteinFriday\"&FORM=HPQUIZ",
+        "BackstageUrl": "/search?q=%e6%97%a5%e5%86%85%e7%93%a6%e6%b9%96&form=hpcapt&filters=HpDate:\"20221027_1600\"",
+        "TriviaId": "HPQuiz_20221028_FrankensteinFriday"
+      },
+      "AudioContent": null,
+      "VideoContent": null,
+      "Ssd": "20221027_1600",
+      "FullDateString": "10月 28, 2022"
+    },
+    {
+      "ImageContent": {
+        "Description": "当船夫带着你来到威尼斯叹息桥下，你可以在这里亲吻你的爱人，传闻在叹息桥下接吻爱情会长久。然而，叹息桥名字的来源与爱情无关。这座封闭的桥于1600年完工，它将新监狱和总督府的审讯室连接起来。据说，囚犯人生中最后一次欣赏美丽的威尼斯，便是在这座桥上。由此看来，这确实足以令人叹息。",
+        "Image": {
+          "Url": "/th?id=OHR.BridgeofSighs_ZH-CN5414607871_1920x1080.jpg&rf=LaDigue_1920x1080.jpg",
+          "Wallpaper": "/th?id=OHR.BridgeofSighs_ZH-CN5414607871_1920x1200.jpg&rf=LaDigue_1920x1200.jpg",
+          "Downloadable": true
+        },
+        "Headline": "一个吻和一声叹息",
+        "Title": "意大利威尼斯的叹息桥",
+        "Copyright": "© Doug Pearson/Alamy",
+        "SocialGood": null,
+        "MapLink": {
+          "Url": "",
+          "Link": ""
+        },
+        "QuickFact": {
+          "MainText": "在桥下的旅行十分轻松惬意，你可以坐在船上欣赏威尼斯的巴洛克式桥梁，沉浸在当地的各种传奇故事中。",
+          "LinkUrl": "",
+          "LinkText": ""
+        },
+        "TriviaUrl": "/search?q=Bing+homepage+quiz&filters=WQOskey:\"HPQuiz_20221027_BridgeofSighs\"&FORM=HPQUIZ",
+        "BackstageUrl": "/search?q=%e5%8f%b9%e6%81%af%e6%a1%a5&form=hpcapt&filters=HpDate:\"20221026_1600\"",
+        "TriviaId": "HPQuiz_20221027_BridgeofSighs"
+      },
+      "AudioContent": null,
+      "VideoContent": null,
+      "Ssd": "20221026_1600",
+      "FullDateString": "10月 27, 2022"
+    },
+    {
+      "ImageContent": {
+        "Description": "万圣节快到了，今天的照片也非常应景，展示了一只“幽灵”，也就是布罗肯现象。尽管看着灵异，但布罗肯现象并非超自然现象。这是一位观察者被投射在阳光对面云层上的阴影。布罗肯现象很少见，但如果你在黎明时分爬上薄雾弥漫的山坡，则有可能幸运地目睹这种现象。只要满足条件，布罗肯现象可以出现在任何地方。在德国哈尔茨山脉的布罗肯峰，当地传说浓雾弥漫的山间有幽灵出没。1780年，约翰·西尔伯施拉格在此观察到了“幽灵”，对其进行了描述记录，并将其命名为“布罗肯现象”。此后，布罗肯现象便常常被记录在有关该地区的文献之中。",
+        "Image": {
+          "Url": "/th?id=OHR.BrockenSpecter_ZH-CN5278743909_1920x1080.jpg&rf=LaDigue_1920x1080.jpg",
+          "Wallpaper": "/th?id=OHR.BrockenSpecter_ZH-CN5278743909_1920x1200.jpg&rf=LaDigue_1920x1200.jpg",
+          "Downloadable": true
+        },
+        "Headline": "山上的幽灵",
+        "Title": "巴尔干中央国家公园的布罗肯现象，保加利亚",
+        "Copyright": "© Maya Karkalicheva/Getty Images",
+        "SocialGood": null,
+        "MapLink": {
+          "Url": "",
+          "Link": ""
+        },
+        "QuickFact": {
+          "MainText": "布罗肯现象出现在日出与日落时的高山上，当前面弥漫着雾气时，太阳光将人的背影衍射在雾气上，浮现出彩虹轮廓。",
+          "LinkUrl": "",
+          "LinkText": ""
+        },
+        "TriviaUrl": "/search?q=Bing+homepage+quiz&filters=WQOskey:\"HPQuiz_20221026_BrockenSpecter\"&FORM=HPQUIZ",
+        "BackstageUrl": "/search?q=%e5%b8%83%e7%bd%97%e8%82%af%e7%8e%b0%e8%b1%a1&form=hpcapt&filters=HpDate:\"20221025_1600\"",
+        "TriviaId": "HPQuiz_20221026_BrockenSpecter"
+      },
+      "AudioContent": null,
+      "VideoContent": null,
+      "Ssd": "20221025_1600",
+      "FullDateString": "10月 26, 2022"
+    },
+    {
+      "ImageContent": {
+        "Description": "万圣节前夕，跟我们一起前往位于罗马西北方向60英里处的一个意大利小镇。我们将带你去博马尔佐，那里有一个曾被遗忘的16世纪花园，里面陈列着巨大的雕像，绝对惊险刺激。在这张照片中，奥库斯黑洞洞的大嘴给人一种被吞入深渊的感觉，奥库斯是罗马的冥界之神，也是违背誓言的惩罚者。这座怪物公园里还有其他诡异怪诞的雕像，如龙被群狮攻击，巨人撕碎人，汉尼拔的大象抓走罗马士兵。这些雕像已有500年的历史，但它们仍然让人们发自内心感到恐惧，这或许就是这座公园的本意。16世纪博马尔佐的欧斯尼公爵在痛失爱妻后，委托人建造了这座公园。",
+        "Image": {
+          "Url": "/th?id=OHR.OrcusMouth_ZH-CN7303142999_1920x1080.jpg&rf=LaDigue_1920x1080.jpg",
+          "Wallpaper": "/th?id=OHR.OrcusMouth_ZH-CN7303142999_1920x1200.jpg&rf=LaDigue_1920x1200.jpg",
+          "Downloadable": true
+        },
+        "Headline": "怪物公园",
+        "Title": "怪物公园里的奥库斯雕像, 意大利博马尔佐花园",
+        "Copyright": "© Scott Wilson/Alamy",
+        "SocialGood": null,
+        "MapLink": {
+          "Url": "",
+          "Link": ""
+        },
+        "QuickFact": {
+          "MainText": "这座花园建于意大利文艺复兴时期。不同于同时期典型的对称布局的花园，这座花园是一种粗糙的“矫饰主义”风格，就像是16世纪的超现实主义。",
+          "LinkUrl": "",
+          "LinkText": ""
+        },
+        "TriviaUrl": "/search?q=Bing+homepage+quiz&filters=WQOskey:\"HPQuiz_20221025_OrcusMouth\"&FORM=HPQUIZ",
+        "BackstageUrl": "/search?q=%e6%84%8f%e5%a4%a7%e5%88%a9%e6%80%aa%e7%89%a9%e5%85%ac%e5%9b%ad&FORM=hpcapt&filters=HpDate:\"20221024_1600\"",
+        "TriviaId": "HPQuiz_20221025_OrcusMouth"
+      },
+      "AudioContent": null,
+      "VideoContent": null,
+      "Ssd": "20221024_1600",
+      "FullDateString": "10月 25, 2022"
+    },
+    {
+      "ImageContent": {
+        "Description": "玛利恩堡（Festung Marienberg）是德国维尔茨堡美因河畔的一座城堡，它是维尔茨堡的象征，作为王子主教的家近5个世纪。自古以来这里就是一个要塞。在1631年瑞典古斯塔夫二世·阿道夫征服该地区后，城堡被重新改建为巴洛克式堡垒。如今，它是一个公园和博物馆。",
+        "Image": {
+          "Url": "/th?id=OHR.MarienburgZell_ZH-CN4562312386_1920x1080.jpg&rf=LaDigue_1920x1080.jpg",
+          "Wallpaper": "/th?id=OHR.MarienburgZell_ZH-CN4562312386_1920x1200.jpg&rf=LaDigue_1920x1200.jpg",
+          "Downloadable": true
+        },
+        "Headline": "维尔茨堡美因河畔的一座城堡",
+        "Title": "玛利恩堡，德国莱茵兰-普法尔茨州采尔县附近",
+        "Copyright": "© Eiben, Hans Georg/Alamy",
+        "SocialGood": null,
+        "MapLink": {
+          "Url": "",
+          "Link": ""
+        },
+        "QuickFact": {
+          "MainText": "在第一次世界大战后整个普法尔茨仍然是巴伐利亚的一部分，直到第二次世界大战结束才被分离出来。",
+          "LinkUrl": "",
+          "LinkText": ""
+        },
+        "TriviaUrl": "/search?q=Bing+homepage+quiz&filters=WQOskey:\"HPQuiz_20221024_MarienburgZell\"&FORM=HPQUIZ",
+        "BackstageUrl": "/search?q=%e7%8e%9b%e5%88%a9%e6%81%a9%e5%a0%a1&form=hpcapt&filters=HpDate:\"20221023_1600\"",
+        "TriviaId": "HPQuiz_20221024_MarienburgZell"
+      },
+      "AudioContent": null,
+      "VideoContent": null,
+      "Ssd": "20221023_1600",
+      "FullDateString": "10月 24, 2022"
+    }
+  ],
+  "LocStrings": {
+    "LOC_HOMEPAGE_VERTICAL_SCROLL_IOTD": "Image of the day",
+    "LOC_HOMEPAGE_VERTICAL_SCROLL_IOTD_LEARN_MORE": "Learn more",
+    "LOC_HOMEPAGE_VERTICAL_SCROLL_DONATE_NOW": "Donate now",
+    "LOC_HOMEPAGE_VERTICAL_SCROLL_FACT": "Quick fact:",
+    "LOC_HOMEPAGE_GALLERY_CARD_TITLE": "Recent Homepage images",
+    "LOC_HOMEPAGE_VERTICAL_SCROLL_GALLERY_IMAGE_ARIALABEL": "Homepage image for {0}",
+    "LOC_HOMEPAGE_ON_THIS_DAY_TITLE": "On this day in history",
+    "LOC_HOMEPAGE_ON_THIS_DAY_IMAGE_ARIALABEL": "On this day in {0}, {1}",
+    "LOC_HOMEPAGE_HOLIDAY_BTN_DONATE": "Donate",
+    "LOC_HOMEPAGE_SHARE_TOOLTIP": "Share today's Bing homepage",
+    "LOC_HOMEPAGE_WALLPAPERDOWNLOAD_TOOLTIP": "Download this image. Use of this image is restricted to wallpaper only.",
+    "LOC_MUSCARD_DOWNLOAD_LINK": "Download this image",
+    "LOC_HOMEPAGE_WALLPAPERNOTAVAILABLE": "This image is not available to download as wallpaper.",
+    "LOC_HOMEPAGE_INFO_TEXT": "Info",
+    "LOC_BING_WP_APP_LINK": "https://go.microsoft.com/fwlink/?linkid=2127455",
+    "LOC_BING_WP_APP_LINK_TEXT": "Get the new Bing Wallpaper app",
+    "LOC_BING_APP_TEXT": "Get Bing Wallpaper on your devices",
+    "LOC_BING_APP_LINK_PC": "https://bing.microsoftapp.net/bing/?adjust=nk9xri2_dzfz5n2",
+    "LOC_BING_APP_LINK_MOBILE": "https://app.adjust.com/d93ddtl_a75k0gg?deeplink=sapphire%3A%2F%2Fwallpaper",
+    "LOC_BING_APP_DOWNLOAD_TEXT": "Mobile App",
+    "LOC_BING_WP_APP_DOWNLOAD_TEXT": "Desktop App",
+    "LOC_BING_APP_TEXT_MOBILE": "Get daily photos with Bing App",
+    "LOC_BING_APP_DOWNLOAD_TEXT_MOBILE": "Get",
+    "LOC_HOMEPAGE_VERTICAL_SCROLL_TOB": "Trending on Bing",
+    "LOC_HOMEPAGE_ANSWER_FINANCE_TITLE": "My watchlist",
+    "LOC_HOMEPAGE_ANSWER_FINANCE_INCREASE_ARIALABEL": "Increase",
+    "LOC_HOMEPAGE_ANSWER_FINANCE_DECREASE_ARIALABEL": "Decrease",
+    "LOC_SEARCH_USING_AN_IMAGE": "Search using an image",
+    "LOC_SEARCH_THE_WEB": "Search the web",
+    "LOC_KEYBOARD_ICON_TOOLTIP": "Search using an on-screen keyboard",
+    "LOC_HOMEPAGE_SETDEFAULTHPLINK": "Make Bing your homepage",
+    "LOC_HOMEPAGE_SETDEFAULTHPLINK_DESC_TITLE": "Experience beauty every day",
+    "LOC_HOMEPAGE_SETDEFAULTHPLINK_DESC_TEXT": "Never miss a moment and keep search at your fingertips. Just set Bing as your browser's homepage with a few easy steps!",
+    "LOC_HOMEPAGE_QS_TITLE": "Customize your homepage",
+    "LOC_HOMEPAGE_QS_TOGGLENAV": "Show menu bar",
+    "LOC_HOMEPAGE_QS_TOGGLECAROUSEL": "Show news and interests",
+    "LOC_HOMEPAGE_QS_TOGGLEIOTD": "Show homepage image",
+    "LOC_HOMEPAGE_QS_TOGGLEGWB": "Show Give with Bing",
+    "LOC_HOMEPAGE_QS_TOGGLEMVS": "Show most visited sites",
+    "LOC_HOMEPAGE_TRIVIA_ANSWER_ARIALABEL": "Answer: {0}, {1}",
+    "LOC_HOMEPAGE_TRIVIA_TITLE": "Bing homepage quiz",
+    "LOC_HOMEPAGE_LANGUAGESWITCH_TITLETEXT": "Languages:",
+    "InPrivate": "InPrivate",
+    "LOC_HOMEPAGE_VERTICAL_SCROLL_GET_INVOLVED": "Get involved:",
+    "LOC_MODULES_AD_NEWS_TITLE": "Ad",
+    "LOC_MODULES_BREAKING_NEWS_TITLE": "BREAKING",
+    "LOC_MODULES_PROACTIVE_EDIT_TOOLTIP": "Manage Interests",
+    "LOC_MSB_OPTIN_TITLE": "Bing homepage for {0}",
+    "LOC_MSB_OPTIN_MESSAGE": "Now enhanced with the {0} info you need — including files, meetings, and more",
+    "LOC_MSB_OPTIN_ACCEPT": "Try it now",
+    "LOC_MSB_OPTIN_REJECT": "Skip",
+    "LOC_HOMEPAGE_WEATHER_TITLE": "Weather",
+    "LOC_HOMEPAGE_ARCHIVE_NEXT": "Next image",
+    "LOC_HOMEPAGE_ARCHIVE_PREV": "Previous image",
+    "LOC_HOMEPAGE_CAROUSEL_SWITCHER_INTERESTS": "My interests",
+    "LOC_HOMEPAGE_CAROUSEL_PREV": "Previous news",
+    "LOC_HOMEPAGE_CAROUSEL_MORE": "More news",
+    "LOC_ZINC_SCOPES_TITLE": "Search for",
+    "LOC_HOMEPAGE_OPALUPSELL_INSTALLCARD_TIP": "Faster and more beautiful search",
+    "LOC_HOMEPAGE_VERTICAL_SCROLL_OPAL_UPSELL_TITLE": "The Bing app: Fast, beautiful and friendly",
+    "LOC_HOMEPAGE_FOLLOW_US": "Follow us",
+    "LOC_MSB_OPTIN_TOGGLE_TITLE": "Show info from {0}",
+    "LOC_HOMEPAGE_COPYRIGHT_FORMAT": "© {0} Microsoft",
+    "LOC_SEARCH_SWITCHTAB_DESKTOP_CN": "国内版",
+    "LOC_SEARCH_SWITCHTAB_DESKTOP_EN": "国际版",
+    "LOC_SEARCH_SWITCHTAB_MOBILE_EN": "切换至国内版",
+    "LOC_SEARCH_SWITCHTAB_MOBILE_CN": "切换至国际版",
+    "LOC_SEARCH_SWITCHTAB_MOBILE_CN_TIP": "直搜全球英文信息",
+    "LOC_MODULES_BINGATWORK_SCHOOL_TITLE": "School",
+    "LOC_MODULES_BINGATWORK_TITLE": "Work",
+    "LOC_OVERFLOWMENU_MORE_ARIALABEL": "More",
+    "Speech_LearnMore_Tooltip": "Search using voice.",
+    "Speech_LearnMore_Tooltip_Link": "Learn how",
+    "Speech_LearnMore_Title": "Search with your voice!",
+    "Speech_LearnMore_ExpQuery": "\"How do I say hello in Chinese\"",
+    "Speech_LearnMore_Instruction2": "Try saying,",
+    "LOC_HOMEPAGE_TRAVEL_GUIDE_TITLE": "See Bing travel guide for {0}",
+    "LOC_MICROPHONE_TOOLTIP": "Search using voice",
+    "LOC_HOMEPAGE_VERTICAL_SCROLL_MAP": "View on map",
+    "LOC_SEARCHBOX_TITLE": "Enter your search term",
+    "LOC_HOMEPAGE_SEARCH_FOR_TYPE": "Search for {0}",
+    "LOC_HOMEPAGE_VERTICAL_SCROLL_IOTD_ARIA": "Image of the day: {0}"
+  },
+  "HasCarousel": false,
+  "MSN_OCID": "",
+  "CarouselTooltipEnabled": false,
+  "TOBHasMsnIcon": false,
+  "OpenTrendingTileNewTab": true,
+  "EnableSerpTrendingOnBing": false,
+  "EnableSearchboxTrendingOnBing": false,
+  "CarouselApiUrl": "/hp/api/v1/carousel?",
+  "HasVerticalScroll": false,
+  "HasMSBTOB": false,
+  "IsWidgetCompatible": false,
+  "IsBrowserSafari": false,
+  "IsNonAadUser": true,
+  "IsEUCookieConsentEnabled": false,
+  "EuCookieName": "MSCC",
+  "EnableManagedCookiePreference": false,
+  "CurrentIndex": 0,
+  "IsMobile": false,
+  "BgQuality": 50,
+  "MbBgASAP": false,
+  "MbBgOnLoad": false,
+  "SearchTypeFix": true,
+  "ImageCropSize": "1920x1080",
+  "IsChromeNewTab": false,
+  "IsChromeExtensionUser": false,
+  "FormCode": "QBLH",
+  "IsBingWpAppEnabled": true,
+  "IsBingAppEnabled": false,
+  "HasTriviaQuiz": true,
+  "RewardsMobileHeaderEnabled": false,
+  "Scopes": [
+    {
+      "Text": "School",
+      "SubScopes": [],
+      "BaseUrl": "/school?FORM=HPTEDU",
+      "Id": "bingatwork",
+      "Overflow": false,
+      "ExposeIfPossible": false,
+      "IsDivider": false,
+      "EnableIcon": false,
+      "ImageSourceUrl": ""
+    },
+    {
+      "Text": "Images",
+      "SubScopes": [],
+      "BaseUrl": "/images?FORM=Z9LH",
+      "Id": "images",
+      "Overflow": false,
+      "ExposeIfPossible": false,
+      "IsDivider": false,
+      "EnableIcon": false,
+      "ImageSourceUrl": ""
+    },
+    {
+      "Text": "Videos",
+      "SubScopes": [],
+      "BaseUrl": "/videos?FORM=Z9LH1",
+      "Id": "video",
+      "Overflow": true,
+      "ExposeIfPossible": true,
+      "IsDivider": false,
+      "EnableIcon": false,
+      "ImageSourceUrl": ""
+    },
+    {
+      "Text": "Translate",
+      "SubScopes": [],
+      "BaseUrl": "/search?q=Bing+translate&FORM=TTAHP1",
+      "Id": "translate",
+      "Overflow": true,
+      "ExposeIfPossible": false,
+      "IsDivider": false,
+      "EnableIcon": false,
+      "ImageSourceUrl": ""
+    },
+    {
+      "Text": "Maps",
+      "SubScopes": [],
+      "BaseUrl": "/maps?FORM=Z9LH2",
+      "Id": "local",
+      "Overflow": true,
+      "ExposeIfPossible": true,
+      "IsDivider": false,
+      "EnableIcon": false,
+      "ImageSourceUrl": ""
+    },
+    {
+      "Text": "Academic",
+      "SubScopes": [],
+      "BaseUrl": "/academic?FORM=Z9LHS3",
+      "Id": "academic",
+      "Overflow": true,
+      "ExposeIfPossible": false,
+      "IsDivider": false,
+      "EnableIcon": false,
+      "ImageSourceUrl": ""
+    },
+    {
+      "Text": "Dictionary",
+      "SubScopes": [],
+      "BaseUrl": "/dict?FORM=Z9LHS4",
+      "Id": "dictionary",
+      "Overflow": true,
+      "ExposeIfPossible": false,
+      "IsDivider": false,
+      "EnableIcon": false,
+      "ImageSourceUrl": ""
+    },
+    {
+      "Text": "Travel",
+      "SubScopes": [],
+      "BaseUrl": "/travel?FORM=TGHPNT",
+      "Id": "travel",
+      "Overflow": true,
+      "ExposeIfPossible": false,
+      "IsDivider": false,
+      "EnableIcon": false,
+      "ImageSourceUrl": ""
+    },
+    {
+      "Text": "MSN",
+      "SubScopes": [],
+      "BaseUrl": "//www.msn.com/?ocid=BHEA000",
+      "Id": "msn",
+      "Overflow": true,
+      "ExposeIfPossible": false,
+      "IsDivider": true,
+      "EnableIcon": false,
+      "ImageSourceUrl": ""
+    },
+    {
+      "Text": "TakeLessons",
+      "SubScopes": [],
+      "BaseUrl": "//www.takelessons.com/?utm_source=bing&utm_medium=hp&utm_campaign=binghp-live&utm_content=binghplink",
+      "Id": "marketplace",
+      "Overflow": true,
+      "ExposeIfPossible": false,
+      "IsDivider": false,
+      "EnableIcon": false,
+      "ImageSourceUrl": ""
+    },
+    {
+      "Text": "Health",
+      "SubScopes": [],
+      "BaseUrl": "//www.msn.com/health?ocid=binghphea",
+      "Id": "health",
+      "Overflow": true,
+      "ExposeIfPossible": false,
+      "IsDivider": false,
+      "EnableIcon": false,
+      "ImageSourceUrl": ""
+    },
+    {
+      "Text": "Office",
+      "SubScopes": [
+        {
+          "Text": "Outlook",
+          "SubScopes": [],
+          "BaseUrl": "//outlook.com/?WT.mc_id=O16_BingHP",
+          "Id": "outlook",
+          "Overflow": false,
+          "ExposeIfPossible": false,
+          "IsDivider": false,
+          "EnableIcon": false,
+          "ImageSourceUrl": ""
+        },
+        {
+          "Text": "Word",
+          "SubScopes": [],
+          "BaseUrl": "//office.live.com/start/Word.aspx?WT.mc_id=O16_BingHP",
+          "Id": "word",
+          "Overflow": false,
+          "ExposeIfPossible": false,
+          "IsDivider": false,
+          "EnableIcon": false,
+          "ImageSourceUrl": ""
+        },
+        {
+          "Text": "Excel",
+          "SubScopes": [],
+          "BaseUrl": "//office.live.com/start/Excel.aspx?WT.mc_id=O16_BingHP",
+          "Id": "excel",
+          "Overflow": false,
+          "ExposeIfPossible": false,
+          "IsDivider": false,
+          "EnableIcon": false,
+          "ImageSourceUrl": ""
+        },
+        {
+          "Text": "PowerPoint",
+          "SubScopes": [],
+          "BaseUrl": "//office.live.com/start/PowerPoint.aspx?WT.mc_id=O16_BingHP",
+          "Id": "powerpoint",
+          "Overflow": false,
+          "ExposeIfPossible": false,
+          "IsDivider": false,
+          "EnableIcon": false,
+          "ImageSourceUrl": ""
+        },
+        {
+          "Text": "OneNote",
+          "SubScopes": [],
+          "BaseUrl": "//www.onenote.com/notebooks?WT.mc_id=O16_BingHP",
+          "Id": "onenote",
+          "Overflow": false,
+          "ExposeIfPossible": false,
+          "IsDivider": false,
+          "EnableIcon": false,
+          "ImageSourceUrl": ""
+        },
+        {
+          "Text": "Sway",
+          "SubScopes": [],
+          "BaseUrl": "//sway.office.com?WT.mc_id=O16_BingHP&utm_source=O16Bing&utm_medium=Nav&utm_campaign=HP",
+          "Id": "sway",
+          "Overflow": false,
+          "ExposeIfPossible": false,
+          "IsDivider": false,
+          "EnableIcon": false,
+          "ImageSourceUrl": ""
+        },
+        {
+          "Text": "OneDrive",
+          "SubScopes": [],
+          "BaseUrl": "//onedrive.live.com/?gologin=1&WT.mc_id=O16_BingHP",
+          "Id": "onedrive",
+          "Overflow": false,
+          "ExposeIfPossible": false,
+          "IsDivider": false,
+          "EnableIcon": false,
+          "ImageSourceUrl": ""
+        },
+        {
+          "Text": "Calendar",
+          "SubScopes": [],
+          "BaseUrl": "//calendar.live.com/?WT.mc_id=O16_BingHP",
+          "Id": "calendar",
+          "Overflow": false,
+          "ExposeIfPossible": false,
+          "IsDivider": false,
+          "EnableIcon": false,
+          "ImageSourceUrl": ""
+        },
+        {
+          "Text": "People",
+          "SubScopes": [],
+          "BaseUrl": "//outlook.live.com/owa/?path=/people&WT.mc_id=O16_BingHP",
+          "Id": "people",
+          "Overflow": false,
+          "ExposeIfPossible": false,
+          "IsDivider": false,
+          "EnableIcon": false,
+          "ImageSourceUrl": ""
+        }
+      ],
+      "BaseUrl": "//www.office.com?WT.mc_id=O16_BingHP",
+      "Id": "office",
+      "Overflow": true,
+      "ExposeIfPossible": false,
+      "IsDivider": false,
+      "EnableIcon": false,
+      "ImageSourceUrl": ""
+    }
+  ],
+  "Footer": [
+    {
+      "Text": "增值电信业务经营许可证：合字B2-20090007",
+      "BaseUrl": "https://dxzhgl.miit.gov.cn/dxxzsp/xkz/xkzgl/resource/qiyereport.jsp?num=caf04fa4-bd8a-4d9e-80b6-2aa1b86c1509&type=yreport",
+      "Id": "ICPLicense",
+      "Overflow": false,
+      "ExposeIfPossible": false,
+      "EnableIcon": false,
+      "ImageSourceUrl": ""
+    },
+    {
+      "Text": "京ICP备10036305号-7",
+      "BaseUrl": "https://beian.miit.gov.cn",
+      "Id": "ICPFiling",
+      "Overflow": false,
+      "ExposeIfPossible": false,
+      "EnableIcon": false,
+      "ImageSourceUrl": ""
+    },
+    {
+      "Text": "京公网安备11010802022657号",
+      "BaseUrl": "http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11010802022657",
+      "Id": "MMAIS",
+      "Overflow": false,
+      "ExposeIfPossible": false,
+      "EnableIcon": false,
+      "ImageSourceUrl": ""
+    },
+    {
+      "Text": "Privacy and Cookies",
+      "BaseUrl": "//go.microsoft.com/fwlink/?LinkId=521839",
+      "Id": "privacy",
+      "Overflow": false,
+      "ExposeIfPossible": false,
+      "EnableIcon": false,
+      "ImageSourceUrl": ""
+    },
+    {
+      "Text": "Legal",
+      "BaseUrl": "//go.microsoft.com/fwlink/?LinkID=246338",
+      "Id": "legal",
+      "Overflow": false,
+      "ExposeIfPossible": false,
+      "EnableIcon": false,
+      "ImageSourceUrl": ""
+    },
+    {
+      "Text": "Advertise",
+      "BaseUrl": "//go.microsoft.com/fwlink/?linkid=868923",
+      "Id": "",
+      "Overflow": false,
+      "ExposeIfPossible": false,
+      "EnableIcon": false,
+      "ImageSourceUrl": ""
+    },
+    {
+      "Text": "About our ads",
+      "BaseUrl": "//go.microsoft.com/fwlink/?LinkID=286759",
+      "Id": "",
+      "Overflow": false,
+      "ExposeIfPossible": false,
+      "EnableIcon": false,
+      "ImageSourceUrl": ""
+    },
+    {
+      "Text": "Help",
+      "BaseUrl": "//support.microsoft.com/topic/82d20721-2d6f-4012-a13d-d1910ccf203f",
+      "Id": "help",
+      "Overflow": false,
+      "ExposeIfPossible": false,
+      "EnableIcon": false,
+      "ImageSourceUrl": ""
+    },
+    {
+      "Text": "Feedback",
+      "BaseUrl": "#",
+      "Id": "sb_feedback",
+      "Overflow": false,
+      "ExposeIfPossible": false,
+      "EnableIcon": false,
+      "ImageSourceUrl": ""
+    }
+  ],
+  "RtlLang": false,
+  "Market": "zh-CN",
+  "TrueMarket": "zh-CN",
+  "Region": "CN",
+  "Language": "en",
+  "SupportedLanguages": [],
+  "SymbolOfSolidarity": null,
+  "UserType": "msa",
+  "MultiLangKeyboardEnabled": false,
+  "Features": {
+    "MicEnabled": "true",
+    "IdentityHeaderVNext": "false"
+  },
+  "InPrivate": false,
+  "IsSuperApp": false,
+  "SearchBoxPlaceHolder": null,
+  "IsEdu": false,
+  "IsTobDisabled": false,
+  "LargeTargNoTT": false,
+  "IconsMaxTarg": false,
+  "SearchBoxIconColor": "#007DAA",
+  "SearchBoxLeftIconStatus": "",
+  "IsCntShareEnabled": false,
+  "IsTravelEnabled": false,
+  "HasShareWidget": false,
+  "DsbClickThru": false,
+  "EnablePreloadMic": true,
+  "EnableShowMicOnSBClick": false,
+  "EnableSydney": false,
+  "SearchByImageEnabled": true,
+  "EnableScopeIcons": false,
+  "OpalUpsellEnabled": true,
+  "EnabledFlights": "",
+  "IsVideoEnabled": false,
+  "HasVidEvtLog": false
+}

@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
+use App\Bundle\Repository\DoctrineRepository;
 use App\Command\ImportFromSqlCommand;
-use App\Bundle\CoreBundle\Doctrine\Contract\TableProvider;
-use App\Bundle\CoreBundle\Doctrine\SchemaProvider;
 use App\LeanCloud;
-use App\Repository\DoctrineRepository;
 use Doctrine\DBAL\Connection;
+use Manyou\BingHomepage\Client\MediaContentClient;
+use Manyou\BingHomepage\ImageArchiveClient;
+use Manyou\Mango\Doctrine\SchemaProvider;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
     $services = $containerConfigurator->services();
@@ -46,4 +47,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->arg('$source', service(DoctrineRepository::class . '_source'))
         ->arg('$destination', service(DoctrineRepository::class))
         ->public();
+
+    $services->set(ImageArchiveClient::class)->public();
+    $services->set(MediaContentClient::class)->public();
 };

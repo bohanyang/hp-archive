@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Command;
 
-use App\ApiResource\Image;
-use App\ApiResource\Record;
+use App\Bundle\Repository\DoctrineRepository;
 use App\LeanCloud;
-use App\Repository\DoctrineRepository;
 use DateTimeImmutable;
 use DateTimeZone;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
+use Manyou\BingHomepage\Image;
+use Manyou\BingHomepage\Record;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
