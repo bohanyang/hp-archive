@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
+use App\Bundle\Message\ImportFromLeanCloudHandler;
+use App\Bundle\Message\ImportFromSqlHandler;
 use App\Bundle\Repository\DoctrineRepository;
-use App\Command\ImportFromSqlCommand;
-use App\LeanCloud;
 use Doctrine\DBAL\Connection;
-use Manyou\BingHomepage\Client\MediaContentClient;
-use Manyou\BingHomepage\ImageArchiveClient;
 use Manyou\Mango\Doctrine\SchemaProvider;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
@@ -29,25 +27,29 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             __DIR__ . '/../src/Kernel.php',
         ]);
 
-    $services->set(LeanCloud::class)
-        ->arg('$endpoint', env('LEANCLOUD_API_SERVER') . '/1.1/')
-        ->arg('$appId', env('LEANCLOUD_APP_ID'))
-        ->arg('$appKey', env('LEANCLOUD_APP_KEY'))
-        ->arg('$sessionToken', env('LEANCLOUD_SESSION_TOKEN'));
-
-    $services->set(SchemaProvider::class . '_source')
+    // Import source
+    $services->set('app.doctrine.schema_provider.source')
         ->class(SchemaProvider::class)
         ->arg(Connection::class, service('doctrine.dbal.source_connection'));
 
-    $services->set(DoctrineRepository::class . '_source')
+    $services->set('app.repository.doctrine.source')
         ->class(DoctrineRepository::class)
-        ->arg(SchemaProvider::class, service(SchemaProvider::class . '_source'));
+        ->arg(SchemaProvider::class, service('app.doctrine.schema_provider.source'));
 
-    $services->set(ImportFromSqlCommand::class)
-        ->arg('$source', service(DoctrineRepository::class . '_source'))
-        ->arg('$destination', service(DoctrineRepository::class))
+    // Import destination
+    $services->set('app.doctrine.schema_provider.import')
+        ->class(SchemaProvider::class)
+        ->arg(Connection::class, service('doctrine.dbal.import_connection'));
+
+    $services->set('app.repository.doctrine.import')
+        ->class(DoctrineRepository::class)
+        ->arg(SchemaProvider::class, service('app.doctrine.schema_provider.import'));
+
+    $services->set(ImportFromSqlHandler::class)
+        ->arg('$source', service('app.repository.doctrine.source'))
+        ->arg('$destination', service('app.repository.doctrine.import'))
         ->public();
 
-    $services->set(ImageArchiveClient::class)->public();
-    $services->set(MediaContentClient::class)->public();
+    $services->set(ImportFromLeanCloudHandler::class)
+        ->arg(DoctrineRepository::class, service('app.repository.doctrine.import'));
 };

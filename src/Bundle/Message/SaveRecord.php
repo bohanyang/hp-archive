@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Messenger;
+namespace App\Bundle\Message;
 
 use Manyou\BingHomepage\Record;
 
@@ -10,7 +10,7 @@ class SaveRecord
 {
     public function __construct(
         public readonly Record $record,
-        public readonly OnDuplicateImage $policy,
+        public readonly OnDuplicateImage $policy = OnDuplicateImage::THROW_IF_DIFFER,
     ) {
     }
 

@@ -31,7 +31,7 @@ final class RetryableHttpClient implements PromiseHttpClientInterface, LoggerAwa
     ) {
         $this->retryStrategy = $retryStrategy ?? new DefaultRetryStrategy();
         $this->delayStrategy = $delayStrategy ?? DelayStrategyChain::createDefault();
-        
+
         if (null !== $logger) {
             $this->setLogger($logger);
         }

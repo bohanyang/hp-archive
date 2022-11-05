@@ -23,8 +23,6 @@ use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 use Throwable;
 
-use function assert;
-
 class RetryableHttpClientTest extends TestCase
 {
     private static function mock(
@@ -90,8 +88,8 @@ class RetryableHttpClientTest extends TestCase
 
         $client = self::mock($responses, self::retryOn(503), self::delay(0), $maxRetries);
 
+        /** @var ResponseInterface */
         $response = $client->request('GET', __FUNCTION__)->wait();
-        assert($response instanceof ResponseInterface);
 
         self::assertSame($expectError ? 503 : 200, $response->getStatusCode());
     }
@@ -140,8 +138,8 @@ class RetryableHttpClientTest extends TestCase
         $promise = $client->request('GET', __FUNCTION__);
 
         if ($exception === null) {
+            /** @var ResponseInterface */
             $response = $promise->wait();
-            assert($response instanceof ResponseInterface);
 
             $this->assertSame(200, $response->getStatusCode());
         } else {

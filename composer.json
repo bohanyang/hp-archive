@@ -67,7 +67,8 @@
             "App\\": "src/",
             "Manyou\\BingHomepage\\": "lib/BingHomepage/",
             "Manyou\\Mango\\": "lib/Mango/",
-            "Manyou\\RemoveDataCollectorBundle\\": "lib/RemoveDataCollectorBundle/"
+            "Manyou\\RemoveDataCollectorBundle\\": "lib/RemoveDataCollectorBundle/",
+            "Manyou\\LeanStorage\\": "lib/LeanStorage/"
         }
     },
     "autoload-dev": {

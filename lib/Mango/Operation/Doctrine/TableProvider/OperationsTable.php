@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Manyou\Mango\Doctrine\TableProvider;
+namespace Manyou\Mango\Operation\Doctrine\TableProvider;
 
+use Doctrine\DBAL\Schema\Schema;
 use Manyou\Mango\Doctrine\Contract\TableProvider;
 use Manyou\Mango\Doctrine\Table;
-use Manyou\Mango\Doctrine\Type\OperationStatusType;
-use Doctrine\DBAL\Schema\Schema;
+use Manyou\Mango\Operation\Doctrine\Type\OperationStatusType;
 
 class OperationsTable implements TableProvider
 {

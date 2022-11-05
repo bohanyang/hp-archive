@@ -20,10 +20,11 @@ final class ImageArchiveClient implements ClientInterface, LoggerAwareInterface
     private ImageArchiveParser $parser;
 
     public function __construct(
-        private string $urlBasePrefix = '/az/hprichbg/rb/',
+        UrlBasePrefixStrategy $prefixStrategy,
         PromiseHttpClientInterface|HttpClientInterface|null $httpClient = null,
         private string $endpoint = 'https://global.bing.com/HPImageArchive.aspx',
     ) {
+        $this->prefixStrategy = $prefixStrategy;
         $this->setHttpClient($httpClient);
         $this->parser = new ImageArchiveParser();
     }
@@ -70,11 +71,6 @@ final class ImageArchiveClient implements ClientInterface, LoggerAwareInterface
     private function getParser(): ParserInterface
     {
         return $this->parser;
-    }
-
-    private function getUrlBasePrefix(RequestParams $params): string
-    {
-        return $this->urlBasePrefix;
     }
 
     private function getIndex(RequestParams $params): string

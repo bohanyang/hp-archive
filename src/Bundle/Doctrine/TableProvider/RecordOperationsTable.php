@@ -9,7 +9,7 @@ use Doctrine\DBAL\Schema\Schema;
 use Doctrine\DBAL\Types\Types;
 use Manyou\Mango\Doctrine\Contract\TableProvider;
 use Manyou\Mango\Doctrine\Table;
-use Manyou\Mango\Doctrine\TableProvider\OperationsTable;
+use Manyou\Mango\Operation\Doctrine\TableProvider\OperationsTable;
 
 class RecordOperationsTable implements TableProvider
 {

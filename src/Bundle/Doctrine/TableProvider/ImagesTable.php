@@ -13,14 +13,16 @@ use Manyou\Mango\Doctrine\Table;
 
 class ImagesTable implements TableProvider
 {
+    public const NAME = 'images';
+
     public function __invoke(Schema $schema): Table
     {
-        $table = new Table($schema, 'images');
+        $table = new Table($schema, self::NAME);
         $table->addColumn('id', ObjectIdType::NAME, ObjectIdType::DEFAULT_OPTIONS);
-        $table->addColumn('name', Types::STRING, ['length' => 255]);
+        $table->addColumn('name', Types::STRING, ['length' => 500]);
         $table->addColumn('debut_on', Types::DATE_IMMUTABLE, alias: 'debutOn');
-        $table->addColumn('urlbase', Types::STRING, ['length' => 255]);
-        $table->addColumn('copyright', Types::STRING, ['length' => 255]);
+        $table->addColumn('urlbase', Types::STRING, ['length' => 500]);
+        $table->addColumn('copyright', Types::STRING, ['length' => 500]);
         $table->addColumn('downloadable', Types::BOOLEAN);
         $table->addColumn('video', JsonTextType::NAME, ['length' => 2000, 'notnull' => false]);
         $table->setPrimaryKey(['id']);

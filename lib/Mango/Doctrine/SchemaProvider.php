@@ -5,10 +5,15 @@ declare(strict_types=1);
 namespace Manyou\Mango\Doctrine;
 
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Result;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\Provider\SchemaProvider as SchemaProviderInterface;
+use InvalidArgumentException;
 use Manyou\Mango\Doctrine\Contract\TableProvider;
 use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
+
+use function array_merge;
+use function is_string;
 
 class SchemaProvider implements SchemaProviderInterface
 {
@@ -57,5 +62,32 @@ class SchemaProvider implements SchemaProviderInterface
     public function getTable(string $name): Table
     {
         return $this->tables[$name];
+    }
+
+    public function executeMergedQuery(string|Query ...$args): Result
+    {
+        if ($args === []) {
+            throw new InvalidArgumentException('Arguments required.');
+        }
+
+        $sql    = '';
+        $params = [];
+        $types  = [];
+
+        foreach ($args as $arg) {
+            if (is_string($arg)) {
+                $sql .= $arg;
+                continue;
+            }
+
+            if ($arg instanceof Query) {
+                $sql     .= $arg->getSQL();
+                $params[] = $arg->getParameters();
+                $types[]  = $arg->getParameterTypes();
+                continue;
+            }
+        }
+
+        return $this->connection->executeQuery($sql, array_merge(...$params), array_merge(...$types));
     }
 }

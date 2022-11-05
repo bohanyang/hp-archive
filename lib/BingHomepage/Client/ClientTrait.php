@@ -9,13 +9,9 @@ use GuzzleHttp\Promise\Utils;
 use Manyou\BingHomepage\Parser\ParserInterface;
 use Manyou\BingHomepage\RequestException;
 use Manyou\BingHomepage\RequestParams;
-use Manyou\PromiseHttpClient\PromiseHttpClient;
-use Manyou\PromiseHttpClient\PromiseHttpClientInterface;
-use Manyou\PromiseHttpClient\RetryableHttpClient;
+use Manyou\PromiseHttpClient\RequiresPromiseHttpClient;
 use Psr\Log\LoggerAwareTrait;
-use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Contracts\HttpClient\Exception\ExceptionInterface;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 use Throwable;
 
@@ -24,22 +20,12 @@ use function sprintf;
 trait ClientTrait
 {
     use LoggerAwareTrait;
+    use RequiresPromiseHttpClient;
 
     /** @var PromiseInterface[] */
     private array $cache;
 
-    private PromiseHttpClientInterface $httpClient;
-
-    private function setHttpClient(PromiseHttpClientInterface|HttpClientInterface|null $httpClient = null): void
-    {
-        $httpClient ??= HttpClient::create();
-
-        if ($httpClient instanceof HttpClientInterface) {
-            $httpClient = new RetryableHttpClient(new PromiseHttpClient($httpClient));
-        }
-
-        $this->httpClient = $httpClient;
-    }
+    private UrlBasePrefixStrategy $prefixStrategy;
 
     abstract private function getCacheKey(RequestParams $params): string;
 
@@ -52,8 +38,6 @@ trait ClientTrait
     abstract private function validateParams(RequestParams $params): void;
 
     abstract private function getParser(): ParserInterface;
-
-    abstract private function getUrlBasePrefix(RequestParams $params): string;
 
     private function getResponse(RequestParams $params): PromiseInterface
     {
@@ -92,7 +76,7 @@ trait ClientTrait
     {
         return $this->getResponse($params)->then(function (array $result) use ($params) {
             try {
-                $record = $this->getParser()->parse($result, $params->getMarket(), $this->getUrlBasePrefix($params));
+                $record = $this->getParser()->parse($result, $params->getMarket(), $this->prefixStrategy->getUrlBasePrefix($params));
             } catch (Throwable $e) {
                 throw new RequestException($e->getMessage(), $params, null, $e);
             }

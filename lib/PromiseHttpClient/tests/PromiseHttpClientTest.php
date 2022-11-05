@@ -18,7 +18,6 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
 use Symfony\Contracts\HttpClient\Test\TestHttpServer;
 use Throwable;
 
-use function assert;
 use function microtime;
 
 final class PromiseHttpClientTest extends TestCase
@@ -35,8 +34,8 @@ final class PromiseHttpClientTest extends TestCase
 
     public function testRequest(): void
     {
+        /** @var ResponseInterface */
         $response = self::createClient()->request('GET', '/')->wait();
-        assert($response instanceof ResponseInterface);
 
         $this->assertSame(200, $response->getStatusCode());
         $this->assertSame('application/json', $response->getHeaders()['content-type'][0]);
@@ -65,8 +64,8 @@ final class PromiseHttpClientTest extends TestCase
 
         $this->assertEquals(Promise::PENDING, $promise->getState());
 
+        /** @var ResponseInterface */
         $response = $promise->wait();
-        assert($response instanceof ResponseInterface);
 
         $this->assertTrue($onFulfilledCalled);
         $this->assertFalse($onRejectedCalled);
@@ -106,10 +105,10 @@ final class PromiseHttpClientTest extends TestCase
 
     public function testPostRequest(): void
     {
+        /** @var ResponseInterface */
         $response = self::createClient()
             ->request('POST', '/post', ['body' => 'foo=0123456789'])
             ->wait();
-        assert($response instanceof ResponseInterface);
 
         $this->assertSame(['foo' => '0123456789', 'REQUEST_METHOD' => 'POST'], $response->toArray());
     }
@@ -255,8 +254,8 @@ final class PromiseHttpClientTest extends TestCase
             },
         );
 
+        /** @var ResponseInterface */
         $response = $promise->wait();
-        assert($response instanceof ResponseInterface);
 
         $this->assertFalse($onFulfilledCalled);
         $this->assertTrue($onRejectedCalled);
@@ -273,8 +272,8 @@ final class PromiseHttpClientTest extends TestCase
         $promise = $client->request('GET', '/', ['delay' => 1000]);
         $this->assertLessThan(0.5, microtime(true) - $time);
 
+        /** @var ResponseInterface */
         $response = $promise->wait();
-        assert($response instanceof ResponseInterface);
 
         $this->assertSame(200, $response->getStatusCode());
         $this->assertGreaterThan(1.0, microtime(true) - $time);

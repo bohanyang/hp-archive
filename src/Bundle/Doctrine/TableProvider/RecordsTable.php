@@ -14,16 +14,18 @@ use Manyou\Mango\Doctrine\Table;
 
 class RecordsTable implements TableProvider
 {
+    public const NAME = 'records';
+
     public function __invoke(Schema $schema): Table
     {
-        $table = new Table($schema, 'records');
+        $table = new Table($schema, self::NAME);
         $table->addColumn('id', ObjectIdType::NAME, ObjectIdType::DEFAULT_OPTIONS);
-        $table->addColumn('image_id', ObjectIdType::NAME, ObjectIdType::DEFAULT_OPTIONS);
+        $table->addColumn('image_id', ObjectIdType::NAME, ObjectIdType::DEFAULT_OPTIONS, alias: 'imageId');
         $table->addColumn('date', Types::DATE_IMMUTABLE);
         $table->addColumn('market', BingMarketType::NAME, BingMarketType::DEFAULT_OPTIONS);
         $table->addColumn('title', Types::STRING, ['length' => 500]);
-        $table->addColumn('keyword', Types::STRING, ['length' => 255, 'notnull' => false]);
-        $table->addColumn('headline', Types::STRING, ['length' => 255, 'notnull' => false]);
+        $table->addColumn('keyword', Types::STRING, ['length' => 500, 'notnull' => false]);
+        $table->addColumn('headline', Types::STRING, ['length' => 500, 'notnull' => false]);
         $table->addColumn('description', Types::STRING, ['length' => 1000, 'notnull' => false]);
         $table->addColumn('quickfact', Types::STRING, ['length' => 500, 'notnull' => false]);
         $table->addColumn('hotspots', JsonTextType::NAME, ['length' => 2000, 'notnull' => false]);
@@ -31,7 +33,7 @@ class RecordsTable implements TableProvider
         $table->addColumn('coverstory', JsonTextType::NAME, ['length' => 2000, 'notnull' => false]);
         $table->setPrimaryKey(['id']);
         $table->addUniqueIndex(['date', 'market']);
-        $table->addForeignKeyConstraint('images', ['image_id'], ['id']);
+        $table->addForeignKeyConstraint(ImagesTable::NAME, ['image_id'], ['id']);
 
         return $table;
     }

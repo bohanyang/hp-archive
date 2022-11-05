@@ -11,8 +11,6 @@ use App\Bundle\Repository\DoctrineRepository;
 use DateTimeImmutable;
 use Doctrine\DBAL\Types\Type;
 
-use function assert;
-
 class RecordProvider implements ProviderInterface
 {
     public function __construct(private DoctrineRepository $repository)
@@ -29,8 +27,8 @@ class RecordProvider implements ProviderInterface
             return null;
         }
 
+        /** @var BingMarketType */
         $type = Type::getType(BingMarketType::NAME);
-        assert($type instanceof BingMarketType);
 
         if (null === $type->valueToId($uriVariables['market'])) {
             return null;

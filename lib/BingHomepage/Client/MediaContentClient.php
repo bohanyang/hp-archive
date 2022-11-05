@@ -20,10 +20,11 @@ final class MediaContentClient implements ClientInterface, LoggerAwareInterface
     private MediaContentParser $parser;
 
     public function __construct(
-        private string $urlBasePrefix = '/az/hprichbg/rb/',
+        UrlBasePrefixStrategy $prefixStrategy,
         PromiseHttpClientInterface|HttpClientInterface|null $httpClient = null,
         private string $endpoint = 'https://www.bing.com/hp/api/model',
     ) {
+        $this->prefixStrategy = $prefixStrategy;
         $this->setHttpClient($httpClient);
         $this->parser = new MediaContentParser();
     }
@@ -60,10 +61,5 @@ final class MediaContentClient implements ClientInterface, LoggerAwareInterface
     private function getParser(): ParserInterface
     {
         return $this->parser;
-    }
-
-    private function getUrlBasePrefix(RequestParams $params): string
-    {
-        return $this->urlBasePrefix;
     }
 }

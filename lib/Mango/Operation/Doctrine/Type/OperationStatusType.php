@@ -2,7 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Manyou\Mango\Doctrine\Type;
+namespace Manyou\Mango\Operation\Doctrine\Type;
+
+use Manyou\Mango\Doctrine\Type\ArrayTinyIntEnum;
+use Manyou\Mango\Doctrine\Type\TinyIntEnumType;
 
 class OperationStatusType extends TinyIntEnumType
 {

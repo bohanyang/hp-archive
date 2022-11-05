@@ -24,5 +24,7 @@ class RemoveDataCollectorPass implements CompilerPassInterface
 
             $definition->clearTags();
         }
+
+        $container->getParameterBag()->remove('remove_data_collector.services');
     }
 }

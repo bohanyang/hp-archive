@@ -6,6 +6,7 @@ namespace Manyou\Mango\Doctrine;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
+use Doctrine\DBAL\Platforms\OraclePlatform;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\DBAL\Result;
 use Doctrine\DBAL\Schema\Column;
@@ -14,10 +15,17 @@ use Doctrine\DBAL\Types\Type;
 use ErrorException;
 use Generator;
 use InvalidArgumentException;
+use RuntimeException;
 
+use function array_fill;
+use function array_keys;
+use function array_merge;
+use function array_values;
+use function count;
 use function explode;
 use function implode;
 use function is_string;
+use function sprintf;
 
 /**
  * @method $this where($predicates)
@@ -25,6 +33,8 @@ use function is_string;
  * @method $this orWhere($where)
  * @method $this setMaxResults(int|null $maxResults)
  * @method $this orderBy(string $sort, string|null $order = null)
+ * @method array getParameters()
+ * @method Type[] getParameterTypes()
  */
 class Query
 {
@@ -89,6 +99,76 @@ class Query
         $this->builder->values($values);
 
         return $this;
+    }
+
+    public function bulkInsert(string $into, array ...$records): void
+    {
+        if (! isset($records[0])) {
+            return;
+        }
+
+        $table = $this->schema->getTable($into);
+
+        $columns = [];
+        $types   = [];
+        $params  = [];
+
+        foreach (array_keys($records[0]) as $key) {
+            $column    = $table->getColumn($key);
+            $columns[] = $column->getQuotedName($this->platform);
+            $types[]   = $column->getType();
+        }
+
+        $recordsCount = count($records);
+        $columnsCount = count($columns);
+
+        $types = array_merge(...array_fill(0, $recordsCount, $types));
+
+        foreach ($records as $record) {
+            $params[] = array_values($record);
+        }
+
+        $params = array_merge(...$params);
+
+        if (count($params) !== count($types)) {
+            throw new InvalidArgumentException('Invalid record values.');
+        }
+
+        $sql = $this->platform instanceof OraclePlatform
+            ? $this->getBulkInsertSQLForOracle($into, $columns, $columnsCount, $recordsCount)
+            : $this->getBulkInsertSQL($into, $columns, $columnsCount, $recordsCount);
+
+        $rowNum = $this->connection->executeStatement($sql, $params, $types);
+
+        if ($rowNum === $recordsCount) {
+            return;
+        }
+
+        throw new RuntimeException(sprintf('Bulk insert failed: row num (%d) !== records count (%d)', $rowNum, $recordsCount));
+    }
+
+    private function getBulkInsertSQL(string $into, array $columns, int $columnsCount, int $recordsCount): string
+    {
+        $sql  = "INSERT INTO {$into} ";
+        $sql .= '(' . implode(',', $columns) . ')';
+        $sql .= ' VALUES ';
+
+        $values = '(' . implode(',', array_fill(0, $columnsCount, '?')) . ')';
+
+        return $sql . implode(',', array_fill(0, $recordsCount, $values));
+    }
+
+    private function getBulkInsertSQLForOracle(string $into, array $columns, int $columnsCount, int $recordsCount): string
+    {
+        $sql = 'INSERT ALL ';
+
+        $columns = '(' . implode(',', $columns) . ')';
+        $values  = '(' . implode(',', array_fill(0, $columnsCount, '?')) . ')';
+
+        $sql .= implode(' ', array_fill(0, $recordsCount, "INTO {$into} {$columns} VALUES {$values}"));
+        $sql .= ' SELECT 1 FROM dual';
+
+        return $sql;
     }
 
     private function getResultAlias(): string

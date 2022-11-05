@@ -7,6 +7,7 @@ namespace App\Bundle;
 use App\Bundle\Doctrine\Type\BingMarketType;
 use App\Bundle\Doctrine\Type\JsonTextType;
 use App\Bundle\Doctrine\Type\ObjectIdType;
+use Manyou\Mango\DependencyInjection\DoctrineConnectionPass;
 use Manyou\Mango\DependencyInjection\DoctrineTypePass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
@@ -21,6 +22,11 @@ class AppBundle extends AbstractBundle
             JsonTextType::NAME => JsonTextType::class,
             ObjectIdType::NAME => ObjectIdType::class,
         ]));
+
+        $container->addCompilerPass(
+            new DoctrineConnectionPass(['import' => 'doctrine.dbal.import_connection']),
+            priority: 1,
+        );
     }
 
     public function prependExtension(ContainerConfigurator $container, ContainerBuilder $builder): void
