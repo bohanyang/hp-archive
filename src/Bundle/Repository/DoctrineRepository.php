@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Bundle\Repository;
 
+use App\Bundle\ApiResource\ImageOperation;
 use App\Bundle\ApiResource\RecordOperation;
+use App\Bundle\Doctrine\TableProvider\ImageOperationsTable;
 use App\Bundle\Doctrine\TableProvider\ImagesTable;
 use App\Bundle\Doctrine\TableProvider\RecordOperationsTable;
 use App\Bundle\Doctrine\TableProvider\RecordsTable;
@@ -76,6 +78,14 @@ class DoctrineRepository
         ])->executeStatement();
     }
 
+    public function createImageOperation(Ulid $id, Image $image): void
+    {
+        $this->schema->createQuery()->insert(ImageOperationsTable::NAME, [
+            'id' => $id,
+            'image_id' => $image->id,
+        ])->executeStatement();
+    }
+
     public function getRecordOperation(Ulid $id): ?RecordOperation
     {
         $q = $this->schema->createQuery();
@@ -88,19 +98,41 @@ class DoctrineRepository
             return null;
         }
 
-        $record    = $data['r'];
-        $operation = $data['o'];
-
         $q = $this->schema->createQuery();
 
-        $data = $q->selectFrom([OperationLogsTable::NAME, 'l'])
+        $logs = $q->selectFrom([OperationLogsTable::NAME, 'l'])
             ->where($q->eq('l.operation_id', $id))
             ->setMaxResults(10)
             ->fetchAllAssociative();
 
-        $logs = array_map(static fn ($row) => $row['l'], $data);
+        $logs = array_map(static fn ($row) => $row['l'], $logs);
 
-        return new RecordOperation(...$record, ...$operation, logs: $logs);
+        return new RecordOperation(...$data['r'], ...$data['o'], logs: $logs);
+    }
+
+    public function getImageOperation(Ulid $id): ?ImageOperation
+    {
+        $q = $this->schema->createQuery();
+        $q->selectFrom([ImageOperationsTable::NAME, 't'], 'id')
+            ->join('t', OperationsTable::NAME, 'o', 't.id = o.id', 'status')
+            ->join('t', ImagesTable::NAME, 'i', 't.image_id = i.id', 'name', 'urlbase', 'video')
+            ->where($q->eq('t.id', $id))
+            ->setMaxResults(1);
+
+        if (false === $data = $q->fetchAssociative()) {
+            return null;
+        }
+
+        $q = $this->schema->createQuery();
+
+        $logs = $q->selectFrom([OperationLogsTable::NAME, 'l'])
+            ->where($q->eq('l.operation_id', $id))
+            ->setMaxResults(10)
+            ->fetchAllAssociative();
+
+        $logs = array_map(static fn ($row) => $row['l'], $logs);
+
+        return new ImageOperation(...$data['t'], ...$data['o'], ...$data['i'], logs: $logs);
     }
 
     public function listRecordOperations(): Generator
@@ -117,12 +149,58 @@ class DoctrineRepository
         }
     }
 
+    public function listImageOperations(): Generator
+    {
+        $q = $this->schema->createQuery();
+        $q->selectFrom([ImageOperationsTable::NAME, 't'], 'id')
+            ->join('t', OperationsTable::NAME, 'o', 't.id = o.id', 'status')
+            ->join('t', ImagesTable::NAME, 'i', 't.image_id = i.id', 'name', 'urlbase', 'video')
+            ->where($q->eq('o.status', OperationStatusType::FAILED))
+            ->orderBy('t.id', 'DESC')
+            ->setMaxResults(100);
+
+        while ($data = $q->fetchAssociative()) {
+            yield new ImageOperation(...$data['t'], ...$data['o'], ...$data['i']);
+        }
+    }
+
     public function getImage(string $name): ?Image
     {
         $q = $this->schema->createQuery();
 
         $q->selectFrom([ImagesTable::NAME, 'i'])
             ->where($q->eq('i.name', $name))
+            ->setMaxResults(1);
+
+        if (false === $data = $q->fetchAssociative()) {
+            return null;
+        }
+
+        return new Image(...$data['i']);
+    }
+
+    public function getImageByOperationId(Ulid $id): ?Image
+    {
+        $q = $this->schema->createQuery();
+
+        $q->selectFrom([ImagesTable::NAME, 'i'])
+            ->join('i', ImageOperationsTable::NAME, 'o', 'i.id = o.image_id', null)
+            ->where($q->eq('o.id', $id))
+            ->setMaxResults(1);
+
+        if (false === $data = $q->fetchAssociative()) {
+            return null;
+        }
+
+        return new Image(...$data['i']);
+    }
+
+    public function getImageById(string $id): ?Image
+    {
+        $q = $this->schema->createQuery();
+
+        $q->selectFrom([ImagesTable::NAME, 'i'])
+            ->where($q->eq('i.id', $id))
             ->setMaxResults(1);
 
         if (false === $data = $q->fetchAssociative()) {

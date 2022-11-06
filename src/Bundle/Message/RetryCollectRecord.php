@@ -6,6 +6,7 @@ namespace App\Bundle\Message;
 
 use ApiPlatform\Metadata\ApiProperty;
 use App\Bundle\ApiResource\RecordOperation;
+use App\Bundle\Message\SaveRecord\OnDuplicateImage;
 use Symfony\Component\Uid\Ulid;
 
 class RetryCollectRecord

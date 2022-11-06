@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Bundle\Message;
 
+use App\Bundle\Message\SaveRecord\OnDuplicateImage;
 use Manyou\BingHomepage\Record;
 
 class SaveRecord

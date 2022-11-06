@@ -8,7 +8,7 @@ use InvalidArgumentException;
 
 class Utils
 {
-    public static function iterate(iterable $iterator, callable $commit, int $limit = 100)
+    public static function iterate(iterable $iterator, callable $commit, int $limit = 100): void
     {
         if ($limit <= 0) {
             throw new InvalidArgumentException('Limit should be larger than 0.');

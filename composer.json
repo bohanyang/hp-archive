@@ -8,6 +8,7 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "api-platform/core": "^3.0",
+        "async-aws/s3": "^1.12",
         "doctrine/annotations": "^1.0",
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "manyou/promise-http-client": "dev-bing",
@@ -33,6 +34,7 @@
         "symfony/validator": "6.1.*",
         "symfony/webpack-encore-bundle": "^1.15",
         "symfony/yaml": "6.1.*",
+        "thecodingmachine/safe": "^2.4",
         "twig/extra-bundle": "^2.12|^3.0",
         "twig/twig": "^2.12|^3.0"
     },
@@ -68,7 +70,8 @@
             "Manyou\\BingHomepage\\": "lib/BingHomepage/",
             "Manyou\\Mango\\": "lib/Mango/",
             "Manyou\\RemoveDataCollectorBundle\\": "lib/RemoveDataCollectorBundle/",
-            "Manyou\\LeanStorage\\": "lib/LeanStorage/"
+            "Manyou\\LeanStorage\\": "lib/LeanStorage/",
+            "Manyou\\PromiseAsyncAws\\": "lib/PromiseAsyncAws/"
         }
     },
     "autoload-dev": {

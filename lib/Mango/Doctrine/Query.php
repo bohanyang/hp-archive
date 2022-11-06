@@ -18,6 +18,7 @@ use InvalidArgumentException;
 use RuntimeException;
 
 use function array_fill;
+use function array_key_exists;
 use function array_keys;
 use function array_merge;
 use function array_values;
@@ -176,14 +177,14 @@ class Query
         return 'c' . $this->resultAliasCounter++;
     }
 
-    public function selectFrom(string|array $from, string ...$selects)
+    public function selectFrom(string|array $from, ?string ...$selects)
     {
         $this->addSelects($this->addFrom($from, [$this->builder, 'from']), $selects);
 
         return $this;
     }
 
-    public function join(string $fromAlias, string $joinTable, string $joinAlias, string $on, string ...$selects)
+    public function join(string $fromAlias, string $joinTable, string $joinAlias, string $on, ?string ...$selects)
     {
         $table = $this->schema->getTable($joinTable);
         $this->builder->join($fromAlias, $joinTable, $joinAlias, $on);
@@ -194,7 +195,7 @@ class Query
         return $this;
     }
 
-    public function leftJoin(string $fromAlias, string $joinTable, string $joinAlias, string $on, string ...$selects)
+    public function leftJoin(string $fromAlias, string $joinTable, string $joinAlias, string $on, ?string ...$selects)
     {
         $table = $this->schema->getTable($joinTable);
         $this->builder->leftJoin($fromAlias, $joinTable, $joinAlias, $on);
@@ -253,6 +254,10 @@ class Query
 
     private function addSelects(string $tableAlias, array $selects)
     {
+        if (array_key_exists(0, $selects) && $selects[0] === null) {
+            return;
+        }
+
         $columns = $this->getSelectColumns($this->selectTableMap[$tableAlias], $selects);
 
         foreach ($columns as $columnAlias => $column) {
