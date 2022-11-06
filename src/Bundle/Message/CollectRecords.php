@@ -60,18 +60,12 @@ class CollectRecords
 
     private static function getAvailableMarkets(DateTimeImmutable $date): array
     {
-        $markets = array_values(array_filter(
+        return array_values(array_filter(
             array_map(static fn (string $market) => new Market($market), self::DEFAULT_MARKETS),
             static function (Market $market) use ($date) {
                 return $market->getDate($date) <= $market->getToday();
             },
         ));
-
-        if ($markets === []) {
-            throw new InvalidArgumentException('No available market.');
-        }
-
-        return $markets;
     }
 
     private static function assertNotFuture(DateTimeImmutable $date, DateTimeImmutable $today): void

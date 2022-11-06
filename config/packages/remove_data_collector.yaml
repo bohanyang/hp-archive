@@ -1,3 +1,4 @@
-remove_data_collector:
-    services:
-        - doctrine_migrations.migrations_collector
+when@dev:
+    remove_data_collector:
+        services:
+            - doctrine_migrations.migrations_collector

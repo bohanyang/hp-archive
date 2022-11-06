@@ -11,8 +11,8 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 
-#[AsCommand(name: 'dev:test')]
-class DevTestCommand extends Command
+#[AsCommand(name: 'app:collect-records')]
+class CollectRecordsCommand extends Command
 {
     public function __construct(private MessageBusInterface $messageBus)
     {
