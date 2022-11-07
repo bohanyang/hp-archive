@@ -59,3 +59,7 @@ when@prod:
                 type: stream
                 channels: [deprecation]
                 path: php://stderr
+            notifier:
+                type: service
+                id: Symfony\Bridge\Monolog\Handler\NotifierHandler
+                channels: [operation]

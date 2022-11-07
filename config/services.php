@@ -12,6 +12,7 @@ use App\Bundle\Message\ImportFromLeanCloudHandler;
 use App\Bundle\Repository\DoctrineRepository;
 use Doctrine\DBAL\Connection;
 use Manyou\Mango\Doctrine\SchemaProvider;
+use Symfony\Bridge\Monolog\Handler\NotifierHandler;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
     $services = $containerConfigurator->services();
@@ -29,6 +30,8 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             __DIR__ . '/../src/Entity/',
             __DIR__ . '/../src/Kernel.php',
         ]);
+
+    $services->set(NotifierHandler::class);
 
     // Import source
     // $services->set('app.doctrine.schema_provider.source')
