@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Manyou\Mango\Operation\Monolog;
 
-use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\Types\Types;
-use Manyou\Mango\Doctrine\Type\LogLevelType;
+use Manyou\Mango\Doctrine\SchemaProvider;
 use Manyou\Mango\Operation\Doctrine\TableProvider\OperationLogsTable;
 use Monolog\Handler\AbstractHandler;
 use Monolog\Handler\FormattableHandlerInterface;
@@ -21,8 +19,11 @@ class OperationLogHandler extends AbstractHandler implements FormattableHandlerI
 
     public const CONTEXT_KEY = 'operation_id';
 
-    public function __construct(private Connection $connection, int|string|Level $level = Level::Debug, bool $bubble = true)
-    {
+    public function __construct(
+        private SchemaProvider $schema,
+        int|string|Level $level = Level::Debug,
+        bool $bubble = true,
+    ) {
         parent::__construct($level, $bubble);
     }
 
@@ -40,30 +41,14 @@ class OperationLogHandler extends AbstractHandler implements FormattableHandlerI
 
         $record->formatted = $this->getFormatter()->format($record);
 
-        $rowNum = $this->connection->createQueryBuilder()->insert(OperationLogsTable::NAME)
-            ->values([
-                'id' => '?',
-                'operation_id' => '?',
-                'level' => '?',
-                'message' => '?',
-                'context' => '?',
-                'extra' => '?',
-            ])
-            ->setParameters([
-                new Ulid(Ulid::generate($record->datetime)),
-                $operationId,
-                $record->level,
-                $record->formatted['message'],
-                $record->formatted['context'],
-                $record->formatted['extra'],
-            ], [
-                'ulid',
-                'ulid',
-                LogLevelType::NAME,
-                Types::TEXT,
-                Types::JSON,
-                Types::JSON,
-            ])->executeStatement();
+        $rowNum = $this->schema->createQuery()->insert(OperationLogsTable::NAME, [
+            'id' => new Ulid(Ulid::generate($record->datetime)),
+            'operation_id' => $operationId,
+            'level' => $record->level,
+            'message' => $record->formatted['message'],
+            'context' => $record->formatted['context'],
+            'extra' => $record->formatted['extra'],
+        ])->executeStatement();
 
         if ($rowNum !== 1) {
             return false;

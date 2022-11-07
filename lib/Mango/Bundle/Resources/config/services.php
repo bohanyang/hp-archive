@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
+use Doctrine\DBAL\Connection;
 use Manyou\Mango\ApiPlatform\SerializerInitializerContextBuilder;
 use Manyou\Mango\Doctrine\Driver\Oci8InitializeSession;
 use Manyou\Mango\Doctrine\SchemaProvider;
@@ -50,8 +51,12 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             service('doctrine.dbal.logging_connection.event_manager'),
         ]);
 
+    $services->set('mango.doctrine.schema_provider.logging')
+        ->class(SchemaProvider::class)
+        ->arg(Connection::class, service('doctrine.dbal.logging_connection'));
+
     $services->set(OperationLogHandler::class)
-        ->args([service('doctrine.dbal.logging_connection'), Level::Debug->value, false])
+        ->args([service('mango.doctrine.schema_provider.logging'), Level::Debug->value, false])
         ->call('setFormatter', [service('monolog.formatter.normalizer')]);
 
     $services->set('monolog.handler.operation', FingersCrossedHandler::class)

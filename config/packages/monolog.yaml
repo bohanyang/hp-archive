@@ -60,6 +60,10 @@ when@prod:
                 channels: [deprecation]
                 path: php://stderr
             notifier:
+                type: fingers_crossed
+                action_level: info
+                handler: notifier_nested
+                channels: [operation]
+            notifier_nested:
                 type: service
                 id: Symfony\Bridge\Monolog\Handler\NotifierHandler
-                channels: [operation]
