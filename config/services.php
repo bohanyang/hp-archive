@@ -9,6 +9,7 @@ use App\Bundle\Downloader\Storage\BunnyCDNStorage;
 use App\Bundle\Downloader\Storage\ReplicatedStorage;
 use App\Bundle\Downloader\VideoDownloader;
 use App\Bundle\Message\ImportFromLeanCloudHandler;
+use App\Bundle\Monolog\Slack3001Processor;
 use App\Bundle\Repository\DoctrineRepository;
 use Doctrine\DBAL\Connection;
 use Manyou\Mango\Doctrine\SchemaProvider;
@@ -31,7 +32,11 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             __DIR__ . '/../src/Kernel.php',
         ]);
 
-    $services->set(NotifierHandler::class);
+    if ('prod' === $containerConfigurator->env()) {
+        $services->set(NotifierHandler::class);
+        $services->set(Slack3001Processor::class)
+            ->tag('monolog.processor', ['handler' => 'notifier']);
+    }
 
     // Import source
     // $services->set('app.doctrine.schema_provider.source')
