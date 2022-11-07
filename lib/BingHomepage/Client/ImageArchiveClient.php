@@ -11,7 +11,6 @@ use Manyou\BingHomepage\RequestException;
 use Manyou\BingHomepage\RequestParams;
 use Manyou\PromiseHttpClient\PromiseHttpClientInterface;
 use Psr\Log\LoggerAwareInterface;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 final class ImageArchiveClient implements ClientInterface, LoggerAwareInterface
 {
@@ -21,12 +20,11 @@ final class ImageArchiveClient implements ClientInterface, LoggerAwareInterface
 
     public function __construct(
         UrlBasePrefixStrategy $prefixStrategy,
-        PromiseHttpClientInterface|HttpClientInterface|null $httpClient = null,
+        private PromiseHttpClientInterface $httpClient,
         private string $endpoint = 'https://global.bing.com/HPImageArchive.aspx',
     ) {
         $this->prefixStrategy = $prefixStrategy;
-        $this->setHttpClient($httpClient);
-        $this->parser = new ImageArchiveParser();
+        $this->parser         = new ImageArchiveParser();
     }
 
     private function getCacheKey(RequestParams $params): string
@@ -44,6 +42,7 @@ final class ImageArchiveClient implements ClientInterface, LoggerAwareInterface
                 'video' => '1',
                 'mkt' => $params->getMarket(),
             ],
+            'max_redirects' => 0,
         ]);
     }
 

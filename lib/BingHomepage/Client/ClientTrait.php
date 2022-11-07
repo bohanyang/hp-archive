@@ -9,7 +9,7 @@ use GuzzleHttp\Promise\Utils;
 use Manyou\BingHomepage\Parser\ParserInterface;
 use Manyou\BingHomepage\RequestException;
 use Manyou\BingHomepage\RequestParams;
-use Manyou\PromiseHttpClient\RequiresPromiseHttpClient;
+use Manyou\PromiseHttpClient\PromiseHttpClientInterface;
 use Psr\Log\LoggerAwareTrait;
 use Symfony\Contracts\HttpClient\Exception\ExceptionInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
@@ -20,7 +20,8 @@ use function sprintf;
 trait ClientTrait
 {
     use LoggerAwareTrait;
-    use RequiresPromiseHttpClient;
+
+    private PromiseHttpClientInterface $httpClient;
 
     /** @var PromiseInterface[] */
     private array $cache;

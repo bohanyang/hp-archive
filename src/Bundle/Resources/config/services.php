@@ -29,7 +29,9 @@ use Manyou\BingHomepage\Client\ClientInterface;
 use Manyou\BingHomepage\Client\MediaContentClient;
 use Manyou\BingHomepage\Client\UrlBasePrefixStrategy;
 use Manyou\LeanStorage\LeanStorageClient;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Manyou\PromiseHttpClient\PromiseHttpClient;
+use Manyou\PromiseHttpClient\PromiseHttpClientInterface;
+use Manyou\PromiseHttpClient\RetryableHttpClient;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
     $services = $containerConfigurator->services();
@@ -62,19 +64,18 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services->set(CalendarUrlBasePrefixStrategy::class);
     $services->alias(UrlBasePrefixStrategy::class, CalendarUrlBasePrefixStrategy::class);
 
-    $services->set(MediaContentClient::class)->public()
-        ->arg('$httpClient', service(HttpClientInterface::class));
+    $services->set(PromiseHttpClientInterface::class, PromiseHttpClient::class);
+    $services->set(RetryableHttpClient::class)
+        ->decorate(PromiseHttpClientInterface::class)->args([service('.inner')]);
 
+    $services->set(MediaContentClient::class);
     $services->alias(ClientInterface::class, MediaContentClient::class);
 
-    $services->set(LeanStorageClient::class)->public()
-        ->args([
-            service(HttpClientInterface::class),
-            env('LEANCLOUD_API_SERVER') . '/1.1/',
-            env('LEANCLOUD_APP_ID'),
-            env('LEANCLOUD_APP_KEY'),
-            env('LEANCLOUD_SESSION_TOKEN'),
-        ]);
+    $services->set(LeanStorageClient::class)
+        ->arg('$endpoint', env('LEANCLOUD_API_SERVER') . '/1.1/')
+        ->arg('$appId', env('LEANCLOUD_APP_ID'))
+        ->arg('$appKey', env('LEANCLOUD_APP_KEY'))
+        ->arg('$sessionToken', env('LEANCLOUD_SESSION_TOKEN'));
 
     $services->set('doctrine.dbal.import_connection.configuration')
         ->parent('doctrine.dbal.connection.configuration');

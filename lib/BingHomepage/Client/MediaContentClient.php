@@ -11,7 +11,6 @@ use Manyou\BingHomepage\RequestException;
 use Manyou\BingHomepage\RequestParams;
 use Manyou\PromiseHttpClient\PromiseHttpClientInterface;
 use Psr\Log\LoggerAwareInterface;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 final class MediaContentClient implements ClientInterface, LoggerAwareInterface
 {
@@ -21,12 +20,11 @@ final class MediaContentClient implements ClientInterface, LoggerAwareInterface
 
     public function __construct(
         UrlBasePrefixStrategy $prefixStrategy,
-        PromiseHttpClientInterface|HttpClientInterface|null $httpClient = null,
+        private PromiseHttpClientInterface $httpClient,
         private string $endpoint = 'https://www.bing.com/hp/api/model',
     ) {
         $this->prefixStrategy = $prefixStrategy;
-        $this->setHttpClient($httpClient);
-        $this->parser = new MediaContentParser();
+        $this->parser         = new MediaContentParser();
     }
 
     private function getCacheKey(RequestParams $params): string
@@ -36,7 +34,10 @@ final class MediaContentClient implements ClientInterface, LoggerAwareInterface
 
     private function makeRequest(RequestParams $params): PromiseInterface
     {
-        return $this->httpClient->request('GET', $this->endpoint, ['query' => ['mkt' => $params->getMarket()]]);
+        return $this->httpClient->request('GET', $this->endpoint, [
+            'query' => ['mkt' => $params->getMarket()],
+            'max_redirects' => 0,
+        ]);
     }
 
     private function getResultsKey(): string

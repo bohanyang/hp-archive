@@ -14,6 +14,8 @@ use Manyou\Mango\DependencyInjection\MonologChannelPass;
 use Manyou\Mango\Doctrine\Contract\TableProvider;
 use Manyou\Mango\Doctrine\SchemaProvider;
 use Manyou\Mango\Doctrine\Type\LogLevelType;
+use Manyou\Mango\Doctrine\Type\UlidType;
+use Manyou\Mango\Doctrine\Type\UuidType;
 use Manyou\Mango\Operation\Doctrine\Type\OperationStatusType;
 use Manyou\Mango\Operation\Messenger\Middleware\OperationMiddware;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -37,7 +39,10 @@ class MangoBundle extends AbstractBundle
             new DoctrineTypePass([
                 OperationStatusType::NAME => OperationStatusType::class,
                 LogLevelType::NAME => LogLevelType::class,
+                'ulid' => UlidType::class,
+                'uuid' => UuidType::class,
             ]),
+            priority: 1,
         );
 
         $container->addCompilerPass(

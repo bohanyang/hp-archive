@@ -6,9 +6,7 @@ namespace App\Bundle\Downloader;
 
 use App\Bundle\Downloader\Storage\Storage;
 use Manyou\PromiseHttpClient\PromiseHttpClientInterface;
-use Manyou\PromiseHttpClient\RequiresPromiseHttpClient;
 use RuntimeException;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
 use function Safe\fopen;
@@ -20,15 +18,10 @@ use function substr;
 
 class VideoDownloader
 {
-    use RequiresPromiseHttpClient;
-
-    private int $prefixToRemoveLength;
-
     public function __construct(
-        PromiseHttpClientInterface|HttpClientInterface $httpClient,
+        private PromiseHttpClientInterface $httpClient,
         private Storage $storage,
     ) {
-        $this->setHttpClient($httpClient);
     }
 
     public function __invoke(array $video): void
@@ -46,6 +39,7 @@ class VideoDownloader
 
         $response = $this->httpClient->request('GET', 'https:' . $url, [
             'buffer' => $stream = fopen('php://memory', 'w+'),
+            'max_redirects' => 0,
         ]);
 
         $savePath = substr($url, strlen($prefix));

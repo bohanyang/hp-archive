@@ -12,8 +12,6 @@ use Manyou\LeanStorage\Request\HasJsonBody;
 use Manyou\LeanStorage\Request\HasQuery;
 use Manyou\LeanStorage\Request\Request;
 use Manyou\PromiseHttpClient\PromiseHttpClientInterface;
-use Manyou\PromiseHttpClient\RequiresPromiseHttpClient;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
 use function array_map;
@@ -23,20 +21,16 @@ use const PHP_URL_PATH;
 
 class LeanStorageClient
 {
-    use RequiresPromiseHttpClient;
-
     private array $options;
     private string $basePath;
 
     public function __construct(
-        PromiseHttpClientInterface|HttpClientInterface|null $httpClient = null,
+        private PromiseHttpClientInterface $httpClient,
         string $endpoint,
         string $appId,
         string $appKey,
         string $sessionToken = '',
     ) {
-        $this->setHttpClient($httpClient);
-
         $this->basePath = parse_url($endpoint, PHP_URL_PATH);
 
         $defaultHeaders = [

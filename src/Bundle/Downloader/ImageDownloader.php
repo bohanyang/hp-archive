@@ -8,9 +8,7 @@ use App\Bundle\Downloader\Storage\Storage;
 use App\Bundle\ImageSpec\ImageSpec;
 use GuzzleHttp\Promise\Utils;
 use Manyou\PromiseHttpClient\PromiseHttpClientInterface;
-use Manyou\PromiseHttpClient\RequiresPromiseHttpClient;
 use RuntimeException;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
 use function basename;
@@ -22,18 +20,15 @@ use function substr;
 
 class ImageDownloader
 {
-    use RequiresPromiseHttpClient;
-
     private int $prefixToRemoveLength;
 
     public function __construct(
-        PromiseHttpClientInterface|HttpClientInterface $httpClient,
+        private PromiseHttpClientInterface $httpClient,
         private Storage $storage,
         private string $prefixToRemove = '',
         private string $endpoint = 'https://www.bing.com/th?id=OHR.',
     ) {
         $this->prefixToRemoveLength = mb_strlen($prefixToRemove);
-        $this->setHttpClient($httpClient);
     }
 
     private function removePrefix(string $urlbase): string
@@ -60,6 +55,7 @@ class ImageDownloader
 
             $response = $this->httpClient->request('GET', $this->endpoint . basename($savePath), [
                 'buffer' => $stream = fopen('php://memory', 'w+'),
+                'max_redirects' => 0,
             ]);
 
             $promises[] = $response->then(function (ResponseInterface $response) use ($spec, $stream, $savePath) {

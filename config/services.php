@@ -8,12 +8,10 @@ use App\Bundle\Downloader\ImageDownloader;
 use App\Bundle\Downloader\Storage\BunnyCDNStorage;
 use App\Bundle\Downloader\Storage\ReplicatedStorage;
 use App\Bundle\Downloader\VideoDownloader;
-use App\Bundle\Message\DownloadImageHandler;
 use App\Bundle\Message\ImportFromLeanCloudHandler;
 use App\Bundle\Repository\DoctrineRepository;
 use Doctrine\DBAL\Connection;
 use Manyou\Mango\Doctrine\SchemaProvider;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
     $services = $containerConfigurator->services();
@@ -90,19 +88,18 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     //     ],
     // ]);
 
-    $services->set('app.image_storage.bunny', BunnyCDNStorage::class)->args([
-        env('BUNNYCDN_ENDPOINT'),
-        env('BUNNYCDN_ACCESS_KEY'),
-        'a/',
-        service(HttpClientInterface::class),
-    ]);
+    $services->set(BunnyCDNStorage::class)
+        ->abstract()
+        ->arg('$baseUri', env('BUNNYCDN_ENDPOINT'))
+        ->arg('$accessKey', env('BUNNYCDN_ACCESS_KEY'));
 
-    $services->set('app.video_storage.bunny', BunnyCDNStorage::class)->args([
-        env('BUNNYCDN_ENDPOINT'),
-        env('BUNNYCDN_ACCESS_KEY'),
-        'videocontent/',
-        service(HttpClientInterface::class),
-    ]);
+    $services->set('app.image_storage.bunny')
+        ->parent(BunnyCDNStorage::class)
+        ->arg('$prefix', 'a/');
+
+    $services->set('app.video_storage.bunny')
+        ->parent(BunnyCDNStorage::class)
+        ->arg('$prefix', 'videocontent/');
 
     $services->set('app.image_storage', ReplicatedStorage::class)
         ->args([
@@ -119,8 +116,9 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ]);
 
     $services->set(ImageDownloader::class)
-        ->args([service(HttpClientInterface::class), service('app.image_storage'), '/a/']);
+        ->arg('$storage', service('app.image_storage'))
+        ->arg('$prefixToRemove', '/a/');
 
     $services->set(VideoDownloader::class)
-        ->args([service(HttpClientInterface::class), service('app.video_storage')]);
+        ->arg('$storage', service('app.video_storage'));
 };
