@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "29b0e134c7703fffe112c485260257ce",
+    "content-hash": "ad015e9dd1f579ada78759b2f1a27456",
     "packages": [
         {
             "name": "api-platform/core",
@@ -1640,35 +1640,175 @@
             "time": "2022-09-13T10:33:30+00:00"
         },
         {
-            "name": "manyou/promise-http-client",
-            "version": "dev-bing",
+            "name": "manyou/bing-homepage",
+            "version": "dev-main",
             "dist": {
                 "type": "path",
-                "url": "./lib/PromiseHttpClient",
-                "reference": "198e5da522154095a8f61fc7af4ba50272ac9e13"
+                "url": "./lib/src/BingHomepage",
+                "reference": "00e2f05df5f4035699ff171ed2f31fd1c30c8944"
             },
             "require": {
-                "guzzlehttp/promises": "^1.5",
+                "ext-mongodb": "*",
+                "guzzlehttp/promises": "^1.4",
+                "manyou/promise-http-client": "^0.1",
                 "php": ">=8.1",
-                "psr/log": "^3.0",
-                "symfony/http-client-contracts": "^3.1"
+                "psr/log": "^2.0 || ^3.0",
+                "symfony/http-client-contracts": "^3.0",
+                "symfony/http-client-implementation": "^3.0"
             },
             "require-dev": {
-                "monolog/monolog": "^3.2",
-                "phpunit/phpunit": "^9.5",
-                "symfony/http-client": "^6.1",
-                "symfony/process": "^6.1"
+                "symfony/http-client": "^6.1"
             },
             "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Manyou\\PromiseHttpClient\\": "src/"
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "0.1-dev"
                 }
             },
-            "autoload-dev": {
+            "autoload": {
                 "psr-4": {
-                    "Manyou\\PromiseHttpClient\\Tests\\": "tests/"
+                    "Manyou\\BingHomepage\\": ""
                 }
+            },
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Brent, Bohan Yang",
+                    "email": "brent@manyou.io"
+                }
+            ],
+            "description": "Fetch and parse daily image from Bing homepage",
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
+        {
+            "name": "manyou/leancloud",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "./lib/src/LeanStorage",
+                "reference": "81da219d931cba98c4021387813ca1ce1329dc21"
+            },
+            "require": {
+                "guzzlehttp/promises": "^1.4",
+                "manyou/promise-http-client": "^0.1",
+                "php": ">=8.1",
+                "symfony/http-client-contracts": "^3.0",
+                "symfony/http-client-implementation": "^3.0"
+            },
+            "require-dev": {
+                "symfony/http-client": "^6.1"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "0.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Manyou\\LeanStorage\\": ""
+                }
+            },
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Brent, Bohan Yang",
+                    "email": "brent@manyou.io"
+                }
+            ],
+            "description": "Clients for LeanCloud",
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
+        {
+            "name": "manyou/mango",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "./lib/src/Mango",
+                "reference": "b68dbc3ff4f59ddfd80fbf9ebe8fd581ede5b644"
+            },
+            "require": {
+                "api-platform/core": "^3.0",
+                "doctrine/dbal": "^3.5.1",
+                "doctrine/doctrine-bundle": "^2.7",
+                "doctrine/doctrine-migrations-bundle": "^3.2",
+                "doctrine/migrations": "^3.2",
+                "monolog/monolog": "^3.0",
+                "php": ">=8.1",
+                "psr/log": "^2.0 || ^3.0",
+                "symfony/dependency-injection": "^6.1",
+                "symfony/framework-bundle": "^6.1",
+                "symfony/messenger": "^6.1",
+                "symfony/monolog-bundle": "^3.8",
+                "symfony/uid": "^6.1"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "0.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Manyou\\Mango\\": ""
+                }
+            },
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Brent, Bohan Yang",
+                    "email": "brent@manyou.io"
+                }
+            ],
+            "description": "Useful components for Symfony development",
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
+        {
+            "name": "manyou/promise-http-client",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "./lib/src/PromiseHttpClient",
+                "reference": "d40104471266d443f8e01badbcdc4b178977e9f4"
+            },
+            "require": {
+                "guzzlehttp/promises": "^1.4",
+                "php": ">=8.1",
+                "psr/log": "^2.0 || ^3.0",
+                "symfony/http-client-contracts": "^3.0",
+                "symfony/http-client-implementation": "^3.0"
+            },
+            "require-dev": {
+                "symfony/http-client": "^6.1"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "0.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Manyou\\PromiseHttpClient\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
             },
             "license": [
                 "MIT"
@@ -1680,6 +1820,46 @@
                 }
             ],
             "description": "Make a Symfony HttpClient to return Guzzle promises",
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
+        {
+            "name": "manyou/remove-data-collector-bundle",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "./lib/src/RemoveDataCollectorBundle",
+                "reference": "60729424bbcc2a8cb1884a6fc733e45f78864d57"
+            },
+            "require": {
+                "php": ">=8.1",
+                "symfony/config": "^6.1",
+                "symfony/dependency-injection": "^6.1",
+                "symfony/http-kernel": "^6.1"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "0.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Manyou\\RemoveDataCollectorBundle\\": ""
+                }
+            },
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Brent, Bohan Yang",
+                    "email": "brent@manyou.io"
+                }
+            ],
+            "description": "Symfony bundle to remove specific data collectors in the profiler",
             "transport-options": {
                 "symlink": true,
                 "relative": true
@@ -10508,9 +10688,8 @@
         }
     ],
     "aliases": [],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "stability-flags": {
-        "manyou/promise-http-client": 20,
         "manyou/workerman-symfony-runtime": 20
     },
     "prefer-stable": true,

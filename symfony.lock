@@ -48,6 +48,9 @@
             "migrations/.gitignore"
         ]
     },
+    "manyou/remove-data-collector-bundle": {
+        "version": "dev-main"
+    },
     "nyholm/psr7": {
         "version": "1.5",
         "recipe": {
