@@ -73,8 +73,7 @@
             "Manyou\\BingHomepage\\": "lib/BingHomepage/",
             "Manyou\\Mango\\": "lib/Mango/",
             "Manyou\\RemoveDataCollectorBundle\\": "lib/RemoveDataCollectorBundle/",
-            "Manyou\\LeanStorage\\": "lib/LeanStorage/",
-            "Manyou\\PromiseAsyncAws\\": "lib/PromiseAsyncAws/"
+            "Manyou\\LeanStorage\\": "lib/LeanStorage/"
         }
     },
     "autoload-dev": {

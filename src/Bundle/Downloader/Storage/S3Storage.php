@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace App\Bundle\Downloader\Storage;
 
+use AsyncAws\Core\Result;
 use AsyncAws\S3\S3Client;
+use GuzzleHttp\Promise\Promise;
 use GuzzleHttp\Promise\PromiseInterface;
-use Manyou\PromiseAsyncAws\Utils;
 
 use function Safe\rewind;
 
@@ -31,6 +32,21 @@ class S3Storage implements Storage
             'ContentType' => $contentType,
         ];
 
-        return Utils::promise($this->client->putObject($options + $this->options));
+        return self::promise($this->client->putObject($options + $this->options));
+    }
+
+    private static function promise(Result $result): PromiseInterface
+    {
+        $promise = new Promise(
+            static function () use (&$promise, $result) {
+                $result->resolve();
+                $promise->resolve($result);
+            },
+            static function () use ($result) {
+                $result->cancel();
+            },
+        );
+
+        return $promise;
     }
 }
