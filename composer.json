@@ -11,6 +11,8 @@
         "async-aws/s3": "^1.12",
         "doctrine/annotations": "^1.0",
         "doctrine/doctrine-migrations-bundle": "^3.2",
+        "league/uri": "^6.8",
+        "league/uri-components": "^2.4",
         "manyou/bing-homepage": "^0.1",
         "manyou/leancloud": "^0.1",
         "manyou/mango": "^0.1",

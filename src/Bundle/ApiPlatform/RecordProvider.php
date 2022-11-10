@@ -22,7 +22,7 @@ class RecordProvider implements ProviderInterface
         if (
             ! isset($uriVariables['date'])
             || ! isset($uriVariables['market'])
-            || false === $date = DateTimeImmutable::createFromFormat('Ymd', $uriVariables['date'])
+            || false === $date = DateTimeImmutable::createFromFormat('!Ymd', $uriVariables['date'])
         ) {
             return null;
         }

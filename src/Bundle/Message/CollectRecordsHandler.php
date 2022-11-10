@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Bundle\Message;
 
 use App\Bundle\Repository\DoctrineRepository;
+use InvalidArgumentException;
 use Manyou\BingHomepage\Client\ClientInterface;
 use Manyou\BingHomepage\RequestParams;
 use Manyou\Mango\Operation\Messenger\Stamp\CreateOperationStamp;
@@ -27,8 +28,11 @@ class CollectRecordsHandler
 
     public function __invoke(CollectRecords $command): void
     {
-        $date    = $command->date;
-        $markets = array_diff($command->markets, $this->repository->getMarketsPendingOrExisting($date));
+        if ([] === $markets = $command->markets) {
+            return;
+        }
+
+        $markets = array_diff($markets, $this->repository->getMarketsPendingOrExisting($date = $command->date));
 
         if ($markets === []) {
             return;

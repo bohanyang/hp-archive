@@ -20,7 +20,10 @@ use Manyou\Mango\Operation\Doctrine\TableProvider\OperationsTable;
 use Manyou\Mango\Operation\Doctrine\Type\OperationStatusType;
 use Symfony\Component\Uid\Ulid;
 
+use function array_column;
 use function array_map;
+use function array_unique;
+use function array_values;
 
 class DoctrineRepository
 {
@@ -60,6 +63,16 @@ class DoctrineRepository
             ])
             ->where($q->eq('i.name', $image->name))
             ->executeStatement();
+    }
+
+    public function getRecordsByImageId(string $id): array
+    {
+        $q = $this->schema->createQuery();
+        $q->selectFrom([RecordsTable::NAME, 't'], 'title', 'market', 'date', 'keyword')
+            ->where($q->eq('t.image_id', $id))
+            ->orderBy('t.date');
+
+        return array_map(static fn ($row) => $row['t'], $q->fetchAllAssociative());
     }
 
     public function createRecord(Record $record): void
@@ -135,6 +148,43 @@ class DoctrineRepository
         return new ImageOperation(...$data['t'], ...$data['o'], ...$data['i'], logs: $logs);
     }
 
+    public function getImagesByDate(DateTimeImmutable $date): array
+    {
+        $q = $this->schema->createQuery();
+
+        $records = $q->selectFrom([RecordsTable::NAME, 'r'], 'market', 'image_id')
+            ->where($q->eq('r.date', $date))
+            ->fetchAllAssociative();
+
+        if ($records === []) {
+            return [];
+        }
+
+        $records = array_column($records, 'r');
+
+        $imageIds = array_unique(array_column($records, 'image_id'));
+
+        $q = $this->schema->createQuery();
+
+        $images = $q->selectFrom([ImagesTable::NAME, 'i'], 'id', 'name', 'urlbase')
+            ->where($q->in('i.id', $imageIds))
+            ->fetchAllAssociative();
+        $images = array_column($images, 'i');
+        $data   = [];
+
+        foreach ($images as $image) {
+            $data[$image['id']] = $image;
+        }
+
+        $images = $data;
+
+        foreach ($records as $record) {
+            $images[$record['image_id']]['records'][] = $record;
+        }
+
+        return array_values($images);
+    }
+
     public function listRecordOperations(): Generator
     {
         $q = $this->schema->createQuery();
@@ -177,6 +227,19 @@ class DoctrineRepository
         }
 
         return new Image(...$data['i']);
+    }
+
+    /** @return Image[] */
+    public function browse(DateTimeImmutable $cursor, DateTimeImmutable $prevCursor): array
+    {
+        $q = $this->schema->createQuery();
+
+        $q->selectFrom([ImagesTable::NAME, 't'], 'name', 'urlbase')
+            ->where($q->gt('t.debutOn', $cursor), $q->lte('t.debutOn', $prevCursor))
+            ->addOrderBy('t.debutOn', 'DESC')
+            ->addOrderBy('t.id', 'DESC');
+
+        return array_map(static fn ($row) => $row['t'], $q->fetchAllAssociative());
     }
 
     public function getImageByOperationId(Ulid $id): ?Image
@@ -236,7 +299,7 @@ class DoctrineRepository
         $q = $this->schema
             ->createQuery()
             ->selectFrom([ImagesTable::NAME, 'i'])
-            ->orderBy('id');
+            ->orderBy('i.id');
 
         while ($data = $q->fetchAssociative()) {
             yield $data['i'];
@@ -249,7 +312,7 @@ class DoctrineRepository
         $q = $this->schema
             ->createQuery()
             ->selectFrom([RecordsTable::NAME, 'r'])
-            ->orderBy('id');
+            ->orderBy('r.id');
 
         while ($data = $q->fetchAssociative()) {
             yield $data['r'];

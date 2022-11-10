@@ -11,6 +11,7 @@ use App\Bundle\Downloader\VideoDownloader;
 use App\Bundle\Message\ImportFromLeanCloudHandler;
 use App\Bundle\Monolog\Slack3001Processor;
 use App\Bundle\Repository\DoctrineRepository;
+use App\Controller\MainController;
 use Doctrine\DBAL\Connection;
 use Manyou\Mango\Doctrine\SchemaProvider;
 use Symfony\Bridge\Monolog\Handler\NotifierHandler;
@@ -129,4 +130,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 
     $services->set(VideoDownloader::class)
         ->arg('$storage', service('app.video_storage'));
+
+    $services->set(MainController::class)
+        ->arg('$origin', env('APP_ORIGIN'));
 };

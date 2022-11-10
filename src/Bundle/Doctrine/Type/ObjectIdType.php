@@ -32,7 +32,7 @@ class ObjectIdType extends Type
 
     public function getBindingType(): int
     {
-        return ParameterType::BINARY;
+        return ParameterType::STRING;
     }
 
     public function getSQLDeclaration(array $column, AbstractPlatform $platform): string
@@ -66,7 +66,20 @@ class ObjectIdType extends Type
             return null;
         }
 
+        if ($platform instanceof OraclePlatform) {
+            return $value;
+        }
+
         return hex2bin($value);
+    }
+
+    public function convertToDatabaseValueSQL($sqlExpr, AbstractPlatform $platform): string
+    {
+        if (! $platform instanceof OraclePlatform) {
+            return $sqlExpr;
+        }
+
+        return 'HEXTORAW(' . $sqlExpr . ')';
     }
 
     public function requiresSQLCommentHint(AbstractPlatform $platform): bool

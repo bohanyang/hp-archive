@@ -143,7 +143,7 @@ class LeanCloudRepository
         return [
             'id' => $record['objectId'],
             'imageId' => $record['image']['objectId'],
-            'date' => DateTimeImmutable::createFromFormat('YmdGp', $record['date'] . '0Z'),
+            'date' => DateTimeImmutable::createFromFormat('!Ymd', $record['date']),
             'market' => $record['market'],
             'title' => $record['info'],
             'keyword' => isset($record['link']) ? Utils::extractKeyword($record['link']) : null,
