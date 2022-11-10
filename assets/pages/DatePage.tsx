@@ -1,7 +1,7 @@
 import Layout from '@/app/Layout'
 import useSettingValue from '@/app/useSettingValue'
 import flags from '@/images/flags'
-import { Link } from '@inertiajs/inertia-react'
+import { Link, Head } from '@inertiajs/inertia-react'
 import React from 'react'
 
 interface Props {
@@ -25,6 +25,7 @@ function DatePage ({ image_origin, images, formattedDate, date }: Props) {
   const { image_size } = useSettingValue('browseSize')
   return (
     <>
+      <Head title={formattedDate} />
       <div className="row">
         <div
           className="col-xs-12"

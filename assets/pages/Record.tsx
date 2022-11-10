@@ -1,7 +1,7 @@
 import ImageModal from '@/app/ImageModal'
 import Layout from '@/app/Layout'
 import useSettingValue from '@/app/useSettingValue'
-import { Link } from '@inertiajs/inertia-react'
+import { Head, Link } from '@inertiajs/inertia-react'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -55,6 +55,7 @@ function Record ({
   const { image_size } = useSettingValue('viewSize')
   return (
     <>
+      <Head title={record.description} />
       <div className="row">
         <div className="col-xs-12">
           <Link href={`/images/${image.name}`}>

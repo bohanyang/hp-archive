@@ -66,7 +66,7 @@ export default function SettingsModal () {
             <div className="modal-footer">
               <button
                 type="button"
-                className="btn btn-embossed btn-primary btn-lg"
+                className="btn btn-primary btn-lg"
                 data-dismiss="modal"
                 onClick={() => {
                   setSettings({ viewSize, browseSize })

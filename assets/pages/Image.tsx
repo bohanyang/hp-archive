@@ -2,7 +2,7 @@ import ImageModal from '@/app/ImageModal'
 import Layout from '@/app/Layout'
 import useSettingValue from '@/app/useSettingValue'
 import flags from '@/images/flags'
-import { Link } from '@inertiajs/inertia-react'
+import { Link, Head } from '@inertiajs/inertia-react'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -30,6 +30,7 @@ function Image ({ image_origin, image, records, video }: Props) {
   const { image_size } = useSettingValue('viewSize')
   return (
     <>
+      <Head title={image.name} />
       <div className="row">
         <div className="col-xs-12">
           <img

@@ -7,7 +7,10 @@ export default function Layout ({ children }: { children: JSX.Element }) {
   const { t } = useTranslation()
   return (
     <React.StrictMode>
-      <div className="container" style={{ width: 'initial', maxWidth: '1536px' }}>
+      <div
+        className="container"
+        style={{ width: 'initial', maxWidth: '1536px' }}
+      >
         {children}
         <div className="row">
           <div className="col-xs-12 footer">

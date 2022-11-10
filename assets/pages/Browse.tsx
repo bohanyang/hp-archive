@@ -1,5 +1,5 @@
 import useSettingValue from '@/app/useSettingValue'
-import { Link } from '@inertiajs/inertia-react'
+import { Link, Head } from '@inertiajs/inertia-react'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import Layout from '../app/Layout'
@@ -19,6 +19,7 @@ function Browse ({ image_origin, images, prevCursor, nextCursor }: Props) {
   const { image_size } = useSettingValue('browseSize')
   return (
     <>
+      <Head title={t('browse')} />
       <div className="row">
         <div className="col-xs-12 pgr">
           <h5 className="text-primary">{t('browse')}</h5>
