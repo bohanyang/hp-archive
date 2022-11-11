@@ -1,3 +1,4 @@
 [submodule "lib"]
 	path = lib
 	url = git@github.com:manyou-io/php.git
+	branch = bing

@@ -21,7 +21,8 @@ export default defineConfig(({ mode }) => {
         build: {
             rollupOptions: {
                 input: {
-                    app: "./assets/bootstrap.tsx"
+                    app: "./assets/bootstrap.tsx",
+                    admin: "./assets/admin/bootstrap.tsx"
                 },
             },
         },

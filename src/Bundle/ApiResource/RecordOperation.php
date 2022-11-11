@@ -15,7 +15,7 @@ use DateTimeImmutable;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Uid\Ulid;
 
-#[ApiResource(provider: RecordOperationProvider::class)]
+#[ApiResource(provider: RecordOperationProvider::class, security: 'is_authenticated()')]
 #[GetCollection('/record_operations', normalizationContext: ['groups' => ['read']])]
 #[Get('/record_operations/{id}')]
 #[Post('/record_operations/{id}/retry', input: RetryCollectRecord::class, output: RetryCollectRecord::class, status: 202, processor: RecordOperationProcessor::class)]

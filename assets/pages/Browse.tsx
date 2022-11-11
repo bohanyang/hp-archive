@@ -2,7 +2,7 @@ import useSettingValue from '@/app/useSettingValue'
 import { Link, Head } from '@inertiajs/inertia-react'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import Layout from '../app/Layout'
+import Layout from '@/app/Layout'
 
 interface Props {
   image_origin: string

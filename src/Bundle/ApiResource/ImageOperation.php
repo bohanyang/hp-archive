@@ -14,7 +14,7 @@ use App\Bundle\Message\RetryDownloadImage;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Uid\Ulid;
 
-#[ApiResource(provider: ImageOperationProvider::class)]
+#[ApiResource(provider: ImageOperationProvider::class, security: 'is_authenticated()')]
 #[GetCollection('/image_operations', normalizationContext: ['groups' => ['read']])]
 #[Get('/image_operations/{id}')]
 #[Post('/image_operations/{id}/retry', input: RetryDownloadImage::class, output: RetryDownloadImage::class, status: 202, processor: ImageOperationProcessor::class)]

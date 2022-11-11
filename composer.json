@@ -116,35 +116,35 @@
     "repositories": [
         {
             "type": "path",
-            "url": "./lib/src/BingHomepage",
+            "url": "./lib/BingHomepage",
             "options": {
                 "symlink": true
             }
         },
         {
             "type": "path",
-            "url": "./lib/src/LeanStorage",
+            "url": "./lib/LeanStorage",
             "options": {
                 "symlink": true
             }
         },
         {
             "type": "path",
-            "url": "./lib/src/Mango",
+            "url": "./lib/Mango",
             "options": {
                 "symlink": true
             }
         },
         {
             "type": "path",
-            "url": "./lib/src/PromiseHttpClient",
+            "url": "./lib/PromiseHttpClient",
             "options": {
                 "symlink": true
             }
         },
         {
             "type": "path",
-            "url": "./lib/src/RemoveDataCollectorBundle",
+            "url": "./lib/RemoveDataCollectorBundle",
             "options": {
                 "symlink": true
             }
