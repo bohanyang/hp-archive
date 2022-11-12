@@ -1906,10 +1906,9 @@
             "dist": {
                 "type": "path",
                 "url": "./lib/BingHomepage",
-                "reference": "00e2f05df5f4035699ff171ed2f31fd1c30c8944"
+                "reference": "a4f1b62be37d9a1220a9e9b0ee7a80e808649553"
             },
             "require": {
-                "ext-mongodb": "*",
                 "guzzlehttp/promises": "^1.4",
                 "manyou/promise-http-client": "^0.1",
                 "php": ">=8.1",
