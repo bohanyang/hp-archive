@@ -17,7 +17,7 @@ use Manyou\BingHomepage\Record;
 use Manyou\Mango\Doctrine\SchemaProvider;
 use Manyou\Mango\Operation\Doctrine\TableProvider\OperationLogsTable;
 use Manyou\Mango\Operation\Doctrine\TableProvider\OperationsTable;
-use Manyou\Mango\Operation\Doctrine\Type\OperationStatusType;
+use Manyou\Mango\Operation\Enum\OperationStatus;
 use Symfony\Component\Uid\Ulid;
 
 use function array_column;
@@ -190,7 +190,7 @@ class DoctrineRepository
         $q = $this->schema->createQuery();
         $q->selectFrom([RecordOperationsTable::NAME, 'r'])
             ->join('r', OperationsTable::NAME, 'o', 'r.id = o.id', 'status')
-            ->where($q->eq('o.status', OperationStatusType::FAILED))
+            ->where($q->eq('o.status', OperationStatus::FAILED))
             ->orderBy('r.id', 'DESC')
             ->setMaxResults(100);
 
@@ -205,7 +205,7 @@ class DoctrineRepository
         $q->selectFrom([ImageOperationsTable::NAME, 't'], 'id')
             ->join('t', OperationsTable::NAME, 'o', 't.id = o.id', 'status')
             ->join('t', ImagesTable::NAME, 'i', 't.image_id = i.id', 'name', 'urlbase', 'video')
-            ->where($q->eq('o.status', OperationStatusType::FAILED))
+            ->where($q->eq('o.status', OperationStatus::FAILED))
             ->orderBy('t.id', 'DESC')
             ->setMaxResults(100);
 
