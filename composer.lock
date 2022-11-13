@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d1f211d30e4e0a442aa6a0451f80f059",
+    "content-hash": "ca2a5327dfb268a895af4d5c10bb0440",
     "packages": [
         {
             "name": "api-platform/core",
@@ -1899,298 +1899,6 @@
                 }
             ],
             "time": "2021-06-28T04:27:21+00:00"
-        },
-        {
-            "name": "manyou/bing-homepage",
-            "version": "dev-main",
-            "dist": {
-                "type": "path",
-                "url": "./lib/BingHomepage",
-                "reference": "a4f1b62be37d9a1220a9e9b0ee7a80e808649553"
-            },
-            "require": {
-                "guzzlehttp/promises": "^1.4",
-                "manyou/promise-http-client": "^0.1",
-                "php": ">=8.1",
-                "psr/log": "^2.0 || ^3.0",
-                "symfony/http-client-contracts": "^3.0",
-                "symfony/http-client-implementation": "^3.0"
-            },
-            "require-dev": {
-                "symfony/http-client": "^6.1"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-main": "0.1-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Manyou\\BingHomepage\\": ""
-                }
-            },
-            "license": [
-                "Apache-2.0"
-            ],
-            "authors": [
-                {
-                    "name": "Brent, Bohan Yang",
-                    "email": "brent@manyou.io"
-                }
-            ],
-            "description": "Fetch and parse daily image from Bing homepage",
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
-        },
-        {
-            "name": "manyou/leancloud",
-            "version": "dev-main",
-            "dist": {
-                "type": "path",
-                "url": "./lib/LeanStorage",
-                "reference": "81da219d931cba98c4021387813ca1ce1329dc21"
-            },
-            "require": {
-                "guzzlehttp/promises": "^1.4",
-                "manyou/promise-http-client": "^0.1",
-                "php": ">=8.1",
-                "symfony/http-client-contracts": "^3.0",
-                "symfony/http-client-implementation": "^3.0"
-            },
-            "require-dev": {
-                "symfony/http-client": "^6.1"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-main": "0.1-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Manyou\\LeanStorage\\": ""
-                }
-            },
-            "license": [
-                "Apache-2.0"
-            ],
-            "authors": [
-                {
-                    "name": "Brent, Bohan Yang",
-                    "email": "brent@manyou.io"
-                }
-            ],
-            "description": "Clients for LeanCloud",
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
-        },
-        {
-            "name": "manyou/mango",
-            "version": "dev-main",
-            "dist": {
-                "type": "path",
-                "url": "./lib/Mango",
-                "reference": "b68dbc3ff4f59ddfd80fbf9ebe8fd581ede5b644"
-            },
-            "require": {
-                "api-platform/core": "^3.0",
-                "doctrine/dbal": "^3.5.1",
-                "doctrine/doctrine-bundle": "^2.7",
-                "doctrine/doctrine-migrations-bundle": "^3.2",
-                "doctrine/migrations": "^3.2",
-                "monolog/monolog": "^3.0",
-                "php": ">=8.1",
-                "psr/log": "^2.0 || ^3.0",
-                "symfony/dependency-injection": "^6.1",
-                "symfony/framework-bundle": "^6.1",
-                "symfony/messenger": "^6.1",
-                "symfony/monolog-bundle": "^3.8",
-                "symfony/uid": "^6.1"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-main": "0.1-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Manyou\\Mango\\": ""
-                }
-            },
-            "license": [
-                "Apache-2.0"
-            ],
-            "authors": [
-                {
-                    "name": "Brent, Bohan Yang",
-                    "email": "brent@manyou.io"
-                }
-            ],
-            "description": "Useful components for Symfony development",
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
-        },
-        {
-            "name": "manyou/promise-http-client",
-            "version": "dev-main",
-            "dist": {
-                "type": "path",
-                "url": "./lib/PromiseHttpClient",
-                "reference": "d40104471266d443f8e01badbcdc4b178977e9f4"
-            },
-            "require": {
-                "guzzlehttp/promises": "^1.4",
-                "php": ">=8.1",
-                "psr/log": "^2.0 || ^3.0",
-                "symfony/http-client-contracts": "^3.0",
-                "symfony/http-client-implementation": "^3.0"
-            },
-            "require-dev": {
-                "symfony/http-client": "^6.1"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-main": "0.1-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Manyou\\PromiseHttpClient\\": ""
-                },
-                "exclude-from-classmap": [
-                    "/Tests/"
-                ]
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Brent, Bohan Yang",
-                    "email": "brent@manyou.io"
-                }
-            ],
-            "description": "Make a Symfony HttpClient to return Guzzle promises",
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
-        },
-        {
-            "name": "manyou/remove-data-collector-bundle",
-            "version": "dev-main",
-            "dist": {
-                "type": "path",
-                "url": "./lib/RemoveDataCollectorBundle",
-                "reference": "60729424bbcc2a8cb1884a6fc733e45f78864d57"
-            },
-            "require": {
-                "php": ">=8.1",
-                "symfony/config": "^6.1",
-                "symfony/dependency-injection": "^6.1",
-                "symfony/http-kernel": "^6.1"
-            },
-            "type": "symfony-bundle",
-            "extra": {
-                "branch-alias": {
-                    "dev-main": "0.1-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Manyou\\RemoveDataCollectorBundle\\": ""
-                }
-            },
-            "license": [
-                "Apache-2.0"
-            ],
-            "authors": [
-                {
-                    "name": "Brent, Bohan Yang",
-                    "email": "brent@manyou.io"
-                }
-            ],
-            "description": "Symfony bundle to remove specific data collectors in the profiler",
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
-        },
-        {
-            "name": "manyou/workerman-symfony-runtime",
-            "version": "dev-main",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/manyou-io/workerman-symfony-runtime.git",
-                "reference": "cc1ef4b034402b346fc9b2cf964641f25f349fb3"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/manyou-io/workerman-symfony-runtime/zipball/cc1ef4b034402b346fc9b2cf964641f25f349fb3",
-                "reference": "cc1ef4b034402b346fc9b2cf964641f25f349fb3",
-                "shasum": ""
-            },
-            "require": {
-                "chubbyphp/chubbyphp-workerman-request-handler": "^2.0",
-                "nyholm/psr7": "^1.5",
-                "php": ">=8.1",
-                "psr/http-factory": "^1.0",
-                "psr/http-message": "^1.0",
-                "psr/http-server-handler": "^1.0",
-                "psr/log": "^2.0 || ^3.0",
-                "symfony/http-foundation": "^6.1",
-                "symfony/http-kernel": "^6.1",
-                "symfony/psr-http-message-bridge": "^2.1",
-                "symfony/runtime": "^6.1",
-                "workerman/workerman": "^4.0"
-            },
-            "require-dev": {
-                "blackfire/php-sdk": "^1.31"
-            },
-            "default-branch": true,
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-main": "0.1-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Manyou\\WorkermanSymfonyRuntime\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Brent, Bohan Yang",
-                    "email": "brent@manyou.io"
-                }
-            ],
-            "description": "Run Symfony applications with Workerman",
-            "homepage": "https://github.com/manyou-io/workerman-symfony-runtime",
-            "keywords": [
-                "php-runtime",
-                "runtime",
-                "symfony",
-                "workerman"
-            ],
-            "support": {
-                "issues": "https://github.com/manyou-io/workerman-symfony-runtime/issues",
-                "source": "https://github.com/manyou-io/workerman-symfony-runtime/tree/main"
-            },
-            "time": "2022-11-08T07:52:07+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -8218,6 +7926,160 @@
     ],
     "packages-dev": [
         {
+            "name": "blackfire/php-sdk",
+            "version": "v1.31.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/blackfireio/php-sdk.git",
+                "reference": "cec036e106d349d66db565c172ffc8f4beece6ae"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/blackfireio/php-sdk/zipball/cec036e106d349d66db565c172ffc8f4beece6ae",
+                "reference": "cec036e106d349d66db565c172ffc8f4beece6ae",
+                "shasum": ""
+            },
+            "require": {
+                "composer/ca-bundle": "^1.0",
+                "php": ">=5.2.0"
+            },
+            "require-dev": {
+                "behat/behat": "^3.8",
+                "friends-of-behat/mink-browserkit-driver": "^1.4",
+                "friends-of-behat/mink-extension": "^2.5",
+                "guzzlehttp/psr7": "^1.6",
+                "illuminate/console": "^8.81",
+                "illuminate/queue": "^8.81",
+                "illuminate/support": "^8.81",
+                "laravel/octane": "^1.2",
+                "phpunit/phpunit": "^9.5",
+                "psr/http-message": "^1.0",
+                "symfony/browser-kit": "^5.1",
+                "symfony/framework-bundle": "^5.1",
+                "symfony/http-client": "^5.1",
+                "symfony/messenger": "^5.1",
+                "symfony/panther": "^1.0",
+                "symfony/phpunit-bridge": "^5.2"
+            },
+            "suggest": {
+                "ext-blackfire": "The C version of the Blackfire probe",
+                "ext-zlib": "To push config to remote profiling targets",
+                "symfony/panther": "To use Symfony web test cases with Blackfire"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.27.x-dev"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/autostart.php"
+                ],
+                "psr-4": {
+                    "Blackfire\\": "src/Blackfire"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Blackfire.io",
+                    "email": "support@blackfire.io"
+                }
+            ],
+            "description": "Blackfire.io PHP SDK",
+            "keywords": [
+                "performance",
+                "profiler",
+                "uprofiler",
+                "xhprof"
+            ],
+            "support": {
+                "issues": "https://github.com/blackfireio/php-sdk/issues",
+                "source": "https://github.com/blackfireio/php-sdk/tree/v1.31.0"
+            },
+            "time": "2022-06-14T08:06:33+00:00"
+        },
+        {
+            "name": "composer/ca-bundle",
+            "version": "1.3.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/composer/ca-bundle.git",
+                "reference": "69098eca243998b53eed7a48d82dedd28b447cd5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/composer/ca-bundle/zipball/69098eca243998b53eed7a48d82dedd28b447cd5",
+                "reference": "69098eca243998b53eed7a48d82dedd28b447cd5",
+                "shasum": ""
+            },
+            "require": {
+                "ext-openssl": "*",
+                "ext-pcre": "*",
+                "php": "^5.3.2 || ^7.0 || ^8.0"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^0.12.55",
+                "psr/log": "^1.0",
+                "symfony/phpunit-bridge": "^4.2 || ^5",
+                "symfony/process": "^2.5 || ^3.0 || ^4.0 || ^5.0 || ^6.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Composer\\CaBundle\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jordi Boggiano",
+                    "email": "j.boggiano@seld.be",
+                    "homepage": "http://seld.be"
+                }
+            ],
+            "description": "Lets you find a path to the system CA bundle, and includes a fallback to the Mozilla CA bundle.",
+            "keywords": [
+                "cabundle",
+                "cacert",
+                "certificate",
+                "ssl",
+                "tls"
+            ],
+            "support": {
+                "irc": "irc://irc.freenode.org/composer",
+                "issues": "https://github.com/composer/ca-bundle/issues",
+                "source": "https://github.com/composer/ca-bundle/tree/1.3.4"
+            },
+            "funding": [
+                {
+                    "url": "https://packagist.com",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/composer",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/composer/composer",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2022-10-12T12:08:29+00:00"
+        },
+        {
             "name": "dealerdirect/phpcodesniffer-composer-installer",
             "version": "v0.7.2",
             "source": {
@@ -8547,16 +8409,16 @@
         },
         {
             "name": "nikic/php-parser",
-            "version": "v4.15.1",
+            "version": "v4.15.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "0ef6c55a3f47f89d7a374e6f835197a0b5fcf900"
+                "reference": "f59bbe44bf7d96f24f3e2b4ddc21cd52c1d2adbc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/0ef6c55a3f47f89d7a374e6f835197a0b5fcf900",
-                "reference": "0ef6c55a3f47f89d7a374e6f835197a0b5fcf900",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/f59bbe44bf7d96f24f3e2b4ddc21cd52c1d2adbc",
+                "reference": "f59bbe44bf7d96f24f3e2b4ddc21cd52c1d2adbc",
                 "shasum": ""
             },
             "require": {
@@ -8597,9 +8459,9 @@
             ],
             "support": {
                 "issues": "https://github.com/nikic/PHP-Parser/issues",
-                "source": "https://github.com/nikic/PHP-Parser/tree/v4.15.1"
+                "source": "https://github.com/nikic/PHP-Parser/tree/v4.15.2"
             },
-            "time": "2022-09-04T07:30:47+00:00"
+            "time": "2022-11-12T15:38:23+00:00"
         },
         {
             "name": "phar-io/manifest",
@@ -10832,6 +10694,52 @@
             "time": "2022-10-02T08:30:52+00:00"
         },
         {
+            "name": "symplify/monorepo-builder",
+            "version": "11.1.17",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symplify/monorepo-builder.git",
+                "reference": "a0549c6ba63a3ee35403f26e51563c82e4a599dc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symplify/monorepo-builder/zipball/a0549c6ba63a3ee35403f26e51563c82e4a599dc",
+                "reference": "a0549c6ba63a3ee35403f26e51563c82e4a599dc",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2"
+            },
+            "bin": [
+                "bin/monorepo-builder"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "10.3-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Prefixed version of Not only Composer tools to build a Monorepo.",
+            "support": {
+                "source": "https://github.com/symplify/monorepo-builder/tree/11.1.17"
+            },
+            "funding": [
+                {
+                    "url": "https://www.paypal.me/rectorphp",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/tomasvotruba",
+                    "type": "github"
+                }
+            ],
+            "time": "2022-11-10T15:19:39+00:00"
+        },
+        {
             "name": "theofidry/psysh-bundle",
             "version": "4.5.0",
             "source": {
@@ -10954,9 +10862,7 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "manyou/workerman-symfony-runtime": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
