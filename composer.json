@@ -3,6 +3,12 @@
     "license": "proprietary",
     "minimum-stability": "dev",
     "prefer-stable": true,
+    "authors": [
+        {
+            "name": "Brent, Bohan Yang",
+            "email": "brent@manyou.io"
+        }
+    ],
     "require": {
         "php": ">=8.1",
         "ext-ctype": "*",
@@ -70,6 +76,7 @@
         "symfony/debug-bundle": "6.1.*",
         "symfony/maker-bundle": "^1.47",
         "symfony/phpunit-bridge": "^6.1",
+        "symfony/process": "^6.1",
         "symfony/stopwatch": "6.1.*",
         "symfony/web-profiler-bundle": "6.1.*",
         "symplify/monorepo-builder": "^11.1",
@@ -90,16 +97,17 @@
     },
     "autoload": {
         "exclude-from-classmap": [
-            "lib/PromiseHttpClient/Tests/"
+            "lib/src/Mango/Tests/",
+            "lib/src/PromiseHttpClient/Tests/"
         ],
         "psr-4": {
             "App\\": "src/",
-            "Manyou\\BingHomepage\\": "lib/BingHomepage/",
-            "Manyou\\LeanStorage\\": "lib/LeanStorage/",
-            "Manyou\\Mango\\": "lib/Mango/",
-            "Manyou\\PromiseHttpClient\\": "lib/PromiseHttpClient/",
-            "Manyou\\RemoveDataCollectorBundle\\": "lib/RemoveDataCollectorBundle/",
-            "Manyou\\WorkermanSymfonyRuntime\\": "lib/WorkermanSymfonyRuntime/"
+            "Manyou\\BingHomepage\\": "lib/src/BingHomepage/",
+            "Manyou\\LeanStorage\\": "lib/src/LeanStorage/",
+            "Manyou\\Mango\\": "lib/src/Mango/",
+            "Manyou\\PromiseHttpClient\\": "lib/src/PromiseHttpClient/",
+            "Manyou\\RemoveDataCollectorBundle\\": "lib/src/RemoveDataCollectorBundle/",
+            "Manyou\\WorkermanSymfonyRuntime\\": "lib/src/WorkermanSymfonyRuntime/"
         }
     },
     "autoload-dev": {
