@@ -11,6 +11,7 @@ use ApiPlatform\Metadata\Post;
 use App\Bundle\ApiPlatform\ImageOperationProcessor;
 use App\Bundle\ApiPlatform\ImageOperationProvider;
 use App\Bundle\Message\RetryDownloadImage;
+use Manyou\Mango\Operation\Enum\OperationStatus;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Uid\Ulid;
 
@@ -30,7 +31,7 @@ class ImageOperation
         #[Groups('read')]
         public readonly ?array $video,
         #[Groups('read')]
-        public readonly string $status,
+        public readonly OperationStatus $status,
         public readonly array $logs = [],
     ) {
     }

@@ -12,6 +12,7 @@ use App\Bundle\ApiPlatform\RecordOperationProcessor;
 use App\Bundle\ApiPlatform\RecordOperationProvider;
 use App\Bundle\Message\RetryCollectRecord;
 use DateTimeImmutable;
+use Manyou\Mango\Operation\Enum\OperationStatus;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Uid\Ulid;
 
@@ -29,7 +30,7 @@ class RecordOperation
         #[Groups('read')]
         public readonly DateTimeImmutable $date,
         #[Groups('read')]
-        public readonly string $status,
+        public readonly OperationStatus $status,
         public readonly array $logs = [],
     ) {
     }
