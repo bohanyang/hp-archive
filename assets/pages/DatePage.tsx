@@ -9,9 +9,7 @@ interface Props {
   images: {
     name: string
     urlbase: string
-    records: {
-      market: string
-    }[]
+    markets: string[]
   }[]
   formattedDate: string
   date: {
@@ -22,6 +20,7 @@ interface Props {
 }
 
 function DatePage ({ image_origin, images, formattedDate, date }: Props) {
+  console.log(images)
   const { image_size } = useSettingValue('browseSize')
   return (
     <>
@@ -55,12 +54,12 @@ function DatePage ({ image_origin, images, formattedDate, date }: Props) {
               className="col-xs-12 para-of-date"
               style={{ display: 'flex', alignItems: 'center', gap: '4px' }}
             >
-              {image.records.map((record) => (
+              {image.markets.map((market) => (
                 <a
-                  href={`/${record.market}/${date.current}`}
-                  key={record.market}
+                  href={`/${market}/${date.current}`}
+                  key={market}
                 >
-                  <img src={flags(record.market)} className="flag-of-date" />
+                  <img src={flags(market)} className="flag-of-date" />
                 </a>
               ))}
             </div>

@@ -20,9 +20,7 @@ use Manyou\Mango\Operation\Doctrine\TableProvider\OperationsTable;
 use Manyou\Mango\Operation\Enum\OperationStatus;
 use Symfony\Component\Uid\Ulid;
 
-use function array_column;
-use function array_map;
-use function array_unique;
+use function array_keys;
 use function array_values;
 
 class DoctrineRepository
@@ -72,7 +70,7 @@ class DoctrineRepository
             ->where($q->eq('t.image_id', $id))
             ->orderBy('t.date');
 
-        return array_map(static fn ($row) => $row['t'], $q->fetchAllAssociative());
+        return $q->fetchAllAssociativeFlat();
     }
 
     public function createRecord(Record $record): void
@@ -107,7 +105,7 @@ class DoctrineRepository
             ->where($q->eq('r.id', $id))
             ->setMaxResults(1);
 
-        if (false === $data = $q->fetchAssociative()) {
+        if (false === $data = $q->fetchAssociativeFlat()) {
             return null;
         }
 
@@ -116,11 +114,9 @@ class DoctrineRepository
         $logs = $q->selectFrom([OperationLogsTable::NAME, 'l'])
             ->where($q->eq('l.operation_id', $id))
             ->setMaxResults(10)
-            ->fetchAllAssociative();
+            ->fetchAllAssociativeFlat();
 
-        $logs = array_map(static fn ($row) => $row['l'], $logs);
-
-        return new RecordOperation(...$data['r'], ...$data['o'], logs: $logs);
+        return new RecordOperation(...$data, logs: $logs);
     }
 
     public function getImageOperation(Ulid $id): ?ImageOperation
@@ -132,7 +128,7 @@ class DoctrineRepository
             ->where($q->eq('t.id', $id))
             ->setMaxResults(1);
 
-        if (false === $data = $q->fetchAssociative()) {
+        if (false === $data = $q->fetchAssociativeFlat()) {
             return null;
         }
 
@@ -141,45 +137,33 @@ class DoctrineRepository
         $logs = $q->selectFrom([OperationLogsTable::NAME, 'l'])
             ->where($q->eq('l.operation_id', $id))
             ->setMaxResults(10)
-            ->fetchAllAssociative();
+            ->fetchAllAssociativeFlat();
 
-        $logs = array_map(static fn ($row) => $row['l'], $logs);
-
-        return new ImageOperation(...$data['t'], ...$data['o'], ...$data['i'], logs: $logs);
+        return new ImageOperation(...$data, logs: $logs);
     }
 
     public function getImagesByDate(DateTimeImmutable $date): array
     {
         $q = $this->schema->createQuery();
 
-        $records = $q->selectFrom([RecordsTable::NAME, 'r'], 'market', 'image_id')
+        $records = $q->selectFrom([RecordsTable::NAME, 'r'], 'image_id', 'market')
             ->where($q->eq('r.date', $date))
-            ->fetchAllAssociative();
+            ->fetchColumnGrouped();
 
         if ($records === []) {
             return [];
         }
 
-        $records = array_column($records, 'r');
-
-        $imageIds = array_unique(array_column($records, 'image_id'));
+        $imageIds = array_keys($records);
 
         $q = $this->schema->createQuery();
 
         $images = $q->selectFrom([ImagesTable::NAME, 'i'], 'id', 'name', 'urlbase')
             ->where($q->in('i.id', $imageIds))
-            ->fetchAllAssociative();
-        $images = array_column($images, 'i');
-        $data   = [];
+            ->fetchAllAssociativeIndexed();
 
-        foreach ($images as $image) {
-            $data[$image['id']] = $image;
-        }
-
-        $images = $data;
-
-        foreach ($records as $record) {
-            $images[$record['image_id']]['records'][] = $record;
+        foreach ($records as $imageId => $markets) {
+            $images[$imageId]['markets'] = $markets;
         }
 
         return array_values($images);
@@ -194,8 +178,8 @@ class DoctrineRepository
             ->orderBy('r.id', 'DESC')
             ->setMaxResults(100);
 
-        while ($data = $q->fetchAssociative()) {
-            yield new RecordOperation(...$data['r'], ...$data['o']);
+        while ($data = $q->fetchAssociativeFlat()) {
+            yield new RecordOperation(...$data);
         }
     }
 
@@ -209,8 +193,8 @@ class DoctrineRepository
             ->orderBy('t.id', 'DESC')
             ->setMaxResults(100);
 
-        while ($data = $q->fetchAssociative()) {
-            yield new ImageOperation(...$data['t'], ...$data['o'], ...$data['i']);
+        while ($data = $q->fetchAssociativeFlat()) {
+            yield new ImageOperation(...$data);
         }
     }
 
@@ -222,11 +206,11 @@ class DoctrineRepository
             ->where($q->eq('i.name', $name))
             ->setMaxResults(1);
 
-        if (false === $data = $q->fetchAssociative()) {
+        if (false === $data = $q->fetchAssociativeFlat()) {
             return null;
         }
 
-        return new Image(...$data['i']);
+        return new Image(...$data);
     }
 
     /** @return Image[] */
@@ -239,7 +223,7 @@ class DoctrineRepository
             ->addOrderBy('t.debutOn', 'DESC')
             ->addOrderBy('t.id', 'DESC');
 
-        return array_map(static fn ($row) => $row['t'], $q->fetchAllAssociative());
+        return $q->fetchAllAssociativeFlat();
     }
 
     public function getImageByOperationId(Ulid $id): ?Image
@@ -251,11 +235,11 @@ class DoctrineRepository
             ->where($q->eq('o.id', $id))
             ->setMaxResults(1);
 
-        if (false === $data = $q->fetchAssociative()) {
+        if (false === $data = $q->fetchAssociativeFlat()) {
             return null;
         }
 
-        return new Image(...$data['i']);
+        return new Image(...$data);
     }
 
     public function getImageById(string $id): ?Image
@@ -266,11 +250,11 @@ class DoctrineRepository
             ->where($q->eq('i.id', $id))
             ->setMaxResults(1);
 
-        if (false === $data = $q->fetchAssociative()) {
+        if (false === $data = $q->fetchAssociativeFlat()) {
             return null;
         }
 
-        return new Image(...$data['i']);
+        return new Image(...$data);
     }
 
     public function getRecord(string $market, DateTimeImmutable $date): ?Record
@@ -293,30 +277,24 @@ class DoctrineRepository
         return $record;
     }
 
-    /** @return Generator|array[] */
-    public function exportImages(): Generator
+    /** @return array[] */
+    public function exportImages(): array
     {
-        $q = $this->schema
+        return $this->schema
             ->createQuery()
             ->selectFrom([ImagesTable::NAME, 'i'])
-            ->orderBy('i.id');
-
-        while ($data = $q->fetchAssociative()) {
-            yield $data['i'];
-        }
+            ->orderBy('i.id')
+            ->fetchAllAssociativeFlat();
     }
 
-    /** @return Generator|array[] */
-    public function exportRecords(): Generator
+    /** @return array[] */
+    public function exportRecords(): array
     {
-        $q = $this->schema
+        return $this->schema
             ->createQuery()
             ->selectFrom([RecordsTable::NAME, 'r'])
-            ->orderBy('r.id');
-
-        while ($data = $q->fetchAssociative()) {
-            yield $data['r'];
-        }
+            ->orderBy('r.id')
+            ->fetchAllAssociativeFlat();
     }
 
     public function getMarketsPendingOrExisting(DateTimeImmutable $date): array
