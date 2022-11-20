@@ -55,19 +55,19 @@ class DoctrineRepository
     {
         $q = $this->schema->createQuery();
         $q
-            ->update([ImagesTable::NAME, 'i'], [
+            ->update(ImagesTable::NAME, [
                 'copyright' => $image->copyright,
                 'downloadable' => $image->downloadable,
             ])
-            ->where($q->eq('i.name', $image->name))
+            ->where($q->eq('name', $image->name))
             ->executeStatement();
     }
 
     public function getRecordsByImageId(string $id): array
     {
         $q = $this->schema->createQuery();
-        $q->selectFrom([RecordsTable::NAME, 't'], 'title', 'market', 'date', 'keyword')
-            ->where($q->eq('t.image_id', $id))
+        $q->selectFrom(RecordsTable::NAME, 'title', 'market', 'date', 'keyword')
+            ->where($q->eq('image_id', $id))
             ->orderBy('t.date');
 
         return $q->fetchAllAssociativeFlat();
@@ -100,9 +100,9 @@ class DoctrineRepository
     public function getRecordOperation(Ulid $id): ?RecordOperation
     {
         $q = $this->schema->createQuery();
-        $q->selectFrom([RecordOperationsTable::NAME, 'r'])
-            ->join('r', OperationsTable::NAME, 'o', 'r.id = o.id', 'status')
-            ->where($q->eq('r.id', $id))
+        $q->selectFrom(RecordOperationsTable::NAME)
+            ->where($q->eq('id', $id))
+            ->joinOn(OperationsTable::NAME, 'id', 'id', 'status')
             ->setMaxResults(1);
 
         if (false === $data = $q->fetchAssociativeFlat()) {
@@ -111,8 +111,8 @@ class DoctrineRepository
 
         $q = $this->schema->createQuery();
 
-        $logs = $q->selectFrom([OperationLogsTable::NAME, 'l'])
-            ->where($q->eq('l.operation_id', $id))
+        $logs = $q->selectFrom(OperationLogsTable::NAME)
+            ->where($q->eq('operation_id', $id))
             ->setMaxResults(10)
             ->fetchAllAssociativeFlat();
 
@@ -122,10 +122,10 @@ class DoctrineRepository
     public function getImageOperation(Ulid $id): ?ImageOperation
     {
         $q = $this->schema->createQuery();
-        $q->selectFrom([ImageOperationsTable::NAME, 't'], 'id')
-            ->join('t', OperationsTable::NAME, 'o', 't.id = o.id', 'status')
-            ->join('t', ImagesTable::NAME, 'i', 't.image_id = i.id', 'name', 'urlbase', 'video')
-            ->where($q->eq('t.id', $id))
+        $q->selectFrom(ImageOperationsTable::NAME, 'id')
+            ->where($q->eq('id', $id))
+            ->joinOn(OperationsTable::NAME, 'id', 'id', 'status')
+            ->joinOn(ImagesTable::NAME, 'id', 'image_id', 'name', 'urlbase', 'video')
             ->setMaxResults(1);
 
         if (false === $data = $q->fetchAssociativeFlat()) {
@@ -134,8 +134,8 @@ class DoctrineRepository
 
         $q = $this->schema->createQuery();
 
-        $logs = $q->selectFrom([OperationLogsTable::NAME, 'l'])
-            ->where($q->eq('l.operation_id', $id))
+        $logs = $q->selectFrom(OperationLogsTable::NAME)
+            ->where($q->eq('operation_id', $id))
             ->setMaxResults(10)
             ->fetchAllAssociativeFlat();
 
@@ -146,8 +146,8 @@ class DoctrineRepository
     {
         $q = $this->schema->createQuery();
 
-        $records = $q->selectFrom([RecordsTable::NAME, 'r'], 'image_id', 'market')
-            ->where($q->eq('r.date', $date))
+        $records = $q->selectFrom(RecordsTable::NAME, 'image_id', 'market')
+            ->where($q->eq('date', $date))
             ->fetchColumnGrouped();
 
         if ($records === []) {
@@ -158,8 +158,8 @@ class DoctrineRepository
 
         $q = $this->schema->createQuery();
 
-        $images = $q->selectFrom([ImagesTable::NAME, 'i'], 'id', 'name', 'urlbase')
-            ->where($q->in('i.id', $imageIds))
+        $images = $q->selectFrom(ImagesTable::NAME, 'id', 'name', 'urlbase')
+            ->where($q->in('id', $imageIds))
             ->fetchAllAssociativeIndexed();
 
         foreach ($records as $imageId => $markets) {
@@ -172,10 +172,9 @@ class DoctrineRepository
     public function listRecordOperations(): Generator
     {
         $q = $this->schema->createQuery();
-        $q->selectFrom([RecordOperationsTable::NAME, 'r'])
-            ->join('r', OperationsTable::NAME, 'o', 'r.id = o.id', 'status')
-            ->where($q->eq('o.status', OperationStatus::FAILED))
-            ->orderBy('r.id', 'DESC')
+        $q->selectFrom(RecordOperationsTable::NAME)
+            ->orderBy('id', 'DESC')
+            ->join(OperationsTable::NAME, 'id', 'id', 'status')
             ->setMaxResults(100);
 
         while ($data = $q->fetchAssociativeFlat()) {
@@ -186,11 +185,10 @@ class DoctrineRepository
     public function listImageOperations(): Generator
     {
         $q = $this->schema->createQuery();
-        $q->selectFrom([ImageOperationsTable::NAME, 't'], 'id')
-            ->join('t', OperationsTable::NAME, 'o', 't.id = o.id', 'status')
-            ->join('t', ImagesTable::NAME, 'i', 't.image_id = i.id', 'name', 'urlbase', 'video')
-            ->where($q->eq('o.status', OperationStatus::FAILED))
-            ->orderBy('t.id', 'DESC')
+        $q->selectFrom(ImageOperationsTable::NAME, 'id')
+            ->orderBy('id', 'DESC')
+            ->join(OperationsTable::NAME, 'id', 'id', 'status')
+            ->join(ImagesTable::NAME, 'id', 'image_id', 'name', 'urlbase', 'video')
             ->setMaxResults(100);
 
         while ($data = $q->fetchAssociativeFlat()) {
@@ -202,8 +200,8 @@ class DoctrineRepository
     {
         $q = $this->schema->createQuery();
 
-        $q->selectFrom([ImagesTable::NAME, 'i'])
-            ->where($q->eq('i.name', $name))
+        $q->selectFrom(ImagesTable::NAME)
+            ->where($q->eq('name', $name))
             ->setMaxResults(1);
 
         if (false === $data = $q->fetchAssociativeFlat()) {
@@ -218,10 +216,10 @@ class DoctrineRepository
     {
         $q = $this->schema->createQuery();
 
-        $q->selectFrom([ImagesTable::NAME, 't'], 'name', 'urlbase')
-            ->where($q->gt('t.debutOn', $cursor), $q->lte('t.debutOn', $prevCursor))
-            ->addOrderBy('t.debutOn', 'DESC')
-            ->addOrderBy('t.id', 'DESC');
+        $q->selectFrom(ImagesTable::NAME, 'name', 'urlbase')
+            ->where($q->gt('debutOn', $cursor), $q->lte('debutOn', $prevCursor))
+            ->addOrderBy('debutOn', 'DESC')
+            ->addOrderBy('id', 'DESC');
 
         return $q->fetchAllAssociativeFlat();
     }
@@ -230,9 +228,9 @@ class DoctrineRepository
     {
         $q = $this->schema->createQuery();
 
-        $q->selectFrom([ImagesTable::NAME, 'i'])
-            ->join('i', ImageOperationsTable::NAME, 'o', 'i.id = o.image_id', null)
-            ->where($q->eq('o.id', $id))
+        $q->selectFrom(ImagesTable::NAME)
+            ->joinOn(ImageOperationsTable::NAME, 'image_id', 'id', null)
+            ->where($q->eq('id', $id))
             ->setMaxResults(1);
 
         if (false === $data = $q->fetchAssociativeFlat()) {
@@ -246,8 +244,8 @@ class DoctrineRepository
     {
         $q = $this->schema->createQuery();
 
-        $q->selectFrom([ImagesTable::NAME, 'i'])
-            ->where($q->eq('i.id', $id))
+        $q->selectFrom(ImagesTable::NAME)
+            ->where($q->eq('id', $id))
             ->setMaxResults(1);
 
         if (false === $data = $q->fetchAssociativeFlat()) {
@@ -262,8 +260,8 @@ class DoctrineRepository
         $q = $this->schema->createQuery();
 
         $q->selectFrom([RecordsTable::NAME, 'r'])
-            ->join('r', ImagesTable::NAME, 'i', 'r.image_id = i.id')
-            ->where($q->eq('r.market', $market), $q->eq('r.date', $date))
+            ->where($q->eq('market', $market), $q->eq('date', $date))
+            ->joinOn([ImagesTable::NAME, 'i'], 'id', 'image_id')
             ->setMaxResults(1);
 
         if (false === $data = $q->fetchAssociative()) {
@@ -282,8 +280,8 @@ class DoctrineRepository
     {
         return $this->schema
             ->createQuery()
-            ->selectFrom([ImagesTable::NAME, 'i'])
-            ->orderBy('i.id')
+            ->selectFrom(ImagesTable::NAME)
+            ->orderBy('id')
             ->fetchAllAssociativeFlat();
     }
 
@@ -292,8 +290,8 @@ class DoctrineRepository
     {
         return $this->schema
             ->createQuery()
-            ->selectFrom([RecordsTable::NAME, 'r'])
-            ->orderBy('r.id')
+            ->selectFrom(RecordsTable::NAME)
+            ->orderBy('id')
             ->fetchAllAssociativeFlat();
     }
 
@@ -301,13 +299,13 @@ class DoctrineRepository
     {
         $recordQuery = $q = $this->schema->createQuery();
         $q
-            ->selectFrom([RecordsTable::NAME, 'r'], 'market')
-            ->where($q->eq('r.date', $date));
+            ->selectFrom(RecordsTable::NAME, 'market')
+            ->where($q->eq('date', $date));
 
         $operationQuery = $q = $this->schema->createQuery();
         $q
-            ->selectFrom([RecordOperationsTable::NAME, 'o'], 'market')
-            ->where($q->eq('o.date', $date));
+            ->selectFrom(RecordOperationsTable::NAME, 'market')
+            ->where($q->eq('date', $date));
 
         return $this->schema
             ->executeMergedQuery($recordQuery, ' UNION ', $operationQuery)
