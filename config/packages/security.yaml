@@ -5,7 +5,7 @@ security:
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
     providers:
         mango:
-            id: Manyou\Mango\Security\UserProvider
+            id: App\Bundle\Security\UserProvider
         users_in_memory: { memory: null }
     firewalls:
         dev:

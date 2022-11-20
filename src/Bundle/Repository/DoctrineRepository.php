@@ -68,7 +68,7 @@ class DoctrineRepository
         $q = $this->schema->createQuery();
         $q->selectFrom(RecordsTable::NAME, 'title', 'market', 'date', 'keyword')
             ->where($q->eq('image_id', $id))
-            ->orderBy('t.date');
+            ->orderBy('date');
 
         return $q->fetchAllAssociativeFlat();
     }

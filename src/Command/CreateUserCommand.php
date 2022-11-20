@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Command;
 
+use App\Bundle\Security\Doctrine\TableProvider\UsersTable;
+use App\Bundle\Security\User;
 use Manyou\Mango\Doctrine\SchemaProvider;
-use Manyou\Mango\Security\Doctrine\TableProvider\UsersTable;
-use Manyou\Mango\Security\User;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;

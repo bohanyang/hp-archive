@@ -24,6 +24,9 @@ use App\Bundle\Message\RetryDownloadImageHandler;
 use App\Bundle\Message\SaveRecordHandler;
 use App\Bundle\Repository\DoctrineRepository;
 use App\Bundle\Repository\LeanCloudRepository;
+use App\Bundle\Security\Doctrine\TableProvider\UsersTable;
+use App\Bundle\Security\LogoutListener;
+use App\Bundle\Security\UserProvider;
 use Manyou\BingHomepage\Client\CalendarUrlBasePrefixStrategy;
 use Manyou\BingHomepage\Client\ClientInterface;
 use Manyou\BingHomepage\Client\MediaContentClient;
@@ -97,4 +100,8 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services->set(RetryDownloadImageHandler::class);
     $services->set(DownloadImageHandler::class);
     $services->set(ImageSpecCollection::class);
+
+    $services->set(UsersTable::class);
+    $services->set(UserProvider::class);
+    $services->set(LogoutListener::class);
 };
