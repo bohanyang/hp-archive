@@ -174,7 +174,7 @@ class DoctrineRepository
         $q = $this->schema->createQuery();
         $q->selectFrom(RecordOperationsTable::NAME)
             ->orderBy('id', 'DESC')
-            ->join(OperationsTable::NAME, 'id', 'id', 'status')
+            ->joinOn(OperationsTable::NAME, 'id', 'id', 'status')
             ->setMaxResults(100);
 
         while ($data = $q->fetchAssociativeFlat()) {
@@ -187,8 +187,8 @@ class DoctrineRepository
         $q = $this->schema->createQuery();
         $q->selectFrom(ImageOperationsTable::NAME, 'id')
             ->orderBy('id', 'DESC')
-            ->join(OperationsTable::NAME, 'id', 'id', 'status')
-            ->join(ImagesTable::NAME, 'id', 'image_id', 'name', 'urlbase', 'video')
+            ->joinOn(OperationsTable::NAME, 'id', 'id', 'status')
+            ->joinOn(ImagesTable::NAME, 'id', 'image_id', 'name', 'urlbase', 'video')
             ->setMaxResults(100);
 
         while ($data = $q->fetchAssociativeFlat()) {
