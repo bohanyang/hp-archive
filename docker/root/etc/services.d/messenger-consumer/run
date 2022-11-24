@@ -1,0 +1,9 @@
+#!/command/with-contenv sh
+# shellcheck shell=sh
+
+set -eux
+
+cd /srv/app
+
+exec 2>&1
+exec bin/console messenger:consume -vv async

@@ -1,0 +1,11 @@
+#!/usr/bin/env sh
+
+set -eux
+
+mkdir -p /var/log/workerman
+chown nobody:nogroup /var/log/workerman
+chmod 02755 /var/log/workerman
+
+mkdir -p /var/log/messenger-consumer
+chown nobody:nogroup /var/log/messenger-consumer
+chmod 02755 /var/log/messenger-consumer

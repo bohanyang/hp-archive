@@ -1,0 +1,13 @@
+#!/command/with-contenv sh
+# shellcheck shell=sh
+
+set -eux
+
+cd /srv/app
+
+export APP_RUNTIME=Manyou\\WorkermanSymfonyRuntime\\Runtime
+export APP_RUNTIME_SOCKET=http://0.0.0.0:8080
+export APP_RUNTIME_WORKERS=1
+
+exec 2>&1
+exec php -f public/index.php start
