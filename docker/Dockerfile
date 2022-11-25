@@ -20,6 +20,21 @@ RUN set -eux; \
         sysvsem \
         zip
 
+FROM node:16-alpine AS frontend
+
+COPY package.json yarn.lock /app/
+
+RUN set -eux; \
+    corepack enable; \
+    cd /app; \
+    yarn
+
+COPY . /app/
+
+RUN set -eux; \
+    cd /app; \
+    yarn build
+
 FROM base AS builder
 
 RUN set -eux; \
@@ -37,6 +52,11 @@ ARG COMPOSER_VERSION="2.4.4"
 ARG COMPOSER_INSTALLER_VERSION="0a51b6fe383f7f61cf1d250c742ec655aa044c94"
 RUN set -eux; \
     curl -fsSL "https://raw.githubusercontent.com/composer/getcomposer.org/${COMPOSER_INSTALLER_VERSION}/web/installer" | php -- --quiet --install-dir=/usr/local/bin --filename=composer --version="${COMPOSER_VERSION}"
+
+ARG NGINX_VERSION="1.23.2"
+RUN set -eux; \
+    mkdir /nginx; \
+    curl -fsSL https://github.com/manyou-io/nginx-build/releases/download/v${NGINX_VERSION}/nginx-${NGINX_VERSION}-bullseye_amd64.tar.xz | tar -C /nginx -Jxpf -
 
 COPY . /app/
 RUN set -eux; \
@@ -57,8 +77,9 @@ RUN set -eux; \
 
 FROM base
 
-COPY --from=builder /overlay /
+COPY --from=builder /overlay /nginx /
 COPY --from=builder --chown=www-data:www-data /srv/app /srv/app/
+COPY --from=frontend --chown=www-data:www-data /app/public/build /srv/app/public/build/
 COPY docker/root /
 
 ENTRYPOINT ["/init"]

@@ -6,4 +6,4 @@ set -eux
 cd /srv/app
 
 exec 2>&1
-exec bin/console messenger:consume -vv async
+exec s6-setuidgid www-data bin/console messenger:consume -vv async

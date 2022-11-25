@@ -1,0 +1,25 @@
+#!/usr/bin/env sh
+
+set -eux
+
+mkdir -p /var/log/nginx-access-log
+chown nobody:nogroup /var/log/nginx-access-log
+chmod 02755 /var/log/nginx-access-log
+
+mkdir -p /var/log/nginx-error-log
+chown nobody:nogroup /var/log/nginx-error-log
+chmod 02755 /var/log/nginx-error-log
+
+logutil-newfifo -o www-data /run/s6/nginx-access-log.fifo
+logutil-newfifo -o www-data /run/s6/nginx-error-log.fifo
+
+mkdir -p /var/cache/nginx
+chown www-data:www-data /var/cache/nginx
+chmod 02755 /var/cache/nginx
+
+mkdir -p /run/nginx
+chown www-data:www-data /run/nginx
+chmod 02755 /run/nginx
+
+nginx-conf app
+nginx-pull-config -- true

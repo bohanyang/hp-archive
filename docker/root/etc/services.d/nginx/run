@@ -1,0 +1,6 @@
+#!/command/with-contenv sh
+# shellcheck shell=sh
+
+set -eux
+
+exec s6-setuidgid www-data nginx -e /run/s6/nginx-error-log.fifo -g 'daemon off;'
