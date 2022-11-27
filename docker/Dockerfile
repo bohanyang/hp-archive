@@ -29,7 +29,8 @@ RUN set -eux; \
     cd /app; \
     yarn
 
-COPY . /app/
+COPY tsconfig.json vite.config.js /app/
+COPY assets /app/assets/
 
 RUN set -eux; \
     cd /app; \
@@ -58,6 +59,14 @@ RUN set -eux; \
     mkdir /nginx; \
     curl -fsSL https://github.com/manyou-io/nginx-build/releases/download/v${NGINX_VERSION}/nginx-${NGINX_VERSION}-bullseye_amd64.tar.xz | tar -C /nginx -Jxpf -
 
+ENV \
+    COMPOSER_ALLOW_SUPERUSER="1" \
+    APP_ENV="prod"
+
+COPY composer.json composer.lock symfony.lock /srv/app/
+RUN set -eux; \
+    composer install --no-cache --no-dev -d /srv/app --no-autoloader --no-scripts
+
 COPY . /app/
 RUN set -eux; \
     cd /app; \
@@ -69,11 +78,8 @@ RUN set -eux; \
         public \
         src \
         templates \
-        composer.json \
-        composer.lock \
-        symfony.lock \
         .env; \
-    APP_ENV=prod composer install -d /srv/app --no-dev -o
+    composer install --no-cache --no-dev -d /srv/app -o
 
 FROM base
 
@@ -81,5 +87,9 @@ COPY --from=builder /overlay /nginx /
 COPY --from=builder --chown=www-data:www-data /srv/app /srv/app/
 COPY --from=frontend --chown=www-data:www-data /app/public/build /srv/app/public/build/
 COPY docker/root /
+
+ENV \
+    S6_CMD_WAIT_FOR_SERVICES_MAXTIME="60000" \
+    APP_RUNTIME_WORKERS="1" 
 
 ENTRYPOINT ["/init"]

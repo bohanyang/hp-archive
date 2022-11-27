@@ -3,4 +3,4 @@
 
 set -eux
 
-exec s6-setuidgid www-data nginx -e /run/s6/nginx-error-log.fifo -g 'daemon off;'
+exec s6-setuidgid www-data nginx -e /run/s6/nginx-error-log.fifo -g 'daemon off; pid /run/nginx/nginx.pid;'

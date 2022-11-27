@@ -7,8 +7,6 @@ cd /srv/app
 
 export APP_RUNTIME=Manyou\\WorkermanSymfonyRuntime\\Runtime
 export APP_RUNTIME_SOCKET=http://127.0.0.1:3000
-export APP_RUNTIME_WORKERS
-APP_RUNTIME_WORKERS=$(nproc)
 
 exec 2>&1
 exec s6-setuidgid www-data php -f public/index.php start

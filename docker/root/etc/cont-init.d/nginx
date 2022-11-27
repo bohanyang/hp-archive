@@ -2,24 +2,43 @@
 
 set -eux
 
-mkdir -p /var/log/nginx-access-log
-chown nobody:nogroup /var/log/nginx-access-log
-chmod 02755 /var/log/nginx-access-log
+mkdir -p \
+  /var/log/nginx-access-log \
+  /var/log/nginx-error-log \
+  /var/cache/nginx \
+  /run/nginx
 
-mkdir -p /var/log/nginx-error-log
-chown nobody:nogroup /var/log/nginx-error-log
-chmod 02755 /var/log/nginx-error-log
+touch \
+  /run/s6/nginx-access-log.fifo \
+  /run/s6/nginx-error-log.fifo
 
-logutil-newfifo -o www-data /run/s6/nginx-access-log.fifo
-logutil-newfifo -o www-data /run/s6/nginx-error-log.fifo
+chown nobody:nogroup \
+  /var/log/nginx-access-log \
+  /var/log/nginx-error-log
 
-mkdir -p /var/cache/nginx
-chown www-data:www-data /var/cache/nginx
-chmod 02755 /var/cache/nginx
+chown www-data:www-data \
+  /var/cache/nginx \
+  /run/nginx \
+  /run/s6/nginx-access-log.fifo \
+  /run/s6/nginx-error-log.fifo
 
-mkdir -p /run/nginx
-chown www-data:www-data /run/nginx
-chmod 02755 /run/nginx
+chmod 02755 \
+  /var/log/nginx-access-log \
+  /var/log/nginx-error-log \
+  /var/cache/nginx \
+  /run/nginx
 
 nginx-conf app
-nginx-pull-config -- true
+nginx-pull-config -- s6-setuidgid www-data nginx -e /run/s6/nginx-error-log.fifo -g 'pid /run/nginx/nginx.pid;' -t
+
+rm -rf \
+  /run/s6/nginx-access-log.fifo \
+  /run/s6/nginx-error-log.fifo
+
+mkfifo -m 0600 \
+  /run/s6/nginx-access-log.fifo \
+  /run/s6/nginx-error-log.fifo
+
+chown www-data:www-data \
+  /run/s6/nginx-access-log.fifo \
+  /run/s6/nginx-error-log.fifo
