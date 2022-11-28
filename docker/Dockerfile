@@ -46,8 +46,8 @@ RUN set -eux; \
 
 ARG S6_OVERLAY_VERSION="3.1.2.1"
 RUN mkdir /overlay; \
-    curl -fsSL https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-noarch.tar.xz | tar -C /overlay -Jxpf -; \
-    curl -fsSL https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-x86_64.tar.xz | tar -C /overlay -Jxpf -
+    curl -fsSL https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-noarch.tar.xz | tar -C /overlay -xJpf -; \
+    curl -fsSL https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-x86_64.tar.xz | tar -C /overlay -xJpf -
 
 ARG COMPOSER_VERSION="2.4.4"
 ARG COMPOSER_INSTALLER_VERSION="0a51b6fe383f7f61cf1d250c742ec655aa044c94"
@@ -57,7 +57,11 @@ RUN set -eux; \
 ARG NGINX_VERSION="1.23.2"
 RUN set -eux; \
     mkdir /nginx; \
-    curl -fsSL https://github.com/manyou-io/nginx-build/releases/download/v${NGINX_VERSION}/nginx-${NGINX_VERSION}-bullseye_amd64.tar.xz | tar -C /nginx -Jxpf -
+    curl -fsSL https://github.com/manyou-io/nginx-build/releases/download/v${NGINX_VERSION}/nginx-${NGINX_VERSION}-bullseye_amd64.tar.xz | tar -C /nginx -xJf -
+
+ARG OFELIA_VERSION="0.3.6"
+RUN set -eux; \
+    curl -fsSL https://github.com/mcuadros/ofelia/releases/download/v0.3.6/ofelia-v0.3.6-linux-amd64.tar.gz | tar -C /overlay/command -xzf -
 
 ENV \
     COMPOSER_ALLOW_SUPERUSER="1" \
@@ -90,6 +94,7 @@ COPY docker/root /
 
 ENV \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME="60000" \
+    S6_LOGGING_SCRIPT="n20 s1000000" \
     APP_RUNTIME_WORKERS="1" 
 
 ENTRYPOINT ["/init"]

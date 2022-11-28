@@ -5,4 +5,4 @@ set -eux
 
 cd /srv/app
 
-bin/console doctrine:migrations:migrate --no-interaction --allow-no-migration
+s6-setuidgid www-data bin/console doctrine:migrations:migrate --no-interaction --allow-no-migration

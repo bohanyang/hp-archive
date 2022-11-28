@@ -1,0 +1,6 @@
+#!/command/with-contenv sh
+# shellcheck shell=sh
+
+set -eux
+
+exec s6-setuidgid www-data ofelia daemon --config=config.ini

@@ -1,5 +1,0 @@
-#!/usr/bin/env sh
-
-set -eux
-
-exec logutil-service /var/log/workerman
