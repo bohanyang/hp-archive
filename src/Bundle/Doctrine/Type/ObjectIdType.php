@@ -54,7 +54,7 @@ class ObjectIdType extends Type
         }
 
         if ($platform instanceof PostgreSQLPlatform) {
-            return 'encode(' . $sqlExpr . ", 'hex');";
+            return 'encode(' . $sqlExpr . ", 'hex')";
         }
 
         throw new ConversionException('Unsupported database platform: ' . get_debug_type($platform));
@@ -62,11 +62,11 @@ class ObjectIdType extends Type
 
     public function convertToDatabaseValue($value, AbstractPlatform $platform): mixed
     {
-        if ($value === null) {
-            return null;
-        }
-
-        if ($platform instanceof OraclePlatform) {
+        if (
+            $value === null
+            || $platform instanceof OraclePlatform
+            || $platform instanceof PostgreSQLPlatform
+        ) {
             return $value;
         }
 
@@ -75,11 +75,15 @@ class ObjectIdType extends Type
 
     public function convertToDatabaseValueSQL($sqlExpr, AbstractPlatform $platform): string
     {
-        if (! $platform instanceof OraclePlatform) {
-            return $sqlExpr;
+        if ($platform instanceof OraclePlatform) {
+            return 'HEXTORAW(' . $sqlExpr . ')';
         }
 
-        return 'HEXTORAW(' . $sqlExpr . ')';
+        if ($platform instanceof PostgreSQLPlatform) {
+            return 'decode(' . $sqlExpr . ", 'hex')";
+        }
+
+        return $sqlExpr;
     }
 
     public function requiresSQLCommentHint(AbstractPlatform $platform): bool

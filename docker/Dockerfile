@@ -79,6 +79,8 @@ RUN set -eux; \
         config \
         lib/src \
         oci8_migrations \
+        mysql_migrations \
+        postgresql_migrations \
         public \
         src \
         templates \

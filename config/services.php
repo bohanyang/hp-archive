@@ -9,6 +9,7 @@ use App\Bundle\Downloader\Storage\BunnyCDNStorage;
 use App\Bundle\Downloader\Storage\ReplicatedStorage;
 use App\Bundle\Downloader\VideoDownloader;
 use App\Bundle\Message\ImportFromLeanCloudHandler;
+use App\Bundle\Message\ImportFromSqlHandler;
 use App\Bundle\Monolog\Slack3001Processor;
 use App\Bundle\Repository\DoctrineRepository;
 use App\Controller\MainController;
@@ -40,13 +41,13 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     }
 
     // Import source
-    // $services->set('app.doctrine.schema_provider.source')
-    //     ->class(SchemaProvider::class)
-    //     ->arg(Connection::class, service('doctrine.dbal.source_connection'));
+    $services->set('app.doctrine.schema_provider.source')
+        ->class(SchemaProvider::class)
+        ->arg(Connection::class, service('doctrine.dbal.source_connection'));
 
-    // $services->set('app.repository.doctrine.source')
-    //     ->class(DoctrineRepository::class)
-    //     ->arg(SchemaProvider::class, service('app.doctrine.schema_provider.source'));
+    $services->set('app.repository.doctrine.source')
+        ->class(DoctrineRepository::class)
+        ->arg(SchemaProvider::class, service('app.doctrine.schema_provider.source'));
 
     // Import destination
     $services->set('app.doctrine.schema_provider.import')
@@ -57,10 +58,10 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->class(DoctrineRepository::class)
         ->arg(SchemaProvider::class, service('app.doctrine.schema_provider.import'));
 
-    // $services->set(ImportFromSqlHandler::class)
-    //     ->arg('$source', service('app.repository.doctrine.source'))
-    //     ->arg('$destination', service('app.repository.doctrine.import'))
-    //     ->public();
+    $services->set(ImportFromSqlHandler::class)
+        ->arg('$source', service('app.repository.doctrine.source'))
+        ->arg('$destination', service('app.repository.doctrine.import'))
+        ->public();
 
     $services->set(ImportFromLeanCloudHandler::class)
         ->arg(DoctrineRepository::class, service('app.repository.doctrine.import'));
