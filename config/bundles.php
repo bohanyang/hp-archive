@@ -18,4 +18,5 @@ return [
     App\Bundle\AppBundle::class => ['all' => true],
     Pentatrion\ViteBundle\PentatrionViteBundle::class => ['all' => true],
     Rompetomp\InertiaBundle\RompetompInertiaBundle::class => ['all' => true],
+    Manyou\WorkermanSymfonyRuntime\Bundle\WorkermanSymfonyRuntimeBundle::class => ['all' => true],
 ];
