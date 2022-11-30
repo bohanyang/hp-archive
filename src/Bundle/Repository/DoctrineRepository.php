@@ -17,7 +17,6 @@ use Manyou\BingHomepage\Record;
 use Manyou\Mango\Doctrine\SchemaProvider;
 use Manyou\Mango\Operation\Doctrine\TableProvider\OperationLogsTable;
 use Manyou\Mango\Operation\Doctrine\TableProvider\OperationsTable;
-use Manyou\Mango\Operation\Enum\OperationStatus;
 use Symfony\Component\Uid\Ulid;
 
 use function array_keys;
