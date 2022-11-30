@@ -27,7 +27,7 @@ class ImagesTable implements TableProvider
         $table->addColumn('video', JsonTextType::NAME, ['length' => 2000, 'notnull' => false]);
         $table->setPrimaryKey(['id']);
         $table->addUniqueIndex(['name']);
-        $table->addIndex(['debut_on']);
+        $table->addIndex(['debut_on', 'id']);
 
         return $table;
     }
