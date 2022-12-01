@@ -28,18 +28,16 @@ class SaveRecordHandler
 
     public function __invoke(SaveRecord $command): void
     {
-        $this->doctrine->getSchemaProvider()->getConnection()->transactional(function () use ($command) {
-            // buffer LeanCloud requests
-            $requests = new ArrayObject();
+        // buffer LeanCloud requests
+        $requests = new ArrayObject();
 
-            $record = $command->record->with(image: $this->saveImage($command, $requests));
+        $record = $command->record->with(image: $this->saveImage($command, $requests));
 
-            $this->doctrine->createRecord($record);
-            $requests[] = $this->leancloud->createRecordRequest($record);
+        $this->doctrine->createRecord($record);
+        $requests[] = $this->leancloud->createRecordRequest($record);
 
-            // commit
-            Utils::unwrap($this->leancloud->getClient()->batch(...$requests));
-        });
+        // commit
+        Utils::unwrap($this->leancloud->getClient()->batch(...$requests));
     }
 
     private function imageEquals(Image $a, Image $b): bool
@@ -54,8 +52,10 @@ class SaveRecordHandler
         $input = $command->record->image;
 
         try {
-            $this->doctrine->createImage($input);
-            $requests[] = $this->leancloud->createImageRequest($input);
+            $this->doctrine->getSchemaProvider()->getConnection()->transactional(function () use ($input) {
+                $this->doctrine->createImage($input);
+                $requests[] = $this->leancloud->createImageRequest($input);
+            });
         } catch (UniqueConstraintViolationException $e) {
             $existing = $this->doctrine->getImage($input->name);
 
