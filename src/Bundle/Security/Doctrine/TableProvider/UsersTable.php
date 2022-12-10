@@ -20,6 +20,7 @@ class UsersTable implements TableProvider
         $table->addColumn('username', Types::STRING, ['length' => 255]);
         $table->addColumn('password', Types::STRING, ['length' => 255]);
         $table->setPrimaryKey(['id']);
+        $table->addUniqueIndex(['username']);
 
         return $table;
     }
