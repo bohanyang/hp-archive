@@ -3,11 +3,13 @@
 
 set -eux
 
-cd /srv/app
+cd /app
 
 export APP_RUNTIME=Manyou\\WorkermanSymfonyRuntime\\Runtime
 export APP_RUNTIME_SOCKET=http://127.0.0.1:3000
 export APP_RUNTIME_LOG_FILE=/run/s6/workerman-log.fifo
 export APP_RUNTIME_PID_FILE=/run/workerman/workerman.pid
+
+unset HOME
 
 exec s6-setuidgid www-data php -f public/index.php start

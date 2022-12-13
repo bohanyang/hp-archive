@@ -3,6 +3,8 @@
 
 set -eux
 
-cd /srv/app
+cd /app
+
+unset HOME
 
 s6-setuidgid www-data bin/console doctrine:migrations:migrate --no-interaction --allow-no-migration

@@ -3,4 +3,6 @@
 
 set -eux
 
+unset HOME
+
 exec s6-setuidgid www-data ofelia daemon --config=config.ini

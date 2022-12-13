@@ -1,0 +1,31 @@
+admin:
+  disabled: true
+
+apps:
+  http:
+    servers:
+      srv0:
+        listen:
+          - :80
+        routes:
+          - match:
+              - path:
+                  - /build/*
+                  - /bundles/*
+            handle:
+              - handler: file_server
+                root: /app/public
+            terminal: true
+          - match:
+              - path:
+                  - /*
+            handle:
+              - handler: reverse_proxy
+                transport:
+                  protocol: http
+                  keep_alive:
+                    enabled: true
+                    max_idle_conns: 128
+                upstreams:
+                  - dial: "tcp/127.0.0.1:3000"
+            terminal: true
