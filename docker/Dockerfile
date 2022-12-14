@@ -19,11 +19,13 @@ FROM node:18.12.1-alpine3.17 AS assets-builder
 COPY package.json yarn.lock /app/
 
 RUN --mount=type=cache,target=/root/.yarn \
+    --mount=type=cache,target=/app/node_modules \
     set -eux; \
     cd /app; \
     YARN_CACHE_FOLDER=/root/.yarn yarn
 
 RUN --mount=type=bind,source=.,target=/usr/src/app \
+    --mount=type=cache,target=/app/node_modules \
     set -eux; \
     cd /usr/src/app; \
     docker/copypath /app/ \
