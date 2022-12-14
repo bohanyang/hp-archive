@@ -19,12 +19,12 @@ FROM node:18.12.1-alpine3.17 AS assets-builder
 COPY package.json yarn.lock /app/
 
 RUN --mount=type=cache,target=/root/.yarn \
-    set -ex; \
+    set -eux; \
     cd /app; \
     YARN_CACHE_FOLDER=/root/.yarn yarn
 
 RUN --mount=type=bind,source=.,target=/usr/src/app \
-    set -ex; \
+    set -eux; \
     cd /usr/src/app; \
     docker/copypath /app/ \
         assets \
@@ -47,11 +47,11 @@ RUN set -eux; \
 
 ARG OFELIA_VERSION="0.3.6"
 RUN set -eux; \
-    curl -fsSL https://github.com/mcuadros/ofelia/releases/download/v0.3.6/ofelia-v0.3.6-linux-amd64.tar.gz | tar -C /overlay/command -xzf -
+    curl -fsSL https://github.com/mcuadros/ofelia/releases/download/v0.3.6/ofelia-v0.3.6-linux-amd64.tar.gz | tar -C /usr/local/bin -xzf -
 
 RUN --mount=type=bind,source=.,target=/usr/src/app \
     --mount=type=cache,target=/root/.composer \
-    set -ex; \
+    set -eux; \
     cd /usr/src/app; \
     docker/copypath /app/ \
         bin/console \
@@ -72,37 +72,25 @@ RUN --mount=type=bind,source=.,target=/usr/src/app \
 FROM caddy:2.6.2-builder-alpine AS caddy-builder
 
 RUN xcaddy build \
-    --with github.com/dunglas/mercure/caddy@v0.14.2 \
     --with github.com/abiosoft/caddy-yaml
 
 FROM base
 
 RUN apk add --no-cache \
+    su-exec \
+    # provides mime types for caddy
     mailcap \
+    # for ofelia
     tzdata \
+    # for ofelia
     libc6-compat
 
-RUN set -eux; \
-	mkdir -p \
-		/config/caddy \
-		/data/caddy \
-		/etc/caddy \
-		/usr/share/caddy \
-	; \
-	wget -O /etc/caddy/Caddyfile "https://github.com/caddyserver/dist/raw/8c5fc6fc265c5d8557f17a18b778c398a2c6f27b/config/Caddyfile"; \
-	wget -O /usr/share/caddy/index.html "https://github.com/caddyserver/dist/raw/8c5fc6fc265c5d8557f17a18b778c398a2c6f27b/welcome/index.html"
+COPY --from=builder \
+    /usr/local/bin/composer \
+    /usr/local/bin/ofelia \
+    /usr/local/bin/
 
-# set up nsswitch.conf for Go's "netgo" implementation
-# - https://github.com/docker-library/golang/blob/1eb096131592bcbc90aa3b97471811c798a93573/1.14/alpine3.12/Dockerfile#L9
-RUN if [ ! -e /etc/nsswitch.conf ]; then \
-        echo 'hosts: files dns' > /etc/nsswitch.conf; \
-    fi
-
-# See https://caddyserver.com/docs/conventions#file-locations for details
-ENV XDG_CONFIG_HOME /config
-ENV XDG_DATA_HOME /data
-
-COPY --from=caddy-builder /usr/bin/caddy /usr/bin/caddy
+COPY --from=caddy-builder /usr/bin/caddy /usr/local/bin/
 
 COPY --from=builder /overlay /
 
@@ -113,7 +101,6 @@ COPY docker/root /
 
 ENV S6_CMD_WAIT_FOR_SERVICES_MAXTIME="60000" \
     S6_LOGGING_SCRIPT="n20 s1000000" \
-    APP_RUNTIME_WORKERS="1" \
-    PATH="/command:${PATH}"
+    APP_RUNTIME_WORKERS="1"
 
 ENTRYPOINT ["/init"]

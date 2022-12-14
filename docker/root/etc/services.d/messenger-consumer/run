@@ -5,7 +5,5 @@ set -eux
 
 cd /app
 
-unset HOME
-
 exec 2>&1
-exec s6-setuidgid www-data bin/console messenger:consume -vv async
+exec su-exec www-data:www-data bin/console messenger:consume -vv async

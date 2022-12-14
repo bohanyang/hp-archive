@@ -6,7 +6,7 @@ apps:
     servers:
       srv0:
         listen:
-          - :80
+          - :8000
         routes:
           - match:
               - path:

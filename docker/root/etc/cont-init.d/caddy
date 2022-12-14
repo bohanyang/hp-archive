@@ -1,0 +1,12 @@
+#!/command/with-contenv sh
+# shellcheck shell=sh
+
+set -eux
+
+mkdir -p \
+  /data/caddy \
+  /config/caddy
+
+chown www-data:www-data \
+  /data/caddy \
+  /config/caddy
