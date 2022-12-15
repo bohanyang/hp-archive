@@ -9,10 +9,20 @@ apps:
           - :8000
         routes:
           - match:
-              - path:
-                  - /build/*
-                  - /bundles/*
+              - path: ['/build/*']
             handle:
+              - handler: file_server
+                root: /app/public
+                precompressed:
+                  br: {}
+                  gzip: {}
+                precompressed_order: [br, gzip]
+            terminal: true
+          - match:
+              - path: ['/bundles/*']
+            handle:
+              - handler: encode
+                encodings: { gzip: {} }
               - handler: file_server
                 root: /app/public
             terminal: true
@@ -20,6 +30,8 @@ apps:
               - path:
                   - /*
             handle:
+              - handler: encode
+                encodings: { gzip: {} }
               - handler: reverse_proxy
                 transport:
                   protocol: http
