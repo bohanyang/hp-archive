@@ -52,7 +52,7 @@ class SaveRecordHandler
         $input = $command->record->image;
 
         try {
-            $this->doctrine->getSchemaProvider()->getConnection()->transactional(function () use ($input) {
+            $this->doctrine->getSchemaProvider()->getConnection()->transactional(function () use ($input, $requests) {
                 $this->doctrine->createImage($input);
                 $requests[] = $this->leancloud->createImageRequest($input);
             });
