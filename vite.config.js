@@ -13,8 +13,7 @@ export default defineConfig(({ mode }) => {
       }),
       react(),
       symfonyPlugin(),
-      viteCompression({ algorithm: 'gzip' }),
-      viteCompression({ algorithm: 'brotliCompress' })
+      viteCompression({ algorithm: 'gzip' })
     ],
     resolve: {
       alias: {
