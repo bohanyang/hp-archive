@@ -1,7 +1,0 @@
-#!/command/with-contenv sh
-# shellcheck shell=sh
-
-export XDG_CONFIG_HOME=/config
-export XDG_DATA_HOME=/data
-
-exec su-exec www-data:www-data caddy run --config config.yaml --adapter yaml

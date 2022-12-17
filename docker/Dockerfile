@@ -1,4 +1,5 @@
-FROM php:8.1.13-cli-alpine3.17 AS base
+ARG ALPINE_VERSION='3.17'
+FROM php:8.1.13-cli-alpine${ALPINE_VERSION} AS base
 
 ARG PHP_EXT_INSTALLER_VERSION="1.5.47"
 RUN set -eux; \
@@ -14,7 +15,7 @@ RUN set -eux; \
         redis \
         pdo_pgsql
 
-FROM node:18.12.1-alpine3.17 AS assets-builder
+FROM node:18.12.1-alpine${ALPINE_VERSION} AS assets-builder
 
 COPY package.json yarn.lock /app/
 
@@ -47,7 +48,7 @@ RUN set -eux; \
 
 ARG OFELIA_VERSION="0.3.6"
 RUN set -eux; \
-    curl -fsSL https://github.com/mcuadros/ofelia/releases/download/v0.3.6/ofelia-v0.3.6-linux-amd64.tar.gz | tar -C /usr/local/bin -xzf -
+    curl -fsSL https://github.com/mcuadros/ofelia/releases/download/v${OFELIA_VERSION}/ofelia-v${OFELIA_VERSION}-linux-amd64.tar.gz | tar -C /usr/local/bin -xzf -
 
 RUN --mount=type=bind,source=.,target=/usr/src/app \
     --mount=type=cache,target=/root/.composer \
@@ -76,14 +77,38 @@ RUN xcaddy build \
 
 FROM base
 
-RUN apk add --no-cache \
-    su-exec \
-    # provides mime types for caddy
-    mailcap \
-    # for ofelia
-    tzdata \
-    # for ofelia
-    libc6-compat
+ARG ALPINE_VERSION='3.17'
+ARG NGINX_VERSION='1.23.3'
+ARG NGINX_PKG_RELEASE='-r1'
+ARG NGINX_MODULES_TAG='1.23.3-test.2'
+ARG NGINX_BROTLI_VERSION='1.0.0'
+ARG NGINX_HEADERS_MORE_VERSION='0.34'
+ARG NGINX_BUILD_TAG='v1.23.2'
+
+RUN set -eux; \
+    apk add --no-cache \
+        su-exec \
+        # for ofelia
+        tzdata \
+        libc6-compat; \
+    curl -fsSL 'https://nginx.org/keys/nginx_signing.rsa.pub' -o /etc/apk/keys/nginx_signing.rsa.pub; \
+    apk add -X "https://nginx.org/packages/mainline/alpine/v${ALPINE_VERSION}/main" --no-cache "nginx=${NGINX_VERSION}${NGINX_PKG_RELEASE}"; \
+    for apk in \
+        "nginx-module-brotli-${NGINX_VERSION}.${NGINX_BROTLI_VERSION}${NGINX_PKG_RELEASE}-x86_64.apk" \
+        "nginx-module-headers-more-${NGINX_VERSION}.${NGINX_HEADERS_MORE_VERSION}${NGINX_PKG_RELEASE}-x86_64.apk" \
+    ; do \
+        curl -fsSL "https://github.com/bohanyang/nginx-modules/releases/download/${NGINX_MODULES_TAG}/${apk}" -o /tmp/nginx-module.apk; \
+        apk add --no-cache --allow-untrusted /tmp/nginx-module.apk; \
+    done; \
+    rm -rfv /tmp/nginx-module.apk; \
+    for script in \
+        nginx-conf \
+        nginx-pull-config \
+    ; do \
+        curl -fsSL "https://github.com/manyou-io/nginx-build/raw/${NGINX_BUILD_TAG}/root/usr/local/bin/${script}" \
+            -o "/usr/local/bin/${script}"; \
+        chmod a+rx "/usr/local/bin/${script}"; \
+    done
 
 COPY --from=builder \
     /usr/local/bin/composer \

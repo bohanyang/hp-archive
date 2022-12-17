@@ -285,6 +285,18 @@ class DoctrineRepository
     }
 
     /** @return array[] */
+    public function exportImagesWhere(): array
+    {
+        $q = $this->schema
+            ->createQuery();
+
+        return $q->selectFrom(ImagesTable::NAME)
+            ->orderBy('id')
+            ->where($q->gt('debut_on', new DateTimeImmutable('2022-11-30T00:00:00.000000Z')))
+            ->fetchAllAssociativeFlat();
+    }
+
+    /** @return array[] */
     public function exportRecords(): array
     {
         return $this->schema
