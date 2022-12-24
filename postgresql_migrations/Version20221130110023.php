@@ -20,11 +20,11 @@ final class Version20221130110023 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('CREATE TABLE operations (id BYTEA NOT NULL, status SMALLINT NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE operations (id UUID NOT NULL, status SMALLINT NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_281453487B00651C ON operations (status)');
         $this->addSql('COMMENT ON COLUMN operations.id IS \'(DC2Type:ulid)\'');
         $this->addSql('COMMENT ON COLUMN operations.status IS \'(DC2Type:operation_status)\'');
-        $this->addSql('CREATE TABLE operation_logs (id BYTEA NOT NULL, operation_id BYTEA NOT NULL, level SMALLINT NOT NULL, message TEXT NOT NULL, context JSON DEFAULT \'{}\' NOT NULL, extra JSON DEFAULT \'{}\' NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE operation_logs (id UUID NOT NULL, operation_id UUID NOT NULL, level SMALLINT NOT NULL, message TEXT NOT NULL, context JSON DEFAULT \'{}\' NOT NULL, extra JSON DEFAULT \'{}\' NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_DFFF9BCD44AC3583 ON operation_logs (operation_id)');
         $this->addSql('COMMENT ON COLUMN operation_logs.id IS \'(DC2Type:ulid)\'');
         $this->addSql('COMMENT ON COLUMN operation_logs.operation_id IS \'(DC2Type:ulid)\'');
@@ -45,16 +45,16 @@ final class Version20221130110023 extends AbstractMigration
         $this->addSql('COMMENT ON COLUMN records.hotspots IS \'(DC2Type:json_text)\'');
         $this->addSql('COMMENT ON COLUMN records.messages IS \'(DC2Type:json_text)\'');
         $this->addSql('COMMENT ON COLUMN records.coverstory IS \'(DC2Type:json_text)\'');
-        $this->addSql('CREATE TABLE record_operations (id BYTEA NOT NULL, date DATE NOT NULL, market SMALLINT NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE record_operations (id UUID NOT NULL, date DATE NOT NULL, market SMALLINT NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_625167B9AA9E377A6BAC85CB ON record_operations (date, market)');
         $this->addSql('COMMENT ON COLUMN record_operations.id IS \'(DC2Type:ulid)\'');
         $this->addSql('COMMENT ON COLUMN record_operations.date IS \'(DC2Type:date_immutable)\'');
         $this->addSql('COMMENT ON COLUMN record_operations.market IS \'(DC2Type:bing_market)\'');
-        $this->addSql('CREATE TABLE image_operations (id BYTEA NOT NULL, image_id BYTEA NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE image_operations (id UUID NOT NULL, image_id BYTEA NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_44CA447E3DA5256D ON image_operations (image_id)');
         $this->addSql('COMMENT ON COLUMN image_operations.id IS \'(DC2Type:ulid)\'');
         $this->addSql('COMMENT ON COLUMN image_operations.image_id IS \'(DC2Type:object_id)\'');
-        $this->addSql('CREATE TABLE users (id BYTEA NOT NULL, username VARCHAR(255) NOT NULL, password VARCHAR(255) NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE users (id UUID NOT NULL, username VARCHAR(255) NOT NULL, password VARCHAR(255) NOT NULL, PRIMARY KEY(id))');
         $this->addSql('COMMENT ON COLUMN users.id IS \'(DC2Type:ulid)\'');
         $this->addSql('ALTER TABLE operation_logs ADD CONSTRAINT FK_DFFF9BCD44AC3583 FOREIGN KEY (operation_id) REFERENCES operations (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('ALTER TABLE records ADD CONSTRAINT FK_9C9D58463DA5256D FOREIGN KEY (image_id) REFERENCES images (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
