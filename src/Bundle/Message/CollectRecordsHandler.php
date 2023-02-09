@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Bundle\Message;
 
 use App\Bundle\Repository\DoctrineRepository;
-use InvalidArgumentException;
 use Manyou\BingHomepage\Client\ClientInterface;
 use Manyou\BingHomepage\RequestParams;
 use Manyou\Mango\Operation\Messenger\Stamp\CreateOperationStamp;

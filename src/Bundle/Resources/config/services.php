@@ -29,6 +29,7 @@ use App\Bundle\Security\LogoutListener;
 use App\Bundle\Security\UserProvider;
 use Manyou\BingHomepage\Client\CalendarUrlBasePrefixStrategy;
 use Manyou\BingHomepage\Client\ClientInterface;
+use Manyou\BingHomepage\Client\ImageArchiveClient;
 use Manyou\BingHomepage\Client\MediaContentClient;
 use Manyou\BingHomepage\Client\UrlBasePrefixStrategy;
 use Manyou\LeanStorage\LeanStorageClient;
@@ -72,7 +73,8 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->decorate(PromiseHttpClientInterface::class)->args([service('.inner')]);
 
     $services->set(MediaContentClient::class);
-    $services->alias(ClientInterface::class, MediaContentClient::class);
+    $services->set(ImageArchiveClient::class);
+    $services->alias(ClientInterface::class, ImageArchiveClient::class);
 
     $services->set(LeanStorageClient::class)
         ->arg('$endpoint', env('LEANCLOUD_API_SERVER') . '/1.1/')
