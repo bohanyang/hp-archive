@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace App\Bundle\Doctrine\Type;
 
+use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Manyou\BingHomepage\Market;
-use Manyou\Mango\Doctrine\Type\ArrayTinyIntEnum;
-use Manyou\Mango\Doctrine\Type\TinyIntEnumType;
+use Manyou\Mango\Doctrine\Type\TinyIntArrayEnum;
+use Manyou\Mango\Doctrine\Type\TinyIntType;
 
-class BingMarketType extends TinyIntEnumType
+class BingMarketType extends TinyIntType
 {
-    use ArrayTinyIntEnum;
+    use TinyIntArrayEnum;
 
     public const NAME = 'bing_market';
 
@@ -37,5 +38,10 @@ class BingMarketType extends TinyIntEnumType
             Market::CN,
             Market::JP,
         ];
+    }
+
+    public function convertToPHPValue($value, AbstractPlatform $platform): mixed
+    {
+        return $value;
     }
 }

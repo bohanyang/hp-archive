@@ -8,7 +8,7 @@ use App\Bundle\Repository\DoctrineRepository;
 use Manyou\BingHomepage\Client\ClientInterface;
 use Manyou\BingHomepage\Market;
 use Manyou\BingHomepage\RequestParams;
-use Manyou\Mango\Operation\Messenger\Stamp\OperationStamp;
+use Manyou\Mango\TaskQueue\Messenger\Stamp\TaskStamp;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Stamp\DispatchAfterCurrentBusStamp;
@@ -25,14 +25,14 @@ class RetryCollectRecordHandler
 
     public function __invoke(RetryCollectRecord $command): void
     {
-        $operation = $this->repository->getRecordOperation($command->id);
+        $task = $this->repository->getRecordTask($command->id);
 
-        $response = $this->client->request(RequestParams::create(new Market($operation->market), $operation->date));
+        $response = $this->client->request(RequestParams::create(new Market($task->market), $task->date));
 
         foreach ($response as $record) {
             $this->messageBus->dispatch(new SaveRecord($record, $command->policy), [
                 new DispatchAfterCurrentBusStamp(),
-                new OperationStamp($command->id),
+                new TaskStamp($command->id),
             ]);
         }
     }

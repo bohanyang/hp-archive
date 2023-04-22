@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-use App\Bundle\ApiPlatform\ImageOperationProcessor;
-use App\Bundle\ApiPlatform\ImageOperationProvider;
 use App\Bundle\ApiPlatform\ImageProvider;
-use App\Bundle\ApiPlatform\RecordOperationProcessor;
-use App\Bundle\ApiPlatform\RecordOperationProvider;
+use App\Bundle\ApiPlatform\ImageTaskProcessor;
+use App\Bundle\ApiPlatform\ImageTaskProvider;
 use App\Bundle\ApiPlatform\RecordProvider;
-use App\Bundle\Doctrine\TableProvider\ImageOperationsTable;
-use App\Bundle\Doctrine\TableProvider\ImagesTable;
-use App\Bundle\Doctrine\TableProvider\RecordOperationsTable;
-use App\Bundle\Doctrine\TableProvider\RecordsTable;
+use App\Bundle\ApiPlatform\RecordTaskProcessor;
+use App\Bundle\ApiPlatform\RecordTaskProvider;
+use App\Bundle\Doctrine\Table\ImagesTable;
+use App\Bundle\Doctrine\Table\ImageTasksTable;
+use App\Bundle\Doctrine\Table\RecordsTable;
+use App\Bundle\Doctrine\Table\RecordTasksTable;
 use App\Bundle\ImageSpec\ImageSpecCollection;
 use App\Bundle\Message\CollectRecordsHandler;
 use App\Bundle\Message\DownloadImageHandler;
@@ -48,8 +48,8 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     // Table Provider
     $services->set(ImagesTable::class);
     $services->set(RecordsTable::class);
-    $services->set(RecordOperationsTable::class);
-    $services->set(ImageOperationsTable::class);
+    $services->set(RecordTasksTable::class);
+    $services->set(ImageTasksTable::class);
 
     // Repository
     $services->set(DoctrineRepository::class);
@@ -58,11 +58,11 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     // API Platform
     $services->set(RecordProvider::class);
     $services->set(ImageProvider::class);
-    $services->set(RecordOperationProvider::class);
-    $services->set(ImageOperationProvider::class);
-    $services->set(RecordOperationProcessor::class)
+    $services->set(RecordTaskProvider::class);
+    $services->set(ImageTaskProvider::class);
+    $services->set(RecordTaskProcessor::class)
         ->tag('mango.api_platform.dto_initializer', ['input_class' => RetryCollectRecord::class]);
-    $services->set(ImageOperationProcessor::class)
+    $services->set(ImageTaskProcessor::class)
         ->tag('mango.api_platform.dto_initializer', ['input_class' => RetryDownloadImage::class]);
 
     $services->set(CalendarUrlBasePrefixStrategy::class);

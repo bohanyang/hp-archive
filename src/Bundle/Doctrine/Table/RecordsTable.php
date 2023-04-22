@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Bundle\Doctrine\TableProvider;
+namespace App\Bundle\Doctrine\Table;
 
 use App\Bundle\Doctrine\Type\BingMarketType;
 use App\Bundle\Doctrine\Type\JsonTextType;
@@ -22,7 +22,7 @@ class RecordsTable implements TableProvider
         $table->addColumn('id', ObjectIdType::NAME, ObjectIdType::DEFAULT_OPTIONS);
         $table->addColumn('image_id', ObjectIdType::NAME, ObjectIdType::DEFAULT_OPTIONS, alias: 'imageId');
         $table->addColumn('date', Types::DATE_IMMUTABLE);
-        $table->addColumn('market', BingMarketType::NAME, BingMarketType::DEFAULT_OPTIONS);
+        $table->addColumn('market', BingMarketType::NAME);
         $table->addColumn('title', Types::STRING, ['length' => 500]);
         $table->addColumn('keyword', Types::STRING, ['length' => 500, 'notnull' => false]);
         $table->addColumn('headline', Types::STRING, ['length' => 500, 'notnull' => false]);

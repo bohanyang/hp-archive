@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Bundle\Doctrine\TableProvider;
+namespace App\Bundle\Doctrine\Table;
 
 use App\Bundle\Doctrine\Type\JsonTextType;
 use App\Bundle\Doctrine\Type\ObjectIdType;

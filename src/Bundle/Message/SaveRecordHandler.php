@@ -11,7 +11,7 @@ use ArrayObject;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use GuzzleHttp\Promise\Utils;
 use Manyou\BingHomepage\Image;
-use Manyou\Mango\Operation\Messenger\Stamp\CreateOperationStamp;
+use Manyou\Mango\TaskQueue\Messenger\Stamp\ScheduleTaskStamp;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Stamp\DispatchAfterCurrentBusStamp;
@@ -76,8 +76,8 @@ class SaveRecordHandler
 
         $this->messageBus->dispatch(new DownloadImage($input), [
             new DispatchAfterCurrentBusStamp(),
-            new CreateOperationStamp(function ($id) use ($input) {
-                $this->doctrine->createImageOperation($id, $input);
+            new ScheduleTaskStamp(function ($id) use ($input) {
+                $this->doctrine->createImageTask($id, $input);
             }),
         ]);
 

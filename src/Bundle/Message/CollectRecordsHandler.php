@@ -7,7 +7,7 @@ namespace App\Bundle\Message;
 use App\Bundle\Repository\DoctrineRepository;
 use Manyou\BingHomepage\Client\ClientInterface;
 use Manyou\BingHomepage\RequestParams;
-use Manyou\Mango\Operation\Messenger\Stamp\CreateOperationStamp;
+use Manyou\Mango\TaskQueue\Messenger\Stamp\ScheduleTaskStamp;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Stamp\DispatchAfterCurrentBusStamp;
@@ -43,8 +43,8 @@ class CollectRecordsHandler
         foreach ($this->client->request(...$requests) as $record) {
             $this->messageBus->dispatch(new SaveRecord($record), [
                 new DispatchAfterCurrentBusStamp(),
-                new CreateOperationStamp(function ($id) use ($record) {
-                    $this->repository->createRecordOperation($id, $record);
+                new ScheduleTaskStamp(function ($id) use ($record) {
+                    $this->repository->createRecordTask($id, $record);
                 }),
             ]);
         }

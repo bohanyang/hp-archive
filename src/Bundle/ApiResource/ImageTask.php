@@ -8,18 +8,18 @@ use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
-use App\Bundle\ApiPlatform\ImageOperationProcessor;
-use App\Bundle\ApiPlatform\ImageOperationProvider;
+use App\Bundle\ApiPlatform\ImageTaskProcessor;
+use App\Bundle\ApiPlatform\ImageTaskProvider;
 use App\Bundle\Message\RetryDownloadImage;
-use Manyou\Mango\Operation\Enum\OperationStatus;
+use Manyou\Mango\TaskQueue\Enum\TaskStatus;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Uid\Ulid;
 
-#[ApiResource(provider: ImageOperationProvider::class, security: 'is_authenticated()')]
+#[ApiResource(provider: ImageTaskProvider::class, security: 'is_authenticated()')]
 #[GetCollection('/image_operations', normalizationContext: ['groups' => ['read']])]
 #[Get('/image_operations/{id}')]
-#[Post('/image_operations/{id}/retry', input: RetryDownloadImage::class, output: RetryDownloadImage::class, status: 202, processor: ImageOperationProcessor::class)]
-class ImageOperation
+#[Post('/image_operations/{id}/retry', input: RetryDownloadImage::class, output: RetryDownloadImage::class, status: 202, processor: ImageTaskProcessor::class)]
+class ImageTask
 {
     public function __construct(
         #[Groups('read')]
@@ -31,7 +31,7 @@ class ImageOperation
         #[Groups('read')]
         public readonly ?array $video,
         #[Groups('read')]
-        public readonly OperationStatus $status,
+        public readonly TaskStatus $status,
         public readonly array $logs = [],
     ) {
     }

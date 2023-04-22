@@ -11,7 +11,7 @@ use App\Bundle\Repository\DoctrineRepository;
 
 use function iterator_to_array;
 
-class ImageOperationProvider implements ProviderInterface
+class RecordTaskProvider implements ProviderInterface
 {
     public function __construct(private DoctrineRepository $repository)
     {
@@ -20,13 +20,13 @@ class ImageOperationProvider implements ProviderInterface
     public function provide(Operation $operation, array $uriVariables = [], array $context = []): object|array|null
     {
         if ($operation instanceof CollectionOperationInterface) {
-            return iterator_to_array($this->repository->listImageOperations());
+            return iterator_to_array($this->repository->listRecordOperations());
         }
 
         if (! isset($uriVariables['id'])) {
             return null;
         }
 
-        return $this->repository->getImageOperation($uriVariables['id']);
+        return $this->repository->getRecordTask($uriVariables['id']);
     }
 }

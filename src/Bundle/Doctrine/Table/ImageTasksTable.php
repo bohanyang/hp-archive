@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace App\Bundle\Doctrine\TableProvider;
+namespace App\Bundle\Doctrine\Table;
 
 use App\Bundle\Doctrine\Type\ObjectIdType;
 use Doctrine\DBAL\Schema\Schema;
 use Manyou\Mango\Doctrine\Contract\TableProvider;
 use Manyou\Mango\Doctrine\Table;
-use Manyou\Mango\Operation\Doctrine\TableProvider\OperationsTable;
+use Manyou\Mango\TaskQueue\Doctrine\Table\TasksTable;
 
-class ImageOperationsTable implements TableProvider
+class ImageTasksTable implements TableProvider
 {
-    public const NAME = 'image_operations';
+    public const NAME = 'image_tasks';
 
     public function __invoke(Schema $schema): Table
     {
@@ -21,7 +21,7 @@ class ImageOperationsTable implements TableProvider
         $table->addColumn('image_id', ObjectIdType::NAME, ObjectIdType::DEFAULT_OPTIONS);
         $table->setPrimaryKey(['id']);
         $table->addUniqueIndex(['image_id']);
-        $table->addForeignKeyConstraint(OperationsTable::NAME, ['id'], ['id']);
+        $table->addForeignKeyConstraint(TasksTable::NAME, ['id'], ['id']);
         $table->addForeignKeyConstraint(ImagesTable::NAME, ['image_id'], ['id']);
 
         return $table;

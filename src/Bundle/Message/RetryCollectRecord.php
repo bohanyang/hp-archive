@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Bundle\Message;
 
 use ApiPlatform\Metadata\ApiProperty;
-use App\Bundle\ApiResource\RecordOperation;
+use App\Bundle\ApiResource\RecordTask;
 use App\Bundle\Message\SaveRecord\OnDuplicateImage;
 use Symfony\Component\Uid\Ulid;
 
@@ -15,9 +15,9 @@ class RetryCollectRecord
 
     public readonly Ulid $id;
 
-    public function __construct(RecordOperation $operation)
+    public function __construct(RecordTask $task)
     {
-        $this->id = $operation->id;
+        $this->id = $task->id;
     }
 
     #[ApiProperty(openapiContext: ['enum' => ['error', 'update', 'ignore']])]

@@ -6,11 +6,11 @@ namespace App\Bundle\ApiPlatform;
 
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProcessorInterface;
-use App\Bundle\Message\RetryDownloadImage;
+use App\Bundle\Message\RetryCollectRecord;
 use Manyou\Mango\ApiPlatform\DtoInitializerInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 
-class ImageOperationProcessor implements ProcessorInterface, DtoInitializerInterface
+class RecordTaskProcessor implements ProcessorInterface, DtoInitializerInterface
 {
     public function __construct(private MessageBusInterface $messageBus)
     {
@@ -18,12 +18,12 @@ class ImageOperationProcessor implements ProcessorInterface, DtoInitializerInter
 
     public function initialize(string $inputClass, array $attributes): ?object
     {
-        return new RetryDownloadImage($attributes['previous_data']);
+        return new RetryCollectRecord($attributes['previous_data']);
     }
 
     public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = [])
     {
-        if ($data instanceof RetryDownloadImage) {
+        if ($data instanceof RetryCollectRecord) {
             $this->messageBus->dispatch($data);
         }
 

@@ -63,7 +63,7 @@ when@prod:
                 type: fingers_crossed
                 action_level: info
                 handler: notifier_nested
-                channels: [operation]
+                channels: [task]
             notifier_nested:
                 type: service
                 id: Symfony\Bridge\Monolog\Handler\NotifierHandler

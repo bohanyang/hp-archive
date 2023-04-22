@@ -4,19 +4,19 @@ declare(strict_types=1);
 
 namespace App\Bundle\Repository;
 
-use App\Bundle\ApiResource\ImageOperation;
-use App\Bundle\ApiResource\RecordOperation;
-use App\Bundle\Doctrine\TableProvider\ImageOperationsTable;
-use App\Bundle\Doctrine\TableProvider\ImagesTable;
-use App\Bundle\Doctrine\TableProvider\RecordOperationsTable;
-use App\Bundle\Doctrine\TableProvider\RecordsTable;
+use App\Bundle\ApiResource\ImageTask;
+use App\Bundle\ApiResource\RecordTask;
+use App\Bundle\Doctrine\Table\ImagesTable;
+use App\Bundle\Doctrine\Table\ImageTasksTable;
+use App\Bundle\Doctrine\Table\RecordsTable;
+use App\Bundle\Doctrine\Table\RecordTasksTable;
 use DateTimeImmutable;
 use Generator;
 use Manyou\BingHomepage\Image;
 use Manyou\BingHomepage\Record;
 use Manyou\Mango\Doctrine\SchemaProvider;
-use Manyou\Mango\Operation\Doctrine\TableProvider\OperationLogsTable;
-use Manyou\Mango\Operation\Doctrine\TableProvider\OperationsTable;
+use Manyou\Mango\TaskQueue\Doctrine\Table\TaskLogsTable;
+use Manyou\Mango\TaskQueue\Doctrine\Table\TasksTable;
 use Symfony\Component\Uid\Ulid;
 
 use function array_keys;
@@ -79,29 +79,29 @@ class DoctrineRepository
             ->executeStatement();
     }
 
-    public function createRecordOperation(Ulid $id, Record $record): void
+    public function createRecordTask(Ulid $id, Record $record): void
     {
-        $this->schema->createQuery()->insert(RecordOperationsTable::NAME, [
+        $this->schema->createQuery()->insert(RecordTasksTable::NAME, [
             'id' => $id,
             'date' => $record->date,
             'market' => $record->market,
         ])->executeStatement();
     }
 
-    public function createImageOperation(Ulid $id, Image $image): void
+    public function createImageTask(Ulid $id, Image $image): void
     {
-        $this->schema->createQuery()->insert(ImageOperationsTable::NAME, [
+        $this->schema->createQuery()->insert(ImageTasksTable::NAME, [
             'id' => $id,
             'image_id' => $image->id,
         ])->executeStatement();
     }
 
-    public function getRecordOperation(Ulid $id): ?RecordOperation
+    public function getRecordTask(Ulid $id): ?RecordTask
     {
         $q = $this->schema->createQuery();
-        $q->selectFrom(RecordOperationsTable::NAME)
+        $q->selectFrom(RecordTasksTable::NAME)
             ->where($q->eq('id', $id))
-            ->joinOn(OperationsTable::NAME, 'id', 'id', 'status')
+            ->joinOn(TasksTable::NAME, 'id', 'id', 'status')
             ->setMaxResults(1);
 
         if (false === $data = $q->fetchAssociativeFlat()) {
@@ -110,20 +110,20 @@ class DoctrineRepository
 
         $q = $this->schema->createQuery();
 
-        $logs = $q->selectFrom(OperationLogsTable::NAME)
-            ->where($q->eq('operation_id', $id))
+        $logs = $q->selectFrom(TaskLogsTable::NAME)
+            ->where($q->eq('task_id', $id))
             ->setMaxResults(10)
             ->fetchAllAssociativeFlat();
 
-        return new RecordOperation(...$data, logs: $logs);
+        return new RecordTask(...$data, logs: $logs);
     }
 
-    public function getImageOperation(Ulid $id): ?ImageOperation
+    public function getImageTask(Ulid $id): ?ImageTask
     {
         $q = $this->schema->createQuery();
-        $q->selectFrom(ImageOperationsTable::NAME, 'id')
+        $q->selectFrom(ImageTasksTable::NAME, 'id')
             ->where($q->eq('id', $id))
-            ->joinOn(OperationsTable::NAME, 'id', 'id', 'status')
+            ->joinOn(TasksTable::NAME, 'id', 'id', 'status')
             ->joinOn(ImagesTable::NAME, 'id', 'image_id', 'name', 'urlbase', 'video')
             ->setMaxResults(1);
 
@@ -133,12 +133,12 @@ class DoctrineRepository
 
         $q = $this->schema->createQuery();
 
-        $logs = $q->selectFrom(OperationLogsTable::NAME)
-            ->where($q->eq('operation_id', $id))
+        $logs = $q->selectFrom(TaskLogsTable::NAME)
+            ->where($q->eq('task_id', $id))
             ->setMaxResults(10)
             ->fetchAllAssociativeFlat();
 
-        return new ImageOperation(...$data, logs: $logs);
+        return new ImageTask(...$data, logs: $logs);
     }
 
     public function getImagesByDate(DateTimeImmutable $date): array
@@ -171,27 +171,27 @@ class DoctrineRepository
     public function listRecordOperations(): Generator
     {
         $q = $this->schema->createQuery();
-        $q->selectFrom(RecordOperationsTable::NAME)
+        $q->selectFrom(RecordTasksTable::NAME)
             ->orderBy('id', 'DESC')
-            ->joinOn(OperationsTable::NAME, 'id', 'id', 'status')
+            ->joinOn(TasksTable::NAME, 'id', 'id', 'status')
             ->setMaxResults(100);
 
         while ($data = $q->fetchAssociativeFlat()) {
-            yield new RecordOperation(...$data);
+            yield new RecordTask(...$data);
         }
     }
 
     public function listImageOperations(): Generator
     {
         $q = $this->schema->createQuery();
-        $q->selectFrom(ImageOperationsTable::NAME, 'id')
+        $q->selectFrom(ImageTasksTable::NAME, 'id')
             ->orderBy('id', 'DESC')
-            ->joinOn(OperationsTable::NAME, 'id', 'id', 'status')
+            ->joinOn(TasksTable::NAME, 'id', 'id', 'status')
             ->joinOn(ImagesTable::NAME, 'id', 'image_id', 'name', 'urlbase', 'video')
             ->setMaxResults(100);
 
         while ($data = $q->fetchAssociativeFlat()) {
-            yield new ImageOperation(...$data);
+            yield new ImageTask(...$data);
         }
     }
 
@@ -228,7 +228,7 @@ class DoctrineRepository
         $q = $this->schema->createQuery();
 
         $q->selectFrom(ImagesTable::NAME)
-            ->joinOn(ImageOperationsTable::NAME, 'image_id', 'id', null)
+            ->joinOn(ImageTasksTable::NAME, 'image_id', 'id', null)
             ->where($q->eq('id', $id))
             ->setMaxResults(1);
 
@@ -266,6 +266,8 @@ class DoctrineRepository
         if (false === $data = $q->fetchAssociative()) {
             return null;
         }
+
+        dump($data);
 
         $record          = $data['r'];
         $record['image'] = new Image(...$data['i']);
@@ -325,13 +327,13 @@ class DoctrineRepository
             ->selectFrom(RecordsTable::NAME, 'market')
             ->where($q->eq('date', $date));
 
-        $operationQuery = $q = $this->schema->createQuery();
+        $taskQuery = $q = $this->schema->createQuery();
         $q
-            ->selectFrom(RecordOperationsTable::NAME, 'market')
+            ->selectFrom(RecordTasksTable::NAME, 'market')
             ->where($q->eq('date', $date));
 
         return $this->schema
-            ->executeMergedQuery($recordQuery, ' UNION ', $operationQuery)
+            ->executeMergedQuery($recordQuery, ' UNION ', $taskQuery)
             ->fetchFirstColumn();
     }
 }
