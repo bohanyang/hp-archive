@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace App\Bundle\Doctrine\Type;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
+use Doctrine\DBAL\Types\Type;
 use Manyou\BingHomepage\Market;
-use Manyou\Mango\Doctrine\Type\TinyIntArrayEnum;
-use Manyou\Mango\Doctrine\Type\TinyIntType;
+use Manyou\Mango\Doctrine\Type\EnumType;
 
-class BingMarketType extends TinyIntType
+class BingMarketType extends Type
 {
-    use TinyIntArrayEnum;
+    use EnumType;
 
     public const NAME = 'bing_market';
 
@@ -40,8 +40,8 @@ class BingMarketType extends TinyIntType
         ];
     }
 
-    public function convertToPHPValue($value, AbstractPlatform $platform): mixed
+    private function usingTinyInt(AbstractPlatform $platform): bool
     {
-        return $value;
+        return true;
     }
 }
