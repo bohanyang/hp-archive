@@ -41,8 +41,6 @@ class ExportToLeanCloudCommand extends Command
 
         $responses = Utils::unwrap($this->leancloud->getClient()->batch(...$requests));
 
-        dump($responses);
-
         return 0;
     }
 }

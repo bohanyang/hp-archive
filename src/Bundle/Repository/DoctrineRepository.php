@@ -267,8 +267,6 @@ class DoctrineRepository
             return null;
         }
 
-        dump($data);
-
         $record          = $data['r'];
         $record['image'] = new Image(...$data['i']);
         $record          = new Record(...$record);
