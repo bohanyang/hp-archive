@@ -1,4 +1,4 @@
-[submodule "lib"]
-	path = lib
+[submodule "manyou"]
+	path = packages/manyou
 	url = git@github.com:manyou-io/php.git
-	branch = bing
+	branch = main

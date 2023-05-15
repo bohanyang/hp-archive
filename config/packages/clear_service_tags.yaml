@@ -1,4 +1,4 @@
 when@dev:
-    remove_data_collector:
+    clear_service_tags:
         services:
             - doctrine_migrations.migrations_collector

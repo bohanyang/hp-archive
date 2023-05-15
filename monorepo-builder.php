@@ -6,12 +6,12 @@ use Symplify\MonorepoBuilder\Config\MBConfig;
 
 return static function (MBConfig $mbConfig): void {
     $mbConfig->packageDirectories([
-        __DIR__ . '/lib/src/BingHomepage',
-        __DIR__ . '/lib/src/LeanStorage',
-        __DIR__ . '/lib/src/Mango',
-        __DIR__ . '/lib/src/PromiseHttpClient',
-        __DIR__ . '/lib/src/RemoveDataCollectorBundle',
-        __DIR__ . '/lib/src/WorkermanSymfonyRuntime',
+        __DIR__ . '/packages/manyou/packages/bing-homepage',
+        __DIR__ . '/packages/manyou/packages/leanstorage',
+        __DIR__ . '/packages/manyou/packages/mango',
+        __DIR__ . '/packages/manyou/packages/promise-http-client',
+        __DIR__ . '/packages/manyou/packages/clear-service-tags-bundle',
+        __DIR__ . '/packages/manyou/packages/workerman-symfony-runtime',
     ]);
     $mbConfig->defaultBranch('main');
 };
