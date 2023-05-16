@@ -1,5 +1,4 @@
-ARG ALPINE_VERSION='3.18'
-FROM php:8.2.6-cli-alpine${ALPINE_VERSION} AS base
+FROM php:8.2-cli-alpine AS base
 
 ARG PHP_EXT_INSTALLER_VERSION="2.1.23"
 RUN set -eux; \
@@ -15,7 +14,7 @@ RUN set -eux; \
         redis \
         pdo_pgsql
 
-FROM node:18.16.0-alpine${ALPINE_VERSION} AS assets-builder
+FROM node:18-alpine AS assets-builder
 
 COPY package.json yarn.lock /app/
 
@@ -46,7 +45,7 @@ ARG COMPOSER_INSTALLER_VERSION="0a51b6fe383f7f61cf1d250c742ec655aa044c94"
 RUN set -eux; \
     curl -fsSL "https://raw.githubusercontent.com/composer/getcomposer.org/${COMPOSER_INSTALLER_VERSION}/web/installer" | php -- --quiet --install-dir=/usr/local/bin --filename=composer --version="${COMPOSER_VERSION}"
 
-ARG OFELIA_VERSION="0.3.7"
+ARG OFELIA_VERSION="0.3.6"
 RUN set -eux; \
     curl -fsSL https://github.com/mcuadros/ofelia/releases/download/v${OFELIA_VERSION}/ofelia-v${OFELIA_VERSION}-linux-amd64.tar.gz | tar -C /usr/local/bin -xzf -
 
@@ -57,7 +56,7 @@ RUN --mount=type=bind,source=.,target=/usr/src/app \
     docker/copypath /app/ \
         bin/console \
         config \
-        lib/src \
+        packages \
         postgresql_migrations \
         public \
         src \
@@ -77,13 +76,13 @@ RUN xcaddy build \
 
 FROM base
 
-ARG ALPINE_VERSION='3.18'
-ARG NGINX_VERSION='1.23.3'
+ARG ALPINE_VERSION='3.17'
+ARG NGINX_VERSION='1.23.4'
 ARG NGINX_PKG_RELEASE='-r1'
-ARG NGINX_MODULES_TAG='1.23.3-test.2'
+ARG NGINX_MODULES_TAG='1.23.4'
 ARG NGINX_BROTLI_VERSION='1.0.0'
 ARG NGINX_HEADERS_MORE_VERSION='0.34'
-ARG NGINX_BUILD_TAG='v1.23.2'
+ARG NGINX_BUILD_TAG='v1.23.4'
 
 RUN set -eux; \
     apk add --no-cache \

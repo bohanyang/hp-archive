@@ -28,7 +28,7 @@ chmod 02755 \
   /var/cache/nginx \
   /run/nginx
 
-nginx-conf app open_file_cache
+nginx-conf app.conf open_file_cache.conf
 nginx-pull-config -- su-exec www-data:www-data nginx -e /run/s6/nginx-error-log.fifo -g 'pid /run/nginx/nginx.pid;' -t
 
 rm -rf \
