@@ -4,46 +4,27 @@ declare(strict_types=1);
 
 namespace App\Bundle\Security;
 
-use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Uid\Ulid;
 
-class User implements UserInterface, PasswordAuthenticatedUserInterface
+class User implements UserInterface
 {
     public function __construct(
-        private Ulid $id,
-        private string $username,
-        private ?string $password = null,
+        public string $id,
+        public array $roles,
     ) {
-    }
-
-    public function getId(): Ulid
-    {
-        return $this->id;
-    }
-
-    public function getPassword(): ?string
-    {
-        return $this->password;
     }
 
     public function getRoles(): array
     {
-        return ['ROLE_USER'];
+        return $this->roles;
     }
 
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
-        $this->password = null;
-    }
-
-    public function getUsername(): string
-    {
-        return $this->username;
     }
 
     public function getUserIdentifier(): string
     {
-        return $this->username;
+        return $this->id;
     }
 }

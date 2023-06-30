@@ -16,7 +16,7 @@ use Manyou\Mango\TaskQueue\Enum\TaskStatus;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Uid\Ulid;
 
-#[ApiResource(provider: RecordTaskProvider::class, security: 'is_authenticated()')]
+#[ApiResource(provider: RecordTaskProvider::class, security: 'is_granted("ROLE_STAFF")')]
 #[GetCollection('/record_operations', normalizationContext: ['groups' => ['read']])]
 #[Get('/record_operations/{id}')]
 #[Post('/record_operations/{id}/retry', input: RetryCollectRecord::class, output: RetryCollectRecord::class, status: 202, processor: RecordTaskProcessor::class)]

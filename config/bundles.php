@@ -19,4 +19,7 @@ return [
     Pentatrion\ViteBundle\PentatrionViteBundle::class => ['all' => true],
     Rompetomp\InertiaBundle\RompetompInertiaBundle::class => ['all' => true],
     Manyou\WorkermanSymfonyRuntime\WorkermanSymfonyRuntimeBundle::class => ['all' => true],
+    Jose\Bundle\JoseFramework\JoseFrameworkBundle::class => ['all' => true],
+    Lexik\Bundle\JWTAuthenticationBundle\LexikJWTAuthenticationBundle::class => ['all' => true],
+    SpomkyLabs\LexikJoseBundle\SpomkyLabsLexikJoseBundle::class => ['all' => true],
 ];

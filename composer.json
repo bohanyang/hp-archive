@@ -32,6 +32,7 @@
         "psr/http-server-handler": "^1.0",
         "psr/log": "^2.0 || ^3.0",
         "rompetomp/inertia-bundle": "^2.4",
+        "spomky-labs/lexik-jose-bridge": "^4.0",
         "symfony/config": "^6.1",
         "symfony/console": "6.2.*",
         "symfony/dependency-injection": "^6.1",
@@ -63,6 +64,7 @@
         "thecodingmachine/safe": "^2.4",
         "twig/extra-bundle": "^2.12|^3.0",
         "twig/twig": "^2.12|^3.0",
+        "web-token/jwt-bundle": "^3.2",
         "workerman/workerman": "^4.0"
     },
     "require-dev": {

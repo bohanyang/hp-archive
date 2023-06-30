@@ -15,7 +15,7 @@ use Manyou\Mango\TaskQueue\Enum\TaskStatus;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Uid\Ulid;
 
-#[ApiResource(provider: ImageTaskProvider::class, security: 'is_authenticated()')]
+#[ApiResource(provider: ImageTaskProvider::class, security: 'is_granted("ROLE_STAFF")')]
 #[GetCollection('/image_operations', normalizationContext: ['groups' => ['read']])]
 #[Get('/image_operations/{id}')]
 #[Post('/image_operations/{id}/retry', input: RetryDownloadImage::class, output: RetryDownloadImage::class, status: 202, processor: ImageTaskProcessor::class)]

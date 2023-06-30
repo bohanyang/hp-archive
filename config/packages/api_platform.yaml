@@ -16,3 +16,6 @@ api_platform:
         jsonproblem:
             mime_types:
                 - application/problem+json
+    oauth:
+        pkce: true
+        clientId: '%env(OAUTH_CLIENT_ID)%'

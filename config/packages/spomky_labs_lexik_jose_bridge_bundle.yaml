@@ -1,0 +1,13 @@
+lexik_jose:
+    ttl: 1000
+    server_name: '%env(SL_JOSE_BRIDGE_SERVER_NAME)%'
+    key_set: '%env(SL_JOSE_BRIDGE_SIGNATURE_KEYSET)%'
+    audience: '%env(SL_JOSE_BRIDGE_AUDIENCE)%'
+    signature_algorithm: 'RS256'
+    key_index: 0
+    encryption:
+        enabled: false
+        key_set: '%env(SL_JOSE_BRIDGE_SIGNATURE_KEYSET)%'
+        key_index: 0
+        key_encryption_algorithm: ~
+        content_encryption_algorithm: ~
