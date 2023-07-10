@@ -14,7 +14,10 @@ use App\Bundle\Monolog\Slack3001Processor;
 use App\Bundle\Repository\DoctrineRepository;
 use App\Controller\MainController;
 use Doctrine\DBAL\Connection;
+use Jose\Component\Checker\AudienceChecker;
+use Jose\Component\Checker\IssuerChecker;
 use Manyou\Mango\Doctrine\SchemaProvider;
+use Manyou\Mango\Jose\AlgHeaderChecker;
 use Symfony\Bridge\Monolog\Handler\NotifierHandler;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
@@ -134,4 +137,16 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 
     $services->set(MainController::class)
         ->arg('$origin', env('APP_ORIGIN'));
+
+    $services->set('jose.checker.claim.access_token_audience', AudienceChecker::class)
+        ->args([env('SL_JOSE_BRIDGE_AUDIENCE')])
+        ->tag('jose.checker.claim', ['alias' => 'access_token_audience']);
+
+    $services->set('jose.checker.claim.access_token_issuer', IssuerChecker::class)
+        ->args([[env('SL_JOSE_BRIDGE_SERVER_NAME')]])
+        ->tag('jose.checker.claim', ['alias' => 'access_token_issuer']);
+
+    $services->set('jose.checker.header.access_token_signature_algorithm', AlgHeaderChecker::class)
+        ->args(['RS256'])
+        ->tag('jose.checker.header', ['alias' => 'access_token_signature_algorithm']);
 };

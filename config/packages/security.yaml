@@ -15,7 +15,9 @@ security:
             stateless: true
             lazy: true
             provider: zitadel
-            jwt: ~
+            access_token:
+                token_handler: Manyou\Mango\Jose\JWTHandler
+                token_extractors: ['header']
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall

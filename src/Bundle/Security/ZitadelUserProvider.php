@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace App\Bundle\Security;
 
-use Lexik\Bundle\JWTAuthenticationBundle\Security\User\PayloadAwareUserProviderInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 use function array_unique;
 use function str_replace;
 use function strtoupper;
 
-class ZitadelUserProvider implements PayloadAwareUserProviderInterface
+class ZitadelUserProvider implements UserProviderInterface
 {
     public function __construct(
         #[Autowire('%env(SL_JOSE_BRIDGE_AUDIENCE)%')]
@@ -34,26 +34,14 @@ class ZitadelUserProvider implements PayloadAwareUserProviderInterface
             }
         }
 
-        if ($roles === []) {
-            $roles[] = 'ROLE_USER';
-        }
+        $roles[] = 'ROLE_USER';
 
         return array_unique($roles);
     }
 
-    public function loadUserByIdentifierAndPayload(string $identifier, array $payload): UserInterface
-    {
-        return new User($identifier, $this->extractRolesFromPayload($payload));
-    }
-
-    public function loadUserByUsernameAndPayload(string $username, array $payload): UserInterface
-    {
-        return $this->loadUserByIdentifierAndPayload($username, $payload);
-    }
-
     public function refreshUser(UserInterface $user): UserInterface
     {
-        throw new AuthenticationException('`refreshUser` is not supported.');
+        throw new AuthenticationException('Cannot refresh user: not supported.');
     }
 
     public function supportsClass(string $class): bool
@@ -61,8 +49,12 @@ class ZitadelUserProvider implements PayloadAwareUserProviderInterface
         return $class === User::class;
     }
 
-    public function loadUserByIdentifier(string $identifier): UserInterface
+    public function loadUserByIdentifier(string $identifier, ?array $payload = null): UserInterface
     {
-        throw new UserNotFoundException('Cannot load user without JWT payload.');
+        if (! $payload) {
+            throw new UserNotFoundException('Cannot load user without JWT payload.');
+        }
+
+        return new User($identifier, $this->extractRolesFromPayload($payload));
     }
 }

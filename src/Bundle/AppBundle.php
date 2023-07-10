@@ -15,7 +15,7 @@ use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
 
 class AppBundle extends AbstractBundle
 {
-    public function build(ContainerBuilder $container)
+    public function build(ContainerBuilder $container): void
     {
         $container->addCompilerPass(new DoctrineTypePass([
             BingMarketType::NAME => BingMarketType::class,
