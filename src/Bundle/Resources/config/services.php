@@ -4,10 +4,6 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-use App\Bundle\ApiPlatform\ImageTaskProcessor;
-use App\Bundle\ApiPlatform\RecordTaskProcessor;
-use App\Bundle\Message\RetryCollectRecord;
-use App\Bundle\Message\RetryDownloadImage;
 use Manyou\BingHomepage\Client\CalendarUrlBasePrefixStrategy;
 use Manyou\BingHomepage\Client\ClientInterface;
 use Manyou\BingHomepage\Client\ImageArchiveClient;
@@ -30,12 +26,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 
     $services->load('App\\Bundle\\', dirname(__DIR__, 2) . '/')
         ->exclude(dirname(__DIR__, 2) . '/{Resources,AppBundle.php}');
-
-    $services->set(RecordTaskProcessor::class)
-        ->tag('mango.api_platform.dto_initializer', ['input_class' => RetryCollectRecord::class]);
-
-    $services->set(ImageTaskProcessor::class)
-        ->tag('mango.api_platform.dto_initializer', ['input_class' => RetryDownloadImage::class]);
 
     $services->set(CalendarUrlBasePrefixStrategy::class);
     $services->alias(UrlBasePrefixStrategy::class, CalendarUrlBasePrefixStrategy::class);

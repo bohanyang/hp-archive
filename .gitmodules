@@ -1,4 +1,0 @@
-[submodule "manyou"]
-	path = packages/manyou
-	url = git@github.com:manyou-io/php.git
-	branch = main

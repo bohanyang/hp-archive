@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Bundle\Message;
 
-use ApiPlatform\Metadata\ApiProperty;
 use App\Bundle\ApiResource\RecordTask;
 use App\Bundle\Message\SaveRecord\OnDuplicateImage;
 use Symfony\Component\Uid\Ulid;
@@ -20,7 +19,6 @@ class RetryCollectRecord
         $this->id = $task->id;
     }
 
-    #[ApiProperty(openapiContext: ['enum' => ['error', 'update', 'ignore']])]
     public function setPolicy(string $policy = 'error')
     {
         $this->policy = match ($policy) {
