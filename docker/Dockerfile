@@ -56,7 +56,6 @@ RUN --mount=type=bind,source=.,target=/usr/src/app \
     docker/copypath /app/ \
         bin/console \
         config \
-        packages \
         postgresql_migrations \
         public \
         src \
