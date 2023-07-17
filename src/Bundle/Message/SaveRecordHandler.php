@@ -11,6 +11,7 @@ use ArrayObject;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use GuzzleHttp\Promise\Utils;
 use Manyou\BingHomepage\Image;
+use Manyou\Mango\Doctrine\SchemaProvider;
 use Manyou\Mango\TaskQueue\Messenger\Stamp\ScheduleTaskStamp;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Messenger\MessageBusInterface;
@@ -23,21 +24,24 @@ class SaveRecordHandler
         private DoctrineRepository $doctrine,
         private LeanCloudRepository $leancloud,
         private MessageBusInterface $messageBus,
+        private SchemaProvider $schema,
     ) {
     }
 
     public function __invoke(SaveRecord $command): void
     {
-        // buffer LeanCloud requests
-        $requests = new ArrayObject();
+        $this->schema->transactional(function () use ($command) {
+            // buffer LeanCloud requests
+            $requests = new ArrayObject();
 
-        $record = $command->record->with(image: $this->saveImage($command, $requests));
+            $record = $command->record->with(image: $this->saveImage($command, $requests));
 
-        $this->doctrine->createRecord($record);
-        $requests[] = $this->leancloud->createRecordRequest($record);
+            $this->doctrine->createRecord($record);
+            $requests[] = $this->leancloud->createRecordRequest($record);
 
-        // commit
-        Utils::unwrap($this->leancloud->getClient()->batch(...$requests));
+            // commit
+            Utils::unwrap($this->leancloud->getClient()->batch(...$requests));
+        });
     }
 
     private function imageEquals(Image $a, Image $b): bool
@@ -52,7 +56,7 @@ class SaveRecordHandler
         $input = $command->record->image;
 
         try {
-            $this->doctrine->getSchemaProvider()->getConnection()->transactional(function () use ($input, $requests) {
+            $this->schema->transactional(function () use ($input, $requests) {
                 $this->doctrine->createImage($input);
                 $requests[] = $this->leancloud->createImageRequest($input);
             });

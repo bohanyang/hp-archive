@@ -28,11 +28,6 @@ class DoctrineRepository
     {
     }
 
-    public function getSchemaProvider(): SchemaProvider
-    {
-        return $this->schema;
-    }
-
     public function createImage(Image $image): void
     {
         $this->schema->createQuery()
