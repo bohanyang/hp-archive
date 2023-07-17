@@ -5,13 +5,11 @@ set -eux
 mkdir -p \
   /var/log/workerman \
   /var/log/messenger-consumer \
-  /var/log/cron-jobs \
   /run/workerman
 
 chown nobody:nogroup \
   /var/log/workerman \
-  /var/log/messenger-consumer \
-  /var/log/cron-jobs
+  /var/log/messenger-consumer
 
 chown www-data:www-data \
   /run/workerman
@@ -19,13 +17,10 @@ chown www-data:www-data \
 chmod 02755 \
   /var/log/workerman \
   /var/log/messenger-consumer \
-  /var/log/cron-jobs \
   /run/workerman
 
 mkfifo -m 0600 \
-  /run/s6/workerman-log.fifo \
-  /run/s6/cron-jobs-log.fifo
+  /run/s6/workerman-log.fifo
 
 chown www-data:www-data \
-  /run/s6/workerman-log.fifo \
-  /run/s6/cron-jobs-log.fifo
+  /run/s6/workerman-log.fifo

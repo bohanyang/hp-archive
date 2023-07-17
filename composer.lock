@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "53aeb0f0e15e48b879638d768c0812d1",
+    "content-hash": "e3660a573cbe45419eae409eae5d9a1b",
     "packages": [
         {
             "name": "async-aws/core",
@@ -1209,6 +1209,67 @@
             "time": "2022-05-23T21:33:49+00:00"
         },
         {
+            "name": "dragonmantank/cron-expression",
+            "version": "v3.3.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dragonmantank/cron-expression.git",
+                "reference": "782ca5968ab8b954773518e9e49a6f892a34b2a8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dragonmantank/cron-expression/zipball/782ca5968ab8b954773518e9e49a6f892a34b2a8",
+                "reference": "782ca5968ab8b954773518e9e49a6f892a34b2a8",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2|^8.0",
+                "webmozart/assert": "^1.0"
+            },
+            "replace": {
+                "mtdowling/cron-expression": "^1.0"
+            },
+            "require-dev": {
+                "phpstan/extension-installer": "^1.0",
+                "phpstan/phpstan": "^1.0",
+                "phpstan/phpstan-webmozart-assert": "^1.0",
+                "phpunit/phpunit": "^7.0|^8.0|^9.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Cron\\": "src/Cron/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Chris Tankersley",
+                    "email": "chris@ctankersley.com",
+                    "homepage": "https://github.com/dragonmantank"
+                }
+            ],
+            "description": "CRON for PHP: Calculate the next or previous run date and determine if a CRON expression is due",
+            "keywords": [
+                "cron",
+                "schedule"
+            ],
+            "support": {
+                "issues": "https://github.com/dragonmantank/cron-expression/issues",
+                "source": "https://github.com/dragonmantank/cron-expression/tree/v3.3.2"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/dragonmantank",
+                    "type": "github"
+                }
+            ],
+            "time": "2022-09-10T18:51:20+00:00"
+        },
+        {
             "name": "guzzlehttp/promises",
             "version": "1.5.3",
             "source": {
@@ -1710,12 +1771,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/manyou-io/mango.git",
-                "reference": "cf768736119382bf447d0dc1707a679eaf92a47b"
+                "reference": "4eaeb5ddbce1fe30d22b5b5051e68394ab2b98ab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/manyou-io/mango/zipball/cf768736119382bf447d0dc1707a679eaf92a47b",
-                "reference": "cf768736119382bf447d0dc1707a679eaf92a47b",
+                "url": "https://api.github.com/repos/manyou-io/mango/zipball/4eaeb5ddbce1fe30d22b5b5051e68394ab2b98ab",
+                "reference": "4eaeb5ddbce1fe30d22b5b5051e68394ab2b98ab",
                 "shasum": ""
             },
             "require": {
@@ -1730,6 +1791,7 @@
                 "symfony/framework-bundle": "^6.3",
                 "symfony/messenger": "^6.3",
                 "symfony/monolog-bundle": "^3.8",
+                "symfony/scheduler": "^6.3",
                 "symfony/uid": "^6.3"
             },
             "require-dev": {
@@ -1774,7 +1836,7 @@
                 "issues": "https://github.com/manyou-io/mango/issues",
                 "source": "https://github.com/manyou-io/mango/tree/main"
             },
-            "time": "2023-07-11T07:15:36+00:00"
+            "time": "2023-07-17T09:35:22+00:00"
         },
         {
             "name": "manyou/promise-http-client",
@@ -6195,6 +6257,84 @@
             "time": "2023-06-21T12:08:28+00:00"
         },
         {
+            "name": "symfony/scheduler",
+            "version": "v6.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/scheduler.git",
+                "reference": "71c4be54a2e27d6aa98cb7011ff56e626de84a09"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/scheduler/zipball/71c4be54a2e27d6aa98cb7011ff56e626de84a09",
+                "reference": "71c4be54a2e27d6aa98cb7011ff56e626de84a09",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1",
+                "symfony/clock": "^6.3"
+            },
+            "require-dev": {
+                "dragonmantank/cron-expression": "^3.1",
+                "symfony/cache": "^5.4|^6.0",
+                "symfony/dependency-injection": "^5.4|^6.0",
+                "symfony/lock": "^5.4|^6.0",
+                "symfony/messenger": "^6.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Scheduler\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sergey Rabochiy",
+                    "email": "upyx.00@gmail.com"
+                },
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Provides scheduling through Symfony Messenger",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "cron",
+                "schedule",
+                "scheduler"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/scheduler/tree/v6.3.0"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2023-05-22T08:28:32+00:00"
+        },
+        {
             "name": "symfony/security-bundle",
             "version": "v6.3.1",
             "source": {
@@ -9630,16 +9770,16 @@
         },
         {
             "name": "psy/psysh",
-            "version": "v0.11.18",
+            "version": "v0.11.19",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bobthecow/psysh.git",
-                "reference": "4f00ee9e236fa6a48f4560d1300b9c961a70a7ec"
+                "reference": "1724ceff278daeeac5a006744633bacbb2dc4706"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/4f00ee9e236fa6a48f4560d1300b9c961a70a7ec",
-                "reference": "4f00ee9e236fa6a48f4560d1300b9c961a70a7ec",
+                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/1724ceff278daeeac5a006744633bacbb2dc4706",
+                "reference": "1724ceff278daeeac5a006744633bacbb2dc4706",
                 "shasum": ""
             },
             "require": {
@@ -9700,9 +9840,9 @@
             ],
             "support": {
                 "issues": "https://github.com/bobthecow/psysh/issues",
-                "source": "https://github.com/bobthecow/psysh/tree/v0.11.18"
+                "source": "https://github.com/bobthecow/psysh/tree/v0.11.19"
             },
-            "time": "2023-05-23T02:31:11+00:00"
+            "time": "2023-07-15T19:42:19+00:00"
         },
         {
             "name": "sebastian/cli-parser",

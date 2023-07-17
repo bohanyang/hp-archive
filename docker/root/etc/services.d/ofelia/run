@@ -1,6 +1,0 @@
-#!/command/with-contenv sh
-# shellcheck shell=sh
-
-set -eux
-
-exec su-exec www-data:www-data ofelia daemon --config=config.ini

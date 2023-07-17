@@ -40,7 +40,8 @@ class CollectRecords
         ?DateTimeImmutable $date = null,
         array $markets = self::DEFAULT_MARKETS,
     ) {
-        $this->date  = ($date ??= (new CurrentTime())->getTheLaterDate());
+        $this->date = ($date ??= (new CurrentTime())->getTheLaterDate());
+
         $this->markets = array_values(array_filter(
             array_map(static fn (string $market) => new Market($market), $markets),
             static function (Market $market) use ($date) {

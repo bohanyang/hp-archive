@@ -18,6 +18,7 @@
         "doctrine/doctrine-bundle": "^2.7",
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/migrations": "^3.2",
+        "dragonmantank/cron-expression": "^3.3",
         "guzzlehttp/promises": "^1.4",
         "league/uri": "^6.8",
         "league/uri-components": "^2.4",
