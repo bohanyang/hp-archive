@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Command;
 
-use App\Bundle\Message\CollectRecords;
+use App\Bundle\Message\TriggerCollectRecords;
 use Manyou\Mango\Scheduler\Scheduler;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -23,7 +23,7 @@ class RecurringSchedulesCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->scheduler->recurring(
-            RecurringMessage::cron('0 * * * *', new CollectRecords())->withJitter(30),
+            RecurringMessage::cron('0 * * * *', new TriggerCollectRecords())->withJitter(30),
             'collect_records',
         );
 
