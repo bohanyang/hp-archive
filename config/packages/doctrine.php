@@ -13,6 +13,7 @@ return static function (ContainerConfigurator $containerConfigurator, DoctrineCo
     $connection = $dbal->connection('default');
     $connection->url(env('DATABASE_URL')->resolve());
     $connection->schemaFilter('`^(?!messenger_)`');
+    $connection->schemaManagerFactory('doctrine.dbal.default_schema_manager_factory');
     // IMPORTANT: You MUST configure your server version,
     // either here or in the DATABASE_URL env var (see .env file)
     // $connection->serverVersion('13');
