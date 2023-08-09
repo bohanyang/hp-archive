@@ -15,7 +15,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 use function array_map;
-use function dump;
 
 #[AsCommand(name: 'export:to-leancloud')]
 class ExportToLeanCloudCommand extends Command

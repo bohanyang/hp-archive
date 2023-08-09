@@ -21,7 +21,8 @@ use Manyou\Mango\Jose\AlgHeaderChecker;
 use Symfony\Bridge\Monolog\Handler\NotifierHandler;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
-    $services = $containerConfigurator->services();
+    $services   = $containerConfigurator->services();
+    $parameters = $containerConfigurator->parameters();
 
     $services
         ->defaults()
@@ -42,6 +43,9 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         $services->set(Slack3001Processor::class)
             ->tag('monolog.processor', ['handler' => 'notifier']);
     }
+
+    $services->alias('mango.scheduler.transport', 'messenger.transport.async');
+    $parameters->set('mango.scheduler.transport', 'async');
 
     // Import source
     $services->set('app.doctrine.schema_provider.source')

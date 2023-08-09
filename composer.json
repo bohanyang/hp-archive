@@ -28,6 +28,7 @@
         "manyou/mango": "^0.1.0@dev",
         "manyou/promise-http-client": "^0.1.0@dev",
         "manyou/workerman-symfony-runtime": "^0.1.0@dev",
+        "moneyphp/money": "^4.1",
         "monolog/monolog": "^3.0",
         "nyholm/psr7": "^1.5",
         "pentatrion/vite-bundle": "^2.2",

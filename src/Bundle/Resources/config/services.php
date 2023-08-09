@@ -25,7 +25,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->autoconfigure();
 
     $services->load('App\\Bundle\\', dirname(__DIR__, 2) . '/')
-        ->exclude(dirname(__DIR__, 2) . '/{Resources,AppBundle.php}');
+        ->exclude(dirname(__DIR__, 2) . '/{ApiResource,Resources,AppBundle.php}');
 
     $services->set(CalendarUrlBasePrefixStrategy::class);
     $services->alias(UrlBasePrefixStrategy::class, CalendarUrlBasePrefixStrategy::class);
