@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Command;
 
 use App\Bundle\Message\RetryCollectRecord;
+use App\Bundle\Message\SaveRecord\OnDuplicateImage;
 use App\Bundle\Repository\DoctrineRepository;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -35,7 +36,7 @@ class RetryRecordTaskCommand extends Command
         }
 
         $message = new RetryCollectRecord($this->repository->getRecordTask($id));
-        $message->setPolicy($input->getOption('policy'));
+        $message->setPolicy(OnDuplicateImage::from($input->getOption('policy')));
         $this->messageBus->dispatch($message);
 
         return 0;

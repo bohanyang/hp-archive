@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Bundle\Message\SaveRecord;
 
-enum OnDuplicateImage
+enum OnDuplicateImage: string
 {
-    case THROW_IF_DIFFER;
-    case UPDATE_EXISTING;
-    case REFER_EXISTING;
+    case THROW_IF_DIFFER = 'error';
+    case UPDATE_EXISTING = 'update';
+    case REFER_EXISTING  = 'ignore';
 }

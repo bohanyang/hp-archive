@@ -19,12 +19,8 @@ class RetryCollectRecord
         $this->id = $task->id;
     }
 
-    public function setPolicy(string $policy = 'error')
+    public function setPolicy(OnDuplicateImage $policy)
     {
-        $this->policy = match ($policy) {
-            'error' => OnDuplicateImage::THROW_IF_DIFFER,
-            'update' => OnDuplicateImage::UPDATE_EXISTING,
-            'ignore' => OnDuplicateImage::REFER_EXISTING,
-        };
+        $this->policy = $policy;
     }
 }
