@@ -249,13 +249,19 @@ class DoctrineRepository
         return new Image(...$data);
     }
 
-    public function getRecord(string $market, DateTimeImmutable $date): ?Record
+    public function getRecord(string $market, ?DateTimeImmutable $date = null): ?Record
     {
         $q = $this->schema->createQuery();
 
         $q->selectFrom([RecordsTable::NAME, 'r'])
-            ->where($q->eq('market', $market), $q->eq('date', $date))
-            ->joinOn([ImagesTable::NAME, 'i'], 'id', 'image_id')
+            ->where($q->eq('market', $market));
+
+        if ($date !== null) {
+            $q->andWhere($q->eq('date', $date));
+        }
+
+        $q->joinOn([ImagesTable::NAME, 'i'], 'id', 'image_id')
+            ->orderBy('date', 'DESC')
             ->setMaxResults(1);
 
         if (false === $data = $q->fetchAssociative()) {

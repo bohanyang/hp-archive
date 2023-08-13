@@ -26,7 +26,7 @@ class MainController extends AbstractController
 
     public function record(string $market, ?string $date)
     {
-        $date = $date === null ? (new Market($market))->getToday() : DateTimeImmutable::createFromFormat('!Ymd', $date);
+        $date = $date !== null ? DateTimeImmutable::createFromFormat('!Ymd', $date) : null;
 
         if (
             (false === $date)
