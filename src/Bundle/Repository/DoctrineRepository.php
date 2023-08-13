@@ -254,14 +254,14 @@ class DoctrineRepository
         $q = $this->schema->createQuery();
 
         $q->selectFrom([RecordsTable::NAME, 'r'])
-            ->where($q->eq('market', $market));
+            ->where($q->eq('market', $market))
+            ->orderBy('date', 'DESC');
 
         if ($date !== null) {
             $q->andWhere($q->eq('date', $date));
         }
 
         $q->joinOn([ImagesTable::NAME, 'i'], 'id', 'image_id')
-            ->orderBy('date', 'DESC')
             ->setMaxResults(1);
 
         if (false === $data = $q->fetchAssociative()) {
