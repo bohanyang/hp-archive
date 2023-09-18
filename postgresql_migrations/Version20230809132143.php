@@ -25,7 +25,7 @@ final class Version20230809132143 extends AbstractMigration
         $this->addSql('ALTER TABLE scheduled_messages DROP COLUMN last_dispatched_at;');
         $this->addSql('ALTER TABLE scheduled_messages DROP COLUMN envelope;');
         $this->addSql('ALTER TABLE scheduled_messages ADD message_id BIGINT NOT NULL;');
-        $this->addSql('ALTER TABLE scheduled_messages ADD CONSTRAINT scheduled_messages_pk2 UNIQUE (message_id);');
+        $this->addSql('ALTER TABLE scheduled_messages ADD CONSTRAINT UNIQ_AAD75C49537A1329 UNIQUE (message_id);');
     }
 
     public function down(Schema $schema): void

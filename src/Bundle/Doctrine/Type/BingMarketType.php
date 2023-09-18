@@ -7,7 +7,7 @@ namespace App\Bundle\Doctrine\Type;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\Type;
 use Manyou\BingHomepage\Market;
-use Manyou\Mango\Doctrine\Type\EnumType;
+use Mango\Doctrine\Type\EnumType;
 
 class BingMarketType extends Type
 {

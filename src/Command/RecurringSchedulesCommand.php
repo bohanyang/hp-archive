@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Command;
 
 use App\Bundle\Message\TriggerCollectRecords;
-use Manyou\Mango\Scheduler\Scheduler;
+use Mango\Scheduler\Scheduler;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;

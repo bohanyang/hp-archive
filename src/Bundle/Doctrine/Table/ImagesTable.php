@@ -6,18 +6,21 @@ namespace App\Bundle\Doctrine\Table;
 
 use App\Bundle\Doctrine\Type\JsonTextType;
 use App\Bundle\Doctrine\Type\ObjectIdType;
-use Doctrine\DBAL\Schema\Schema;
 use Doctrine\DBAL\Types\Types;
-use Manyou\Mango\Doctrine\Contract\TableProvider;
-use Manyou\Mango\Doctrine\Table;
+use Mango\Doctrine\Schema\TableBuilder;
+use Mango\Doctrine\Table;
 
-class ImagesTable implements TableProvider
+class ImagesTable implements TableBuilder
 {
     public const NAME = 'images';
 
-    public function __invoke(Schema $schema): Table
+    public function getName(): string
     {
-        $table = new Table($schema, self::NAME);
+        return self::NAME;
+    }
+
+    public function build(Table $table): void
+    {
         $table->addColumn('id', ObjectIdType::NAME, ObjectIdType::DEFAULT_OPTIONS);
         $table->addColumn('name', Types::STRING, ['length' => 500]);
         $table->addColumn('debut_on', Types::DATE_IMMUTABLE, alias: 'debutOn');
@@ -28,7 +31,5 @@ class ImagesTable implements TableProvider
         $table->setPrimaryKey(['id']);
         $table->addUniqueIndex(['name']);
         $table->addIndex(['debut_on', 'id']);
-
-        return $table;
     }
 }

@@ -8,7 +8,7 @@ use App\Bundle\Repository\DoctrineRepository;
 use Manyou\BingHomepage\Client\ClientInterface;
 use Manyou\BingHomepage\Market;
 use Manyou\BingHomepage\RequestParams;
-use Manyou\Mango\TaskQueue\Messenger\Stamp\TaskStamp;
+use Mango\TaskQueue\Messenger\Stamp\TaskStamp;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Stamp\DispatchAfterCurrentBusStamp;

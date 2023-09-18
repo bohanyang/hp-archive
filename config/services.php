@@ -16,8 +16,8 @@ use App\Controller\MainController;
 use Doctrine\DBAL\Connection;
 use Jose\Component\Checker\AudienceChecker;
 use Jose\Component\Checker\IssuerChecker;
-use Manyou\Mango\Doctrine\SchemaProvider;
-use Manyou\Mango\Jose\AlgHeaderChecker;
+use Mango\Doctrine\SchemaProvider;
+use Mango\Jose\AlgHeaderChecker;
 use Symfony\Bridge\Monolog\Handler\NotifierHandler;
 
 return static function (ContainerConfigurator $containerConfigurator): void {

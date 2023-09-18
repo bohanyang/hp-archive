@@ -12,11 +12,11 @@ use App\Bundle\Doctrine\Table\RecordsTable;
 use App\Bundle\Doctrine\Table\RecordTasksTable;
 use DateTimeImmutable;
 use Generator;
+use Mango\Doctrine\SchemaProvider;
+use Mango\TaskQueue\Doctrine\Table\TaskLogsTable;
+use Mango\TaskQueue\Doctrine\Table\TasksTable;
 use Manyou\BingHomepage\Image;
 use Manyou\BingHomepage\Record;
-use Manyou\Mango\Doctrine\SchemaProvider;
-use Manyou\Mango\TaskQueue\Doctrine\Table\TaskLogsTable;
-use Manyou\Mango\TaskQueue\Doctrine\Table\TasksTable;
 use Symfony\Component\Uid\Ulid;
 
 use function array_keys;

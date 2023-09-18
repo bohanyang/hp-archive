@@ -1,6 +1,6 @@
 FROM php:8.2-cli-alpine AS base
 
-ARG PHP_EXT_INSTALLER_VERSION="2.1.40"
+ARG PHP_EXT_INSTALLER_VERSION="2.1.52"
 RUN set -eux; \
     curl -o /usr/local/bin/install-php-extensions -fsSL https://github.com/mlocati/docker-php-extension-installer/releases/download/${PHP_EXT_INSTALLER_VERSION}/install-php-extensions; \
     chmod a+rx /usr/local/bin/install-php-extensions; \
@@ -16,12 +16,15 @@ RUN set -eux; \
 
 FROM node:18-alpine AS assets-builder
 
-COPY package.json yarn.lock /app/
+COPY package.json pnpm-lock.yaml /app/
 
-RUN --mount=type=cache,target=/root/.yarn \
+RUN --mount=type=cache,target=/root/.local/share/pnpm/store \
+    --mount=type=cache,target=/root/.cache/pnpm \
     set -eux; \
+    corepack enable; \
+    corepack prepare pnpm@latest --activate; \
     cd /app; \
-    YARN_CACHE_FOLDER=/root/.yarn yarn
+    pnpm install
 
 RUN --mount=type=bind,source=.,target=/usr/src/app \
     set -eux; \
@@ -31,7 +34,7 @@ RUN --mount=type=bind,source=.,target=/usr/src/app \
         tsconfig.json \
         vite.config.js; \
     cd /app; \
-    yarn build
+    pnpm build
 
 FROM base AS builder
 
@@ -40,7 +43,7 @@ RUN mkdir /overlay; \
     curl -fsSL https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-noarch.tar.xz | tar -C /overlay -xJpf -; \
     curl -fsSL https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-x86_64.tar.xz | tar -C /overlay -xJpf -
 
-ARG COMPOSER_VERSION="2.5.8"
+ARG COMPOSER_VERSION="2.6.3"
 ARG COMPOSER_INSTALLER_VERSION="70527179915d55b3811bebaec55926afd331091b"
 RUN set -eux; \
     curl -fsSL "https://raw.githubusercontent.com/composer/getcomposer.org/${COMPOSER_INSTALLER_VERSION}/web/installer" | php -- --quiet --install-dir=/usr/local/bin --filename=composer --version="${COMPOSER_VERSION}"
@@ -64,7 +67,7 @@ RUN --mount=type=bind,source=.,target=/usr/src/app \
     APP_ENV=prod \
     composer install --no-dev -d /app -o
 
-FROM caddy:2.7.2-builder-alpine AS caddy-builder
+FROM caddy:2.7.4-builder-alpine AS caddy-builder
 
 RUN xcaddy build \
     --with github.com/abiosoft/caddy-yaml

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Bundle\ApiResource;
 
 use DateTimeImmutable;
-use Manyou\Mango\TaskQueue\Enum\TaskStatus;
+use Mango\TaskQueue\Enum\TaskStatus;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Uid\Ulid;
 

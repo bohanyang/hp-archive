@@ -16,7 +16,7 @@ security:
             lazy: true
             provider: zitadel
             access_token:
-                token_handler: Manyou\Mango\Jose\JWTHandler
+                token_handler: Mango\Jose\JWTHandler
                 token_extractors: ['header']
 
             # activate different ways to authenticate

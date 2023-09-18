@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Bundle\Message;
 
 use App\Bundle\Repository\DoctrineRepository;
-use Manyou\Mango\TaskQueue\Messenger\Stamp\TaskStamp;
+use Mango\TaskQueue\Messenger\Stamp\TaskStamp;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Stamp\DispatchAfterCurrentBusStamp;

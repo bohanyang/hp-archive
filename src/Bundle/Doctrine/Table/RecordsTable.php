@@ -7,18 +7,21 @@ namespace App\Bundle\Doctrine\Table;
 use App\Bundle\Doctrine\Type\BingMarketType;
 use App\Bundle\Doctrine\Type\JsonTextType;
 use App\Bundle\Doctrine\Type\ObjectIdType;
-use Doctrine\DBAL\Schema\Schema;
 use Doctrine\DBAL\Types\Types;
-use Manyou\Mango\Doctrine\Contract\TableProvider;
-use Manyou\Mango\Doctrine\Table;
+use Mango\Doctrine\Schema\TableBuilder;
+use Mango\Doctrine\Table;
 
-class RecordsTable implements TableProvider
+class RecordsTable implements TableBuilder
 {
     public const NAME = 'records';
 
-    public function __invoke(Schema $schema): Table
+    public function getName(): string
     {
-        $table = new Table($schema, self::NAME);
+        return self::NAME;
+    }
+
+    public function build(Table $table): void
+    {
         $table->addColumn('id', ObjectIdType::NAME, ObjectIdType::DEFAULT_OPTIONS);
         $table->addColumn('image_id', ObjectIdType::NAME, ObjectIdType::DEFAULT_OPTIONS, alias: 'imageId');
         $table->addColumn('date', Types::DATE_IMMUTABLE);
@@ -34,7 +37,5 @@ class RecordsTable implements TableProvider
         $table->setPrimaryKey(['id']);
         $table->addUniqueIndex(['date', 'market']);
         $table->addForeignKeyConstraint(ImagesTable::NAME, ['image_id'], ['id']);
-
-        return $table;
     }
 }

@@ -7,7 +7,7 @@ namespace App\Bundle\Message;
 use App\Bundle\Repository\DoctrineRepository;
 use Manyou\BingHomepage\Client\ClientInterface;
 use Manyou\BingHomepage\RequestParams;
-use Manyou\Mango\TaskQueue\Messenger\Stamp\ScheduleTaskStamp;
+use Mango\TaskQueue\Messenger\Stamp\ScheduleTaskStamp;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Stamp\DispatchAfterCurrentBusStamp;

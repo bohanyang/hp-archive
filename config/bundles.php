@@ -13,7 +13,7 @@ return [
     Twig\Extra\TwigExtraBundle\TwigExtraBundle::class => ['all' => true],
     Fidry\PsyshBundle\PsyshBundle::class => ['dev' => true, 'test' => true],
     Manyou\ClearServiceTagsBundle\ClearServiceTagsBundle::class => ['dev' => true],
-    Manyou\Mango\Bundle\MangoBundle::class => ['all' => true],
+    Mango\Bundle\MangoBundle::class => ['all' => true],
     App\Bundle\AppBundle::class => ['all' => true],
     Pentatrion\ViteBundle\PentatrionViteBundle::class => ['all' => true],
     Rompetomp\InertiaBundle\RompetompInertiaBundle::class => ['all' => true],
