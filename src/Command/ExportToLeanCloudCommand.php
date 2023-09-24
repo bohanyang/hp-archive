@@ -16,12 +16,12 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 use function array_map;
 
-#[AsCommand(name: 'export:to-leancloud')]
+#[AsCommand(name: 'export:to-leanCloud')]
 class ExportToLeanCloudCommand extends Command
 {
     public function __construct(
         private DoctrineRepository $repository,
-        private LeanCloudRepository $leancloud,
+        private LeanCloudRepository $leanCloud,
     ) {
         parent::__construct();
     }
@@ -34,11 +34,11 @@ class ExportToLeanCloudCommand extends Command
     {
         /** @var Batchable[] */
         $requests = array_map(
-            fn ($data) => $this->leancloud->createImageRequest(new Image(...$data)),
+            fn ($data) => $this->leanCloud->createImageRequest(new Image(...$data)),
             $this->repository->exportImagesWhere(),
         );
 
-        $responses = Utils::unwrap($this->leancloud->getClient()->batch(...$requests));
+        $responses = Utils::unwrap($this->leanCloud->getClient()->batch(...$requests));
 
         return 0;
     }

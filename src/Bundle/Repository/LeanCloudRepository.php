@@ -43,12 +43,17 @@ class LeanCloudRepository
         return new CreateObject($this->recordClass, $this->normalizeRecord($record));
     }
 
-    public function updateImageRequest(Image $image): UpdateObject
+    public function updateImageRequest(Image $image, bool $baseUrl = false): UpdateObject
     {
         return new UpdateObject($this->imageClass, $image->id, [
             'copyright' => $image->copyright,
             'wp' => $image->downloadable,
-        ]);
+        ] + ($baseUrl ? ['urlbase' => $image->urlbase] : []));
+    }
+
+    public function updateRecordRequest(Record $record): UpdateObject
+    {
+        return new UpdateObject($this->recordClass, $record->id, $this->normalizeRecord($record));
     }
 
     public function exportImages(?DateTimeInterface $createdLaterThan = null): Generator

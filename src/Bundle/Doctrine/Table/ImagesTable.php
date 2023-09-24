@@ -23,7 +23,7 @@ class ImagesTable implements TableBuilder
     {
         $table->addColumn('id', ObjectIdType::NAME, ObjectIdType::DEFAULT_OPTIONS);
         $table->addColumn('name', Types::STRING, ['length' => 500]);
-        $table->addColumn('debut_on', Types::DATE_IMMUTABLE, alias: 'debutOn');
+        $table->addColumn('debut_on', Types::DATE_IMMUTABLE);
         $table->addColumn('urlbase', Types::STRING, ['length' => 500]);
         $table->addColumn('copyright', Types::STRING, ['length' => 500]);
         $table->addColumn('downloadable', Types::BOOLEAN);

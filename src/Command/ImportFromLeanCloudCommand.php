@@ -13,7 +13,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 
-#[AsCommand(name: 'import:from-leancloud')]
+#[AsCommand(name: 'import:from-leanCloud')]
 class ImportFromLeanCloudCommand extends Command
 {
     public function __construct(private MessageBusInterface $messageBus)

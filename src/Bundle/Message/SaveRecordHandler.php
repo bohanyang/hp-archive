@@ -10,9 +10,9 @@ use App\Bundle\Repository\LeanCloudRepository;
 use ArrayObject;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use GuzzleHttp\Promise\Utils;
-use Manyou\BingHomepage\Image;
 use Mango\Doctrine\SchemaProvider;
 use Mango\TaskQueue\Messenger\Stamp\ScheduleTaskStamp;
+use Manyou\BingHomepage\Image;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Stamp\DispatchAfterCurrentBusStamp;
@@ -22,7 +22,7 @@ class SaveRecordHandler
 {
     public function __construct(
         private DoctrineRepository $doctrine,
-        private LeanCloudRepository $leancloud,
+        private LeanCloudRepository $leanCloud,
         private MessageBusInterface $messageBus,
         private SchemaProvider $schema,
     ) {
@@ -37,10 +37,10 @@ class SaveRecordHandler
             $record = $command->record->with(image: $this->saveImage($command, $requests));
 
             $this->doctrine->createRecord($record);
-            $requests[] = $this->leancloud->createRecordRequest($record);
+            $requests[] = $this->leanCloud->createRecordRequest($record);
 
             // commit
-            Utils::unwrap($this->leancloud->getClient()->batch(...$requests));
+            Utils::unwrap($this->leanCloud->getClient()->batch(...$requests));
         });
     }
 
@@ -58,7 +58,7 @@ class SaveRecordHandler
         try {
             $this->schema->transactional(function () use ($input, $requests) {
                 $this->doctrine->createImage($input);
-                $requests[] = $this->leancloud->createImageRequest($input);
+                $requests[] = $this->leanCloud->createImageRequest($input);
             });
         } catch (UniqueConstraintViolationException $e) {
             $existing = $this->doctrine->getImage($input->name);
@@ -70,7 +70,7 @@ class SaveRecordHandler
             if ($command->updateExisting()) {
                 $updated = $input->with(id: $existing->id);
                 $this->doctrine->updateImage($updated);
-                $requests[] = $this->leancloud->updateImageRequest($updated);
+                $requests[] = $this->leanCloud->updateImageRequest($updated);
 
                 return $updated;
             }

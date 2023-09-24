@@ -13,13 +13,13 @@ class ImportFromLeanCloudHandler
 {
     public function __construct(
         private DoctrineRepository $doctrine,
-        private LeanCloudRepository $leancloud,
+        private LeanCloudRepository $leanCloud,
     ) {
     }
 
     public function __invoke(ImportFromLeanCloud $command): void
     {
-        Utils::iterate($this->leancloud->exportImages($command->createdLaterThan), [$this->doctrine, 'importImages']);
-        Utils::iterate($this->leancloud->exportRecords($command->createdLaterThan), [$this->doctrine, 'importRecords']);
+        Utils::iterate($this->leanCloud->exportImages($command->createdLaterThan), [$this->doctrine, 'importImages']);
+        Utils::iterate($this->leanCloud->exportRecords($command->createdLaterThan), [$this->doctrine, 'importRecords']);
     }
 }

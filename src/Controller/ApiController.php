@@ -10,7 +10,6 @@ use App\Bundle\Repository\DoctrineRepository;
 use Mango\HttpKernel\AsPayloadInitializer;
 use Mango\HttpKernel\MapRequestPayload;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -31,13 +30,9 @@ class ApiController
     }
 
     #[AsPayloadInitializer]
-    public function initRetryRecord(Request $request): RetryCollectRecord
+    public function initRetryRecord(Ulid $id): RetryCollectRecord
     {
-        if (! $id = $request->attributes->get('id')) {
-            throw new NotFoundHttpException();
-        }
-
-        if (! $task = $this->repository->getRecordTask(Ulid::fromString($id))) {
+        if (! $task = $this->repository->getRecordTask($id)) {
             throw new NotFoundHttpException();
         }
 
@@ -55,13 +50,9 @@ class ApiController
     }
 
     #[AsPayloadInitializer]
-    public function initRetryImage(Request $request): RetryDownloadImage
+    public function initRetryImage(Ulid $id): RetryDownloadImage
     {
-        if (! $id = $request->attributes->get('id')) {
-            throw new NotFoundHttpException();
-        }
-
-        if (! $task = $this->repository->getImageTask(Ulid::fromString($id))) {
+        if (! $task = $this->repository->getImageTask($id)) {
             throw new NotFoundHttpException();
         }
 
