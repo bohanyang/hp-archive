@@ -11,7 +11,7 @@ class SaveRecord
 {
     public function __construct(
         public readonly Record $record,
-        public readonly OnDuplicateImage $policy = OnDuplicateImage::THROW_IF_DIFFER,
+        public readonly OnDuplicateImage $policy = OnDuplicateImage::REFER_EXISTING,
     ) {
     }
 

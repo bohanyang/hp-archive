@@ -6,8 +6,8 @@ namespace App\Bundle\Doctrine\Type;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\Type;
-use Manyou\BingHomepage\Market;
 use Mango\Doctrine\Type\EnumType;
+use Manyou\BingHomepage\Market;
 
 class BingMarketType extends Type
 {

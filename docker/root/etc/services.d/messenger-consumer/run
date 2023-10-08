@@ -6,4 +6,4 @@ set -eux
 cd /app
 
 exec 2>&1
-exec su-exec www-data:www-data bin/console messenger:consume -vv async
+exec su-exec www-data:www-data bin/console messenger:consume -vv scheduler_default

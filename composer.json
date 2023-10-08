@@ -39,6 +39,7 @@
         "psr/http-server-handler": "^1.0",
         "psr/log": "^2.0 || ^3.0",
         "rompetomp/inertia-bundle": "^2.4",
+        "symfony/amazon-mailer": "6.3.*",
         "symfony/config": "^6.3",
         "symfony/console": "6.3.*",
         "symfony/dependency-injection": "^6.3",
@@ -52,17 +53,17 @@
         "symfony/http-client-implementation": "^3.0",
         "symfony/http-foundation": "^6.3",
         "symfony/http-kernel": "^6.3",
+        "symfony/mailer": "6.3.*",
         "symfony/messenger": "^6.3",
         "symfony/monolog-bundle": "^3.8",
-        "symfony/notifier": "6.3.*",
         "symfony/property-access": "6.3.*",
         "symfony/property-info": "6.3.*",
         "symfony/psr-http-message-bridge": "^2.1",
         "symfony/redis-messenger": "6.3.*",
         "symfony/runtime": "^6.3",
+        "symfony/scheduler": "6.3.*",
         "symfony/security-bundle": "6.3.*",
         "symfony/serializer": "6.3.*",
-        "symfony/slack-notifier": "6.3.*",
         "symfony/twig-bundle": "6.3.*",
         "symfony/uid": "^6.3",
         "symfony/validator": "6.3.*",
@@ -145,7 +146,8 @@
     "extra": {
         "symfony": {
             "allow-contrib": false,
-            "require": "6.3.*"
+            "require": "6.3.*",
+            "docker": false
         }
     },
     "minimum-stability": "dev",

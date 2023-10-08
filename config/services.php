@@ -10,7 +10,6 @@ use App\Bundle\Downloader\Storage\ReplicatedStorage;
 use App\Bundle\Downloader\VideoDownloader;
 use App\Bundle\Message\ImportFromLeanCloudHandler;
 use App\Bundle\Message\ImportFromSqlHandler;
-use App\Bundle\Monolog\Slack3001Processor;
 use App\Bundle\Repository\DoctrineRepository;
 use App\Controller\MainController;
 use Doctrine\DBAL\Connection;
@@ -18,7 +17,6 @@ use Jose\Component\Checker\AudienceChecker;
 use Jose\Component\Checker\IssuerChecker;
 use Mango\Doctrine\SchemaProvider;
 use Mango\Jose\AlgHeaderChecker;
-use Symfony\Bridge\Monolog\Handler\NotifierHandler;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
     $services   = $containerConfigurator->services();
@@ -37,12 +35,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             __DIR__ . '/../src/Entity/',
             __DIR__ . '/../src/Kernel.php',
         ]);
-
-    if ('prod' === $containerConfigurator->env()) {
-        $services->set(NotifierHandler::class);
-        $services->set(Slack3001Processor::class)
-            ->tag('monolog.processor', ['handler' => 'notifier']);
-    }
 
     $services->alias('mango.scheduler.transport', 'messenger.transport.async');
     $parameters->set('mango.scheduler.transport', 'async');

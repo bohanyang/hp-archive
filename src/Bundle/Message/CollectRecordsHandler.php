@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Bundle\Message;
 
 use App\Bundle\Repository\DoctrineRepository;
-use Mango\TaskQueue\Messenger\Stamp\ScheduleTaskStamp;
 use Manyou\BingHomepage\Client\ClientInterface;
 use Manyou\BingHomepage\RequestParams;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
@@ -41,12 +40,7 @@ class CollectRecordsHandler
         $requests = array_map(static fn ($market) => RequestParams::create($market, $date), $markets);
 
         foreach ($this->client->request(...$requests) as $record) {
-            $this->messageBus->dispatch(new SaveRecord($record), [
-                new DispatchAfterCurrentBusStamp(),
-                new ScheduleTaskStamp(function ($id) use ($record) {
-                    $this->repository->createRecordTask($id, $record);
-                }),
-            ]);
+            $this->messageBus->dispatch(new SaveRecord($record), [new DispatchAfterCurrentBusStamp()]);
         }
     }
 }

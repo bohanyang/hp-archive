@@ -4,15 +4,14 @@ declare(strict_types=1);
 
 namespace App\Bundle\Message;
 
-use App\Bundle\Message\SaveRecord\ImageConfliction;
 use App\Bundle\Repository\DoctrineRepository;
 use App\Bundle\Repository\LeanCloudRepository;
 use ArrayObject;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use GuzzleHttp\Promise\Utils;
 use Mango\Doctrine\SchemaProvider;
-use Mango\TaskQueue\Messenger\Stamp\ScheduleTaskStamp;
 use Manyou\BingHomepage\Image;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Stamp\DispatchAfterCurrentBusStamp;
@@ -25,6 +24,7 @@ class SaveRecordHandler
         private LeanCloudRepository $leanCloud,
         private MessageBusInterface $messageBus,
         private SchemaProvider $schema,
+        private LoggerInterface $logger,
     ) {
     }
 
@@ -53,22 +53,28 @@ class SaveRecordHandler
 
     private function saveImage(SaveRecord $command, ArrayObject $requests): Image
     {
-        $input = $command->record->image;
+        $record = $command->record;
+        $image  = $record->image;
 
         try {
-            $this->schema->transactional(function () use ($input, $requests) {
-                $this->doctrine->createImage($input);
-                $requests[] = $this->leanCloud->createImageRequest($input);
+            $this->schema->transactional(function () use ($image, $requests) {
+                $this->doctrine->createImage($image);
+                $requests[] = $this->leanCloud->createImageRequest($image);
             });
-        } catch (UniqueConstraintViolationException $e) {
-            $existing = $this->doctrine->getImage($input->name);
+        } catch (UniqueConstraintViolationException) {
+            $existing = $this->doctrine->getImage($image->name);
 
-            if ($command->throwIfDiffer() && ! $this->imageEquals($input, $existing)) {
-                throw ImageConfliction::create($command->record, $existing, $e);
+            if (! $this->imageEquals($image, $existing)) {
+                $this->logger->error('Image differs from the existing one.', [
+                    'market' => $record->market,
+                    'date' => $record->date,
+                    'image' => (array) $image,
+                    'existing' => (array) $existing,
+                ]);
             }
 
             if ($command->updateExisting()) {
-                $updated = $input->with(id: $existing->id);
+                $updated = $image->with(id: $existing->id);
                 $this->doctrine->updateImage($updated);
                 $requests[] = $this->leanCloud->updateImageRequest($updated);
 
@@ -78,13 +84,8 @@ class SaveRecordHandler
             return $existing;
         }
 
-        $this->messageBus->dispatch(new DownloadImage($input), [
-            new DispatchAfterCurrentBusStamp(),
-            new ScheduleTaskStamp(function ($id) use ($input) {
-                $this->doctrine->createImageTask($id, $input);
-            }),
-        ]);
+        $this->messageBus->dispatch(new DownloadImage($image), [new DispatchAfterCurrentBusStamp()]);
 
-        return $input;
+        return $image;
     }
 }

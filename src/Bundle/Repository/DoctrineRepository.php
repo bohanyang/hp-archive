@@ -4,20 +4,12 @@ declare(strict_types=1);
 
 namespace App\Bundle\Repository;
 
-use App\Bundle\ApiResource\ImageTask;
-use App\Bundle\ApiResource\RecordTask;
 use App\Bundle\Doctrine\Table\ImagesTable;
-use App\Bundle\Doctrine\Table\ImageTasksTable;
 use App\Bundle\Doctrine\Table\RecordsTable;
-use App\Bundle\Doctrine\Table\RecordTasksTable;
 use DateTimeImmutable;
-use Generator;
 use Mango\Doctrine\SchemaProvider;
-use Mango\TaskQueue\Doctrine\Table\TaskLogsTable;
-use Mango\TaskQueue\Doctrine\Table\TasksTable;
 use Manyou\BingHomepage\Image;
 use Manyou\BingHomepage\Record;
-use Symfony\Component\Uid\Ulid;
 
 use function array_keys;
 use function array_values;
@@ -82,72 +74,6 @@ class DoctrineRepository
             ->executeStatement(1);
     }
 
-    public function createRecordTask(Ulid $id, Record $record): void
-    {
-        $this->schema->createQuery()->insert(RecordTasksTable::NAME, [
-            'id' => $id,
-            'date' => $record->date,
-            'market' => $record->market,
-        ])->executeStatement();
-    }
-
-    public function createImageTask(Ulid $id, Image $image): void
-    {
-        $this->schema->createQuery()->insert(ImageTasksTable::NAME, [
-            'id' => $id,
-            'image_id' => $image->id,
-        ])->executeStatement();
-    }
-
-    public function getRecordTask(Ulid $id): ?RecordTask
-    {
-        $q = $this->schema->createQuery();
-        $q->from(RecordTasksTable::NAME)
-            ->select()
-            ->where(id: $id)
-            ->joinOn(TasksTable::NAME, 'id', 'id', 'status')
-            ->setMaxResults(1);
-
-        if (false === $data = $q->fetchAssociativeFlat()) {
-            return null;
-        }
-
-        $q = $this->schema->createQuery();
-
-        $logs = $q->from(TaskLogsTable::NAME)
-            ->select()
-            ->where(task_id: $id)
-            ->setMaxResults(10)
-            ->fetchAllAssociativeFlat();
-
-        return new RecordTask(...$data, logs: $logs);
-    }
-
-    public function getImageTask(Ulid $id): ?ImageTask
-    {
-        $q = $this->schema->createQuery();
-        $q->from(ImageTasksTable::NAME, 'id')
-            ->select()
-            ->where(id: $id)
-            ->joinOn(TasksTable::NAME, 'id', 'id', 'status')
-            ->joinOn(ImagesTable::NAME, 'id', 'image_id', 'name', 'urlbase', 'video')
-            ->setMaxResults(1);
-
-        if (false === $data = $q->fetchAssociativeFlat()) {
-            return null;
-        }
-
-        $q = $this->schema->createQuery();
-
-        $logs = $q->from(TaskLogsTable::NAME)
-            ->select()
-            ->where(task_id: $id)
-            ->setMaxResults(10)
-            ->fetchAllAssociativeFlat();
-
-        return new ImageTask(...$data, logs: $logs);
-    }
-
     public function getImagesByDate(DateTimeImmutable $date): array
     {
         $q = $this->schema->createQuery();
@@ -175,35 +101,6 @@ class DoctrineRepository
         }
 
         return array_values($images);
-    }
-
-    public function listRecordOperations(): Generator
-    {
-        $q = $this->schema->createQuery();
-        $q->from(RecordTasksTable::NAME)
-            ->select()
-            ->orderBy('id', 'DESC')
-            ->joinOn(TasksTable::NAME, 'id', 'id', 'status')
-            ->setMaxResults(100);
-
-        while ($data = $q->fetchAssociativeFlat()) {
-            yield new RecordTask(...$data);
-        }
-    }
-
-    public function listImageOperations(): Generator
-    {
-        $q = $this->schema->createQuery();
-        $q->from(ImageTasksTable::NAME, 'id')
-            ->select()
-            ->orderBy('id', 'DESC')
-            ->joinOn(TasksTable::NAME, 'id', 'id', 'status')
-            ->joinOn(ImagesTable::NAME, 'id', 'image_id', 'name', 'urlbase', 'video')
-            ->setMaxResults(100);
-
-        while ($data = $q->fetchAssociativeFlat()) {
-            yield new ImageTask(...$data);
-        }
     }
 
     public function getImage(string $name): ?Image
@@ -234,23 +131,6 @@ class DoctrineRepository
             ->addOrderBy('id', 'DESC');
 
         return $q->fetchAllAssociativeFlat();
-    }
-
-    public function getImageByOperationId(Ulid $id): ?Image
-    {
-        $q = $this->schema->createQuery();
-
-        $q->from(ImagesTable::NAME)
-            ->select()
-            ->joinOn(ImageTasksTable::NAME, 'image_id', 'id', null)
-            ->where(id: $id)
-            ->setMaxResults(1);
-
-        if (false === $data = $q->fetchAssociativeFlat()) {
-            return null;
-        }
-
-        return new Image(...$data);
     }
 
     public function getImageById(string $id): ?Image
@@ -346,18 +226,10 @@ class DoctrineRepository
 
     public function getMarketsPendingOrExisting(DateTimeImmutable $date): array
     {
-        $recordQuery = $q = $this->schema->createQuery();
-        $q->from(RecordsTable::NAME)
+        return $this->schema->createQuery()
+            ->from(RecordsTable::NAME, 'r')
             ->select('market')
-            ->where(date: $date);
-
-        $taskQuery = $q = $this->schema->createQuery();
-        $q->from(RecordTasksTable::NAME)
-            ->select('market')
-            ->where(date: $date);
-
-        return $this->schema
-            ->executeMergedQuery($recordQuery, ' UNION ', $taskQuery)
+            ->where(date: $date)
             ->fetchFirstColumn();
     }
 }

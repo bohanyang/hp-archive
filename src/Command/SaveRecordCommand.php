@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace App\Command;
 
-use App\Bundle\Message\DownloadImage;
 use App\Bundle\Repository\DoctrineRepository;
+use DateTimeImmutable;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -15,8 +16,11 @@ use Symfony\Component\Messenger\MessageBusInterface;
 #[AsCommand(name: 'app:save-record')]
 class SaveRecordCommand extends Command
 {
-    public function __construct(private MessageBusInterface $messageBus, private DoctrineRepository $repository)
-    {
+    public function __construct(
+        private MessageBusInterface $messageBus,
+        private DoctrineRepository $repository,
+        private LoggerInterface $logger,
+    ) {
         parent::__construct();
     }
 
@@ -43,9 +47,27 @@ class SaveRecordCommand extends Command
         //     new DateTimeImmutable('2023-09-23'),
         //     'fr-CA',
         // ));
-        $this->messageBus->dispatch(new DownloadImage(
-            $this->repository->getImageById('5d983fad12215f00720d4c5f'),
-        ));
+        // $this->messageBus->dispatch(new DownloadImage(
+        //     $this->repository->getImageById('5d983fad12215f00720d4c5f'),
+        // ));
+
+        $this->logger->error('TEST ERROR 3');
+        $image  = $this->repository->getImage('Rothenburg');
+        $date   = new DateTimeImmutable('2023-08-24');
+        $market = 'de-DE';
+        $this->logger->error('TEST ERROR', [
+            'market' => $market,
+            'date' => $date,
+            'image' => (array) $image,
+        ]);
+        
+        $this->logger->error('TEST ERROR 2', [
+            'market' => $market,
+            'date' => $date,
+            'image' => (array) $image,
+        ]);
+
+        $this->logger->error('TEST ERROR 3');
 
         return 0;
     }
