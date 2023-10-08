@@ -6,5 +6,3 @@ set -eux
 cd /app
 
 su-exec www-data:www-data bin/console doctrine:migrations:migrate --no-interaction --allow-no-migration
-su-exec www-data:www-data bin/console messenger:setup-transports
-su-exec www-data:www-data bin/console app:recurring-schedules

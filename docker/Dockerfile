@@ -12,7 +12,8 @@ RUN set -eux; \
         intl \
         pcntl \
         redis \
-        pdo_pgsql
+        pdo_pgsql \
+        gmp
 
 FROM node:18-alpine AS assets-builder
 
