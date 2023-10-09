@@ -28,8 +28,8 @@ class ImagesTable implements TableBuilder
         $table->addColumn('copyright', Types::STRING, ['length' => 500]);
         $table->addColumn('downloadable', Types::BOOLEAN);
         $table->addColumn('video', JsonTextType::NAME, ['length' => 2000, 'notnull' => false]);
-        $table->setPrimaryKey(['id']);
-        $table->addUniqueIndex(['name']);
-        $table->addIndex(['debut_on', 'id']);
+        $table->setPrimaryKey(['id'], 'images_pk');
+        $table->addUniqueIndex(['name'], 'images_name_uindex');
+        $table->addIndex(['debut_on', 'id'], 'images_debut_on_id_index');
     }
 }

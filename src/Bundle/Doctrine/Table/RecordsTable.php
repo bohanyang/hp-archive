@@ -22,8 +22,8 @@ class RecordsTable implements TableBuilder
 
     public function build(Table $table): void
     {
-        $table->addColumn('id', ObjectIdType::NAME, ObjectIdType::DEFAULT_OPTIONS);
-        $table->addColumn('image_id', ObjectIdType::NAME, ObjectIdType::DEFAULT_OPTIONS);
+        $table->addColumn('id', ObjectIdType::NAME, ObjectIdType::DEFAULT_OPTIONS, 'records_pk');
+        $table->addColumn('image_id', ObjectIdType::NAME, ObjectIdType::DEFAULT_OPTIONS, 'records_images_id_fk');
         $table->addColumn('date', Types::DATE_IMMUTABLE);
         $table->addColumn('market', BingMarketType::NAME);
         $table->addColumn('title', Types::STRING, ['length' => 500]);
@@ -34,8 +34,8 @@ class RecordsTable implements TableBuilder
         $table->addColumn('hotspots', JsonTextType::NAME, ['length' => 2000, 'notnull' => false]);
         $table->addColumn('messages', JsonTextType::NAME, ['length' => 2000, 'notnull' => false]);
         $table->addColumn('coverstory', JsonTextType::NAME, ['length' => 2000, 'notnull' => false]);
-        $table->setPrimaryKey(['id']);
-        $table->addUniqueIndex(['date', 'market']);
-        $table->addForeignKeyConstraint(ImagesTable::NAME, ['image_id'], ['id']);
+        $table->setPrimaryKey(['id'], 'records_pk');
+        $table->addUniqueIndex(['date', 'market'], 'records_date_market_uindex');
+        $table->addForeignKeyConstraint(ImagesTable::NAME, ['image_id'], ['id'], ['onUpdate' => 'CASCADE', 'onDelete' => 'RESTRICT'], 'records_images_id_fk');
     }
 }
