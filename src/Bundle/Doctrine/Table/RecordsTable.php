@@ -22,8 +22,8 @@ class RecordsTable implements TableBuilder
 
     public function build(Table $table): void
     {
-        $table->addColumn('id', ObjectIdType::NAME, ObjectIdType::DEFAULT_OPTIONS, 'records_pk');
-        $table->addColumn('image_id', ObjectIdType::NAME, ObjectIdType::DEFAULT_OPTIONS, 'records_images_id_fk');
+        $table->addColumn('id', ObjectIdType::NAME, ObjectIdType::DEFAULT_OPTIONS);
+        $table->addColumn('image_id', ObjectIdType::NAME, ObjectIdType::DEFAULT_OPTIONS);
         $table->addColumn('date', Types::DATE_IMMUTABLE);
         $table->addColumn('market', BingMarketType::NAME);
         $table->addColumn('title', Types::STRING, ['length' => 500]);
