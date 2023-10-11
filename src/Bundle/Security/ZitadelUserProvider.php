@@ -17,9 +17,9 @@ use function strtoupper;
 class ZitadelUserProvider implements UserProviderInterface
 {
     public function __construct(
-        #[Autowire('%env(SL_JOSE_BRIDGE_AUDIENCE)%')]
+        #[Autowire('%env(ZITADEL_PROJECT_ID)%')]
         private string $projectId,
-        #[Autowire('%env(ZITADEL_ORG_ID)%')]
+        #[Autowire('%env(ZITADEL_ORGANIZATION_ID)%')]
         private string $orgId,
     ) {
     }

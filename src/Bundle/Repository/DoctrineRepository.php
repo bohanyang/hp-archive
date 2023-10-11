@@ -51,7 +51,7 @@ class DoctrineRepository
     public function getRecordsByImageId(string $id): array
     {
         $q = $this->schema->createQuery();
-        $q->from(RecordsTable::NAME)
+        $q->from(RecordsTable::NAME, 'r')
             ->select('title', 'market', 'date', 'keyword')
             ->where(image_id: $id)
             ->orderBy('date');
@@ -76,10 +76,9 @@ class DoctrineRepository
 
     public function getImagesByDate(DateTimeImmutable $date): array
     {
-        $q = $this->schema->createQuery();
-
-        $records = $q->from(RecordsTable::NAME, 'image_id', 'market')
-            ->select()
+        $records = $this->schema->createQuery()
+            ->from(RecordsTable::NAME, 'r')
+            ->select('imageId', 'market')
             ->where(date: $date)
             ->fetchColumnGrouped();
 
@@ -87,13 +86,10 @@ class DoctrineRepository
             return [];
         }
 
-        $imageIds = array_keys($records);
-
-        $q = $this->schema->createQuery();
-
-        $images = $q->from(ImagesTable::NAME, 'id', 'name', 'urlbase')
-            ->select()
-            ->where($q->in('id', $imageIds))
+        $images = $this->schema->createQuery()
+            ->from(ImagesTable::NAME, 'i')
+            ->select('id', 'name', 'urlbase')
+            ->where(id: array_keys($records))
             ->fetchAllAssociativeIndexed();
 
         foreach ($records as $imageId => $markets) {
@@ -107,7 +103,7 @@ class DoctrineRepository
     {
         $q = $this->schema->createQuery();
 
-        $q->from(ImagesTable::NAME)
+        $q->from(ImagesTable::NAME, 'i')
             ->select()
             ->where(name: $name)
             ->setMaxResults(1);
@@ -123,9 +119,8 @@ class DoctrineRepository
     public function browse(DateTimeImmutable $cursor, DateTimeImmutable $prevCursor): array
     {
         $q = $this->schema->createQuery();
-
-        $q->from(ImagesTable::NAME, 'name', 'urlbase')
-            ->select()
+        $q->from(ImagesTable::NAME, 'i')
+            ->select('name', 'urlbase')
             ->where($q->gt('debutOn', $cursor), $q->lte('debutOn', $prevCursor))
             ->addOrderBy('debutOn', 'DESC')
             ->addOrderBy('id', 'DESC');
@@ -135,14 +130,14 @@ class DoctrineRepository
 
     public function getImageById(string $id): ?Image
     {
-        $q = $this->schema->createQuery();
-
-        $q->from(ImagesTable::NAME)
+        $data = $this->schema->createQuery()
+            ->from(ImagesTable::NAME, 'i')
             ->select()
             ->where(id: $id)
-            ->setMaxResults(1);
+            ->setMaxResults(1)
+            ->fetchAssociativeFlat();
 
-        if (false === $data = $q->fetchAssociativeFlat()) {
+        if (false === $data) {
             return null;
         }
 
@@ -151,9 +146,8 @@ class DoctrineRepository
 
     public function getRecord(string $market, ?DateTimeImmutable $date = null): ?Record
     {
-        $q = $this->schema->createQuery();
-
-        $q->from(RecordsTable::NAME, 'r')
+        $q = $this->schema->createQuery()
+            ->from(RecordsTable::NAME, 'r')
             ->select()
             ->where(market: $market)
             ->orderBy('date', 'DESC');
@@ -179,9 +173,8 @@ class DoctrineRepository
     /** @return array[] */
     public function exportImages(): array
     {
-        return $this->schema
-            ->createQuery()
-            ->from(ImagesTable::NAME)
+        return $this->schema->createQuery()
+            ->from(ImagesTable::NAME, 'i')
             ->select()
             ->orderBy('id')
             ->fetchAllAssociativeFlat();
@@ -190,10 +183,8 @@ class DoctrineRepository
     /** @return array[] */
     public function exportImagesWhere(): array
     {
-        $q = $this->schema
-            ->createQuery();
-
-        return $q->from(ImagesTable::NAME)
+        return $this->schema->createQuery()
+            ->from(ImagesTable::NAME, 'i')
             ->select()
             ->orderBy('id')
             ->where(debutOn: new DateTimeImmutable('2022-11-20T00:00:00.000000Z'))
@@ -203,10 +194,8 @@ class DoctrineRepository
     /** @return array[] */
     public function exportRecordsWhere(): array
     {
-        $q = $this->schema
-            ->createQuery();
-
-        return $q->from(RecordsTable::NAME)
+        return $this->schema->createQuery()
+            ->from(RecordsTable::NAME, 'r')
             ->select()
             ->orderBy('id')
             ->where(date: new DateTimeImmutable('2022-11-19T00:00:00.000000Z'))
@@ -216,9 +205,8 @@ class DoctrineRepository
     /** @return array[] */
     public function exportRecords(): array
     {
-        return $this->schema
-            ->createQuery()
-            ->from(RecordsTable::NAME)
+        return $this->schema->createQuery()
+            ->from(RecordsTable::NAME, 'r')
             ->select()
             ->orderBy('id')
             ->fetchAllAssociativeFlat();

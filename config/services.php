@@ -17,10 +17,21 @@ use Jose\Component\Checker\AudienceChecker;
 use Jose\Component\Checker\IssuerChecker;
 use Mango\Doctrine\SchemaProvider;
 use Mango\Jose\AlgHeaderChecker;
+use Mango\Jose\CustomClaimChecker;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
-    $services   = $containerConfigurator->services();
     $parameters = $containerConfigurator->parameters();
+
+    $parameters->set('jose.access_token.mandatory_claims', [
+        'exp',
+        'iat',
+        'aud',
+        'iss',
+        'urn:zitadel:iam:org:id',
+        'role',
+    ]);
+
+    $services = $containerConfigurator->services();
 
     $services
         ->defaults()
@@ -134,15 +145,19 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services->set(MainController::class)
         ->arg('$origin', env('APP_ORIGIN'));
 
-    $services->set('jose.checker.claim.access_token_audience', AudienceChecker::class)
-        ->args([env('SL_JOSE_BRIDGE_AUDIENCE')])
-        ->tag('jose.checker.claim', ['alias' => 'access_token_audience']);
+    $services->set('jose.checker.claim.aud', AudienceChecker::class)
+        ->args([env('ZITADEL_PROJECT_ID')])
+        ->tag('jose.checker.claim', ['alias' => 'aud']);
 
-    $services->set('jose.checker.claim.access_token_issuer', IssuerChecker::class)
-        ->args([[env('SL_JOSE_BRIDGE_SERVER_NAME')]])
-        ->tag('jose.checker.claim', ['alias' => 'access_token_issuer']);
+    $services->set('jose.checker.claim.iss', IssuerChecker::class)
+        ->args([[env('OIDC_AUTHORITY')]])
+        ->tag('jose.checker.claim', ['alias' => 'iss']);
 
-    $services->set('jose.checker.header.access_token_signature_algorithm', AlgHeaderChecker::class)
+    $services->set('jose.checker.claim.zitadel_org_id', CustomClaimChecker::class)
+        ->args(['urn:zitadel:iam:org:id', env('ZITADEL_ORGANIZATION_ID')])
+        ->tag('jose.checker.claim', ['alias' => 'zitadel_org_id']);
+
+    $services->set('jose.checker.header.alg', AlgHeaderChecker::class)
         ->args(['RS256'])
-        ->tag('jose.checker.header', ['alias' => 'access_token_signature_algorithm']);
+        ->tag('jose.checker.header', ['alias' => 'alg']);
 };
