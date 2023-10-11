@@ -486,16 +486,16 @@
         },
         {
             "name": "doctrine/dbal",
-            "version": "3.7.0",
+            "version": "3.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "00d03067f07482f025d41ab55e4ba0db5eca2cdf"
+                "reference": "5b7bd66c9ff58c04c5474ab85edce442f8081cb2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/00d03067f07482f025d41ab55e4ba0db5eca2cdf",
-                "reference": "00d03067f07482f025d41ab55e4ba0db5eca2cdf",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/5b7bd66c9ff58c04c5474ab85edce442f8081cb2",
+                "reference": "5b7bd66c9ff58c04c5474ab85edce442f8081cb2",
                 "shasum": ""
             },
             "require": {
@@ -579,7 +579,7 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/dbal/issues",
-                "source": "https://github.com/doctrine/dbal/tree/3.7.0"
+                "source": "https://github.com/doctrine/dbal/tree/3.7.1"
             },
             "funding": [
                 {
@@ -595,7 +595,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-09-26T20:56:55+00:00"
+            "time": "2023-10-06T05:06:20+00:00"
         },
         {
             "name": "doctrine/deprecations",
@@ -1739,12 +1739,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/manyou-io/bing-homepage.git",
-                "reference": "1d05f2e5269d77180b3ab5d4db91bb6d47fb5c60"
+                "reference": "2f85a235aac6d4f35be6d04d0a8dc957070c0ca8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/manyou-io/bing-homepage/zipball/1d05f2e5269d77180b3ab5d4db91bb6d47fb5c60",
-                "reference": "1d05f2e5269d77180b3ab5d4db91bb6d47fb5c60",
+                "url": "https://api.github.com/repos/manyou-io/bing-homepage/zipball/2f85a235aac6d4f35be6d04d0a8dc957070c0ca8",
+                "reference": "2f85a235aac6d4f35be6d04d0a8dc957070c0ca8",
                 "shasum": ""
             },
             "require": {
@@ -1785,7 +1785,7 @@
                 "issues": "https://github.com/manyou-io/bing-homepage/issues",
                 "source": "https://github.com/manyou-io/bing-homepage/tree/main"
             },
-            "time": "2023-07-04T07:21:32+00:00"
+            "time": "2023-10-11T04:13:18+00:00"
         },
         {
             "name": "manyou/clear-service-tags-bundle",
@@ -12129,6 +12129,7 @@
         "manyou/bing-homepage": 20,
         "manyou/clear-service-tags-bundle": 20,
         "manyou/leanstorage": 20,
+        "manyou/mango": 20,
         "manyou/promise-http-client": 20,
         "manyou/workerman-symfony-runtime": 20
     },
