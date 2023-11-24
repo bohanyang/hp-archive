@@ -10,7 +10,7 @@ use Doctrine\DBAL\Exception\ConnectionLost;
 use Doctrine\DBAL\Exception\DriverException;
 use Doctrine\DBAL\Query;
 
-use function preg_match;
+use function str_contains;
 
 class ExceptionConverter implements ExceptionConverterInterface
 {
@@ -19,14 +19,20 @@ class ExceptionConverter implements ExceptionConverterInterface
     ) {
     }
 
+    public const CONNECTION_LOST_ERRORS = [
+        'terminating connection due to administrator command SSL connection has been closed unexpectedly',
+        'no connection to the server',
+        'SSL SYSCALL error: EOF detected',
+    ];
+
     public function convert(Exception $exception, ?Query $query): DriverException
     {
-        if (preg_match('/terminating connection due to administrator command SSL connection has been closed unexpectedly/', $exception->getMessage())) {
-            return new ConnectionLost($exception, $query);
-        }
-
-        if (preg_match('/no connection to the server/', $exception->getMessage())) {
-            return new ConnectionLost($exception, $query);
+        if ($exception->getSQLState() === 'HY000') {
+            foreach (self::CONNECTION_LOST_ERRORS as $needle) {
+                if (str_contains($exception->getMessage(), $needle)) {
+                    return new ConnectionLost($exception, $query);
+                }
+            }
         }
 
         return $this->decorated->convert($exception, $query);
