@@ -7,8 +7,10 @@ namespace App\Bundle;
 use App\Bundle\Doctrine\Type\BingMarketType;
 use App\Bundle\Doctrine\Type\JsonTextType;
 use App\Bundle\Doctrine\Type\ObjectIdType;
+use App\Bundle\Message\DoctrinePingConnectionMiddleware;
 use Mango\DependencyInjection\DoctrineConnectionPass;
 use Mango\DependencyInjection\DoctrineTypePass;
+use Mango\DependencyInjection\MessengerMiddlewarePass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
@@ -25,6 +27,10 @@ class AppBundle extends AbstractBundle
 
         $container->addCompilerPass(
             new DoctrineConnectionPass(['import' => 'doctrine.dbal.import_connection']),
+            priority: 1,
+        );
+        $container->addCompilerPass(
+            new MessengerMiddlewarePass(['id' => DoctrinePingConnectionMiddleware::class]),
             priority: 1,
         );
     }
