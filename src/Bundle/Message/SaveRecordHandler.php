@@ -8,7 +8,6 @@ use App\Bundle\Repository\DoctrineRepository;
 use App\Bundle\Repository\LeanCloudRepository;
 use ArrayObject;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
-use GuzzleHttp\Promise\Utils;
 use Mango\Doctrine\SchemaProvider;
 use Manyou\BingHomepage\Image;
 use Psr\Log\LoggerInterface;
@@ -30,18 +29,19 @@ class SaveRecordHandler
 
     public function __invoke(SaveRecord $command): void
     {
-        $this->schema->transactional(function () use ($command) {
-            // buffer LeanCloud requests
-            $requests = new ArrayObject();
+        // LeanCloud request objects
+        $requests = new ArrayObject();
 
+        $this->schema->transactional(function () use ($command, $requests) {
             $record = $command->record->with(image: $this->saveImage($command, $requests));
 
             $this->doctrine->createRecord($record);
             $requests[] = $this->leanCloud->createRecordRequest($record);
-
-            // commit
-            Utils::unwrap($this->leanCloud->getClient()->batch(...$requests));
         });
+
+        foreach ($requests as $request) {
+            $this->messageBus->dispatch($request);
+        }
     }
 
     private function imageEquals(Image $a, Image $b): bool
