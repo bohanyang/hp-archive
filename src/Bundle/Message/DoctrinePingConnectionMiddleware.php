@@ -32,17 +32,17 @@ class DoctrinePingConnectionMiddleware implements MiddlewareInterface
 
     public function handle(Envelope $envelope, StackInterface $stack): Envelope
     {
-        if (null === $envelope->last(ConsumedByWorkerStamp::class)) {
-            return $stack->next()->handle($envelope, $stack);
+        if (null !== $envelope->last(ConsumedByWorkerStamp::class)) {
+            $connection = $this->schema->getConnection();
+
+            try {
+                $connection->executeQuery($connection->getDatabasePlatform()->getDummySelectSQL());
+            } catch (DBALException) {
+                $connection->close();
+                $connection->connect();
+            }
         }
 
-        $connection = $this->schema->getConnection();
-
-        try {
-            $connection->executeQuery($connection->getDatabasePlatform()->getDummySelectSQL());
-        } catch (DBALException) {
-            $connection->close();
-            $connection->connect();
-        }
+        return $stack->next()->handle($envelope, $stack);
     }
 }
