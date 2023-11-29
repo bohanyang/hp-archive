@@ -1,6 +1,6 @@
-FROM php:8.2-cli-alpine AS base
+FROM php:8.3-cli-alpine AS base
 
-ARG PHP_EXT_INSTALLER_VERSION="2.1.52"
+ARG PHP_EXT_INSTALLER_VERSION="2.1.67"
 RUN set -eux; \
     curl -o /usr/local/bin/install-php-extensions -fsSL https://github.com/mlocati/docker-php-extension-installer/releases/download/${PHP_EXT_INSTALLER_VERSION}/install-php-extensions; \
     chmod a+rx /usr/local/bin/install-php-extensions; \
@@ -39,12 +39,12 @@ RUN --mount=type=bind,source=.,target=/usr/src/app \
 
 FROM base AS builder
 
-ARG S6_OVERLAY_VERSION="3.1.5.0"
+ARG S6_OVERLAY_VERSION="3.1.6.2"
 RUN mkdir /overlay; \
     curl -fsSL https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-noarch.tar.xz | tar -C /overlay -xJpf -; \
     curl -fsSL https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-x86_64.tar.xz | tar -C /overlay -xJpf -
 
-ARG COMPOSER_VERSION="2.6.3"
+ARG COMPOSER_VERSION="2.6.5"
 ARG COMPOSER_INSTALLER_VERSION="70527179915d55b3811bebaec55926afd331091b"
 RUN set -eux; \
     curl -fsSL "https://raw.githubusercontent.com/composer/getcomposer.org/${COMPOSER_INSTALLER_VERSION}/web/installer" | php -- --quiet --install-dir=/usr/local/bin --filename=composer --version="${COMPOSER_VERSION}"
@@ -68,20 +68,15 @@ RUN --mount=type=bind,source=.,target=/usr/src/app \
     APP_ENV=prod \
     composer install --no-dev -d /app -o
 
-FROM caddy:2.7.4-builder-alpine AS caddy-builder
-
-RUN xcaddy build \
-    --with github.com/abiosoft/caddy-yaml
-
 FROM base
 
-ARG ALPINE_VERSION='3.17'
-ARG NGINX_VERSION='1.23.4'
+ARG ALPINE_VERSION='3.18'
+ARG NGINX_VERSION='1.25.3'
 ARG NGINX_PKG_RELEASE='-r1'
 ARG NGINX_MODULES_TAG='1.23.4'
 ARG NGINX_BROTLI_VERSION='1.0.0'
 ARG NGINX_HEADERS_MORE_VERSION='0.34'
-ARG NGINX_BUILD_TAG='v1.23.4'
+ARG NGINX_BUILD_TAG='v1.25.2'
 
 RUN set -eux; \
     apk add --no-cache \
@@ -89,14 +84,6 @@ RUN set -eux; \
         libc6-compat; \
     curl -fsSL 'https://nginx.org/keys/nginx_signing.rsa.pub' -o /etc/apk/keys/nginx_signing.rsa.pub; \
     apk add -X "https://nginx.org/packages/mainline/alpine/v${ALPINE_VERSION}/main" --no-cache "nginx=${NGINX_VERSION}${NGINX_PKG_RELEASE}"; \
-    for apk in \
-        "nginx-module-brotli-${NGINX_VERSION}.${NGINX_BROTLI_VERSION}${NGINX_PKG_RELEASE}-x86_64.apk" \
-        "nginx-module-headers-more-${NGINX_VERSION}.${NGINX_HEADERS_MORE_VERSION}${NGINX_PKG_RELEASE}-x86_64.apk" \
-    ; do \
-        curl -fsSL "https://github.com/bohanyang/nginx-modules/releases/download/${NGINX_MODULES_TAG}/${apk}" -o /tmp/nginx-module.apk; \
-        apk add --no-cache --allow-untrusted /tmp/nginx-module.apk; \
-    done; \
-    rm -rfv /tmp/nginx-module.apk; \
     for script in \
         nginx-conf \
         nginx-pull-config \
@@ -109,8 +96,6 @@ RUN set -eux; \
 COPY --from=builder \
     /usr/local/bin/composer \
     /usr/local/bin/
-
-COPY --from=caddy-builder /usr/bin/caddy /usr/local/bin/
 
 COPY --from=builder /overlay /
 
