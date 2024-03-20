@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Bundle\Doctrine\Table;
 
-use App\Bundle\Doctrine\Type\JsonTextType;
 use App\Bundle\Doctrine\Type\ObjectIdType;
 use Doctrine\DBAL\Types\Types;
 use Mango\Doctrine\Schema\TableBuilder;
@@ -22,12 +21,12 @@ class ImagesTable implements TableBuilder
     public function build(Table $table): void
     {
         $table->addColumn('id', ObjectIdType::NAME, ObjectIdType::DEFAULT_OPTIONS);
-        $table->addColumn('name', Types::STRING, ['length' => 500]);
+        $table->addColumn('name', Types::TEXT);
         $table->addColumn('debut_on', Types::DATE_IMMUTABLE);
-        $table->addColumn('urlbase', Types::STRING, ['length' => 500]);
-        $table->addColumn('copyright', Types::STRING, ['length' => 500]);
+        $table->addColumn('urlbase', Types::TEXT);
+        $table->addColumn('copyright', Types::TEXT);
         $table->addColumn('downloadable', Types::BOOLEAN);
-        $table->addColumn('video', JsonTextType::NAME, ['length' => 2000, 'notnull' => false]);
+        $table->addColumn('video', Types::JSON)->setNotnull(false);
         $table->setPrimaryKey(['id'], 'images_pk');
         $table->addUniqueIndex(['name'], 'images_name_uindex');
         $table->addIndex(['debut_on', 'id'], 'images_debut_on_id_index');
