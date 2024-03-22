@@ -30,7 +30,7 @@ class ObjectIdType extends Type
         return self::NAME;
     }
 
-    public function getBindingType(): int
+    public function getBindingType(): ParameterType
     {
         return ParameterType::STRING;
     }
