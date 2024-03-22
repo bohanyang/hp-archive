@@ -42,7 +42,7 @@ class JsonTextType extends Type
         try {
             return json_encode($value, JSON_THROW_ON_ERROR | JSON_PRESERVE_ZERO_FRACTION | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
         } catch (JsonException $e) {
-            throw ConversionException::conversionFailedSerialization($value, 'json', $e->getMessage(), $e);
+            throw new ConversionException($e->getMessage(), $e->getCode(), $e);
         }
     }
 
@@ -59,7 +59,7 @@ class JsonTextType extends Type
         try {
             return json_decode($value, true, 512, JSON_THROW_ON_ERROR);
         } catch (JsonException $e) {
-            throw ConversionException::conversionFailed($value, $this->getName(), $e);
+            throw new ConversionException($e->getMessage(), $e->getCode(), $e);
         }
     }
 
