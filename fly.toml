@@ -1,21 +1,5 @@
-# fly.toml app configuration file generated for hp-archive on 2024-03-22T21:33:20+09:00
-#
-# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
-#
-
 app = 'hp-archive'
 primary_region = 'nrt'
 
 [build]
   dockerfile = 'docker/Dockerfile'
-
-[http_service]
-  internal_port = 8000
-  force_https = true
-  auto_stop_machines = false
-  auto_start_machines = false
-  min_machines_running = 1
-  processes = ['app']
-
-[[vm]]
-  size = 'shared-cpu-1x'

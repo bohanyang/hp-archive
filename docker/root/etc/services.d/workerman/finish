@@ -1,5 +1,0 @@
-#!/usr/bin/env sh
-
-set -eux
-
-exec /run/s6/basedir/bin/halt

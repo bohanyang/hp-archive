@@ -1,8 +1,0 @@
-#!/command/with-contenv sh
-# shellcheck shell=sh
-
-set -eux
-
-cd /app
-
-su-exec www-data:www-data bin/console doctrine:migrations:migrate --no-interaction --allow-no-migration

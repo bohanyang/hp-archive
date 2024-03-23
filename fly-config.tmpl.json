@@ -1,0 +1,51 @@
+{
+  "region": "nrt",
+  "config": {
+    "guest": {
+      "cpu_kind": "shared",
+      "cpus": 1,
+      "memory_mb": 256
+    },
+    "processes": [
+      {
+        "name": "workerman",
+        "cmd": ["/start-workerman"]
+      },
+      {
+        "name": "messenger",
+        "cmd": ["/start-messenger"]
+      }
+    ],
+    "services": [
+      {
+        "protocol": "tcp",
+        "internal_port": 3000,
+        "autostop": true,
+        "autostart": true,
+        "min_machines_running": 0,
+        "ports": [
+          {
+            "port": 80,
+            "handlers": [
+              "http"
+            ],
+            "force_https": true
+          },
+          {
+            "port": 443,
+            "handlers": [
+              "http",
+              "tls"
+            ]
+          }
+        ]
+      }
+    ],
+    "statics": [
+      {
+        "guest_path": "/app/public/build",
+        "url_prefix": "/build"
+      }
+    ]
+  }
+}
