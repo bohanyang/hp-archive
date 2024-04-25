@@ -12,6 +12,7 @@ RUN set -eux; \
         intl \
         pcntl \
         redis \
+        pdo_mysql \
         pdo_pgsql \
         gmp
 

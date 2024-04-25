@@ -55,6 +55,5 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->args([
             ['url' => env('DATABASE_URL')->resolve()],
             service('doctrine.dbal.import_connection.configuration'),
-            service('doctrine.dbal.import_connection.event_manager'),
         ]);
 };

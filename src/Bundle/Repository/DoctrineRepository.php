@@ -170,14 +170,17 @@ class DoctrineRepository
         return $record;
     }
 
-    /** @return array[] */
-    public function exportImages(): array
+    /** @return \Generator */
+    public function exportImages(): iterable
     {
-        return $this->schema->createQuery()
+        $q = $this->schema->createQuery()
             ->from(ImagesTable::NAME, 'i')
             ->select()
-            ->orderBy('id')
-            ->fetchAllAssociativeFlat();
+            ->orderBy('id');
+
+        while ($result = $q->fetchAssociativeFlat()) {
+            yield $result;
+        }
     }
 
     /** @return array[] */
@@ -202,14 +205,17 @@ class DoctrineRepository
             ->fetchAllAssociativeFlat();
     }
 
-    /** @return array[] */
-    public function exportRecords(): array
+    /** @return \Generator */
+    public function exportRecords(): iterable
     {
-        return $this->schema->createQuery()
+        $q = $this->schema->createQuery()
             ->from(RecordsTable::NAME, 'r')
             ->select()
-            ->orderBy('id')
-            ->fetchAllAssociativeFlat();
+            ->orderBy('id');
+
+        while ($result = $q->fetchAssociativeFlat()) {
+            yield $result;
+        }
     }
 
     public function getMarketsPendingOrExisting(DateTimeImmutable $date): array
