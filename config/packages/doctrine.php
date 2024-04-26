@@ -14,6 +14,8 @@ return static function (ContainerConfigurator $containerConfigurator, DoctrineCo
     $connection->url(env('DATABASE_URL')->resolve());
     $connection->schemaFilter('`^(?!messenger_)`');
     $connection->schemaManagerFactory('doctrine.dbal.default_schema_manager_factory');
+    $connection->mappingType('enum', 'string');
+
     // IMPORTANT: You MUST configure your server version,
     // either here or in the DATABASE_URL env var (see .env file)
     // $connection->serverVersion('13');

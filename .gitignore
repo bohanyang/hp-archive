@@ -35,3 +35,4 @@ yarn-error.log
 
 /deploy.sh
 /docker-compose.yml
+/public/.htaccess

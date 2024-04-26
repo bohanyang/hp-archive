@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Bundle\Doctrine\Type;
 
-use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\Type;
 use Mango\Doctrine\Type\EnumType;
 use Manyou\BingHomepage\Market;
@@ -38,10 +37,5 @@ class BingMarketType extends Type
             Market::CN,
             Market::JP,
         ];
-    }
-
-    private function usingTinyInt(AbstractPlatform $platform): bool
-    {
-        return true;
     }
 }

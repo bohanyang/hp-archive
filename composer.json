@@ -60,7 +60,6 @@
         "symfony/property-access": "^6.4",
         "symfony/property-info": "^6.4",
         "symfony/psr-http-message-bridge": "^2.1",
-        "symfony/redis-messenger": "^6.4",
         "symfony/runtime": "^6.4",
         "symfony/scheduler": "^6.4",
         "symfony/security-bundle": "^6.4",
