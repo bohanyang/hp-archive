@@ -1,5 +1,0 @@
-app = 'hp-archive'
-primary_region = 'nrt'
-
-[build]
-  dockerfile = 'docker/Dockerfile'

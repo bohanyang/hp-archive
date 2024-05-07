@@ -13,8 +13,11 @@
 
     <rule ref="Doctrine" />
 
-    <file>src</file>
-    <file>config</file>
+    <file>bin/</file>
+    <file>config/</file>
+    <file>public/</file>
+    <file>src/</file>
+    <file>tests/</file>
 
     <rule ref="Generic.Files.LineLength">
         <properties>

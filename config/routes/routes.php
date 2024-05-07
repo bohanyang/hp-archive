@@ -45,4 +45,7 @@ return static function (RoutingConfigurator $routes) {
 
     $get('browse', '/browse/{cursor?}')->requirements(['cursor' => '\d{8}'])
         ->controller([MainController::class, 'browse']);
+
+    $get('healthcheck', '/_ping')
+        ->controller([MainController::class, 'health']);
 };

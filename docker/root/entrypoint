@@ -1,5 +1,0 @@
-#!/bin/sh
-
-su-exec www-data:www-data /app/bin/console doctrine:migrations:migrate --no-interaction --allow-no-migration
-
-exec "$@"

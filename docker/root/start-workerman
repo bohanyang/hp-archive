@@ -1,6 +1,0 @@
-#!/bin/sh
-
-export APP_RUNTIME=Manyou\\WorkermanSymfonyRuntime\\Runtime
-export APP_RUNTIME_SOCKET=http://0.0.0.0:3000
-
-exec su-exec www-data:www-data php -f /app/public/index.php start

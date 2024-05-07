@@ -1,5 +1,0 @@
-example1.com {
-	reverse_proxy localhost:8000 {
-		header_up Host {http.reverse_proxy.header.X-Forwarded-Host}
-	}
-}

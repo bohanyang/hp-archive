@@ -11,6 +11,7 @@ use Manyou\BingHomepage\CurrentTime;
 use Manyou\BingHomepage\Market;
 use Rompetomp\InertiaBundle\Service\InertiaInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 use function array_map;
 use function urlencode;
@@ -22,6 +23,11 @@ class MainController extends AbstractController
         private DoctrineRepository $repository,
         private string $origin,
     ) {
+    }
+
+    public function health()
+    {
+        return new JsonResponse('{}', json: true);
     }
 
     public function record(string $market, ?string $date)

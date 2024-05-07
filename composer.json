@@ -12,7 +12,6 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "async-aws/s3": "^1.12",
-        "chubbyphp/chubbyphp-workerman-request-handler": "^2.0",
         "doctrine/annotations": "^1.0",
         "doctrine/dbal": "^4.0",
         "doctrine/doctrine-bundle": "^2.7",
@@ -27,7 +26,6 @@
         "manyou/leanstorage": "^0.1.0@dev",
         "manyou/mango": "^0.1.0@dev",
         "manyou/promise-http-client": "^0.1.0@dev",
-        "manyou/workerman-symfony-runtime": "^0.1.0@dev",
         "moneyphp/money": "^4.1",
         "monolog/monolog": "^3.0",
         "nyholm/psr7": "^1.5",
@@ -39,6 +37,7 @@
         "psr/http-server-handler": "^1.0",
         "psr/log": "^2.0 || ^3.0",
         "rompetomp/inertia-bundle": "^2.4",
+        "runtime/frankenphp-symfony": "^0.2.0",
         "symfony/amazon-mailer": "^6.4",
         "symfony/config": "^6.4",
         "symfony/console": "^6.4",
@@ -72,8 +71,7 @@
         "twig/extra-bundle": "^2.12|^3.0",
         "twig/twig": "^2.12|^3.0",
         "web-token/jwt-bundle": "*",
-        "web-token/jwt-library": "*",
-        "workerman/workerman": "^4.0"
+        "web-token/jwt-library": "*"
     },
     "require-dev": {
         "ext-intl": "*",
@@ -142,7 +140,7 @@
         "symfony": {
             "allow-contrib": false,
             "require": "6.4.*",
-            "docker": false
+            "docker": true
         }
     },
     "minimum-stability": "dev",
