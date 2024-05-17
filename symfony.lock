@@ -38,6 +38,9 @@
     "manyou/clear-service-tags-bundle": {
         "version": "0.1.x-dev"
     },
+    "manyou/inertia-bundle": {
+        "version": "v2.4.4"
+    },
     "nyholm/psr7": {
         "version": "1.8",
         "recipe": {
@@ -90,15 +93,6 @@
         "files": [
             "phpcs.xml.dist"
         ]
-    },
-    "symfony/amazon-mailer": {
-        "version": "6.4",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "main",
-            "version": "4.4",
-            "ref": "9648db3ecae5c8a6b1a5f74715d3907124348815"
-        }
     },
     "symfony/console": {
         "version": "6.4",
@@ -302,9 +296,6 @@
             "config/packages/web_profiler.yaml",
             "config/routes/web_profiler.yaml"
         ]
-    },
-    "theofidry/psysh-bundle": {
-        "version": "4.5.0"
     },
     "twig/extra-bundle": {
         "version": "v3.9.3"

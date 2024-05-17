@@ -11,7 +11,6 @@ return [
     Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle::class => ['all' => true],
     Symfony\Bundle\SecurityBundle\SecurityBundle::class => ['all' => true],
     Twig\Extra\TwigExtraBundle\TwigExtraBundle::class => ['all' => true],
-    Fidry\PsyshBundle\PsyshBundle::class => ['dev' => true, 'test' => true],
     Manyou\ClearServiceTagsBundle\ClearServiceTagsBundle::class => ['dev' => true],
     Mango\Bundle\MangoBundle::class => ['all' => true],
     App\Bundle\AppBundle::class => ['all' => true],

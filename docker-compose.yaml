@@ -1,0 +1,32 @@
+volumes:
+  caddy_data:
+  caddy_config:
+
+services:
+  web: &app
+    build: .
+    image: ${IMAGES_PREFIX:-}app-php
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+      SOURCE_DATABASE_URL: ${SOURCE_DATABASE_URL}
+      LEANCLOUD_API_SERVER: ${LEANCLOUD_API_SERVER}
+      LEANCLOUD_APP_ID: ${LEANCLOUD_APP_ID}
+      LEANCLOUD_APP_KEY: ${LEANCLOUD_APP_KEY}
+      LEANCLOUD_SESSION_TOKEN: ${LEANCLOUD_SESSION_TOKEN}
+      MESSENGER_TRANSPORT_DSN: ${MESSENGER_TRANSPORT_DSN}
+      APP_ORIGIN: ${APP_ORIGIN}
+      BUNNYCDN_ENDPOINT: ${BUNNYCDN_ENDPOINT}
+      BUNNYCDN_ACCESS_KEY: ${BUNNYCDN_ACCESS_KEY}
+      MAILER_DSN: ${MAILER_DSN}
+      MONOLOG_FROM_EMAIL: ${MONOLOG_FROM_EMAIL}
+      MONOLOG_TO_EMAIL: ${MONOLOG_TO_EMAIL}
+      OIDC_AUTHORITY: ${OIDC_AUTHORITY}
+      OIDC_JWKS_URI: ${OIDC_JWKS_URI}
+      ZITADEL_ORGANIZATION_ID: ${ZITADEL_ORGANIZATION_ID}
+    volumes:
+      - caddy_data:/data
+      - caddy_config:/config
+  worker:
+    <<: *app
+    command: ["php", "bin/console", "messenger:consume", "-vv", "scheduler_default", "async"]
