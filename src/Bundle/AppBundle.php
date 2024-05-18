@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace App\Bundle;
 
 use App\Bundle\Doctrine\Type\BingMarketType;
-use App\Bundle\Doctrine\Type\JsonTextType;
+use App\Bundle\Doctrine\Type\JsonType;
 use App\Bundle\Doctrine\Type\ObjectIdType;
 use App\Bundle\Message\DoctrinePingConnectionMiddleware;
+use Doctrine\DBAL\Types\Types;
 use Mango\DependencyInjection\DoctrineConnectionPass;
 use Mango\DependencyInjection\DoctrineTypePass;
 use Mango\DependencyInjection\MessengerMiddlewarePass;
@@ -21,7 +22,7 @@ class AppBundle extends AbstractBundle
     {
         $container->addCompilerPass(new DoctrineTypePass([
             BingMarketType::NAME => BingMarketType::class,
-            JsonTextType::NAME => JsonTextType::class,
+            Types::JSON => JsonType::class,
             ObjectIdType::NAME => ObjectIdType::class,
         ]));
 

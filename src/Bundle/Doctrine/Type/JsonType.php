@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace App\Bundle\Doctrine\Type;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
-use Doctrine\DBAL\Types\ConversionException;
+use Doctrine\DBAL\Types\Exception\SerializationFailed;
+use Doctrine\DBAL\Types\Exception\ValueNotConvertible;
 use Doctrine\DBAL\Types\Type;
 use JsonException;
 
@@ -19,21 +20,27 @@ use const JSON_THROW_ON_ERROR;
 use const JSON_UNESCAPED_SLASHES;
 use const JSON_UNESCAPED_UNICODE;
 
-class JsonTextType extends Type
+/**
+ * Type generating json objects values
+ */
+class JsonType extends Type
 {
-    public const NAME = 'json_text';
-
-    public function getName(): string
-    {
-        return self::NAME;
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     public function getSQLDeclaration(array $column, AbstractPlatform $platform): string
     {
-        return $platform->getStringTypeDeclarationSQL($column);
+        return $platform->getJsonTypeDeclarationSQL($column);
     }
 
-    public function convertToDatabaseValue($value, AbstractPlatform $platform): mixed
+    /**
+     * @param T $value
+     *
+     * @return (T is null ? null : string)
+     *
+     * @template T
+     */
+    public function convertToDatabaseValue(mixed $value, AbstractPlatform $platform): ?string
     {
         if ($value === null) {
             return null;
@@ -42,11 +49,11 @@ class JsonTextType extends Type
         try {
             return json_encode($value, JSON_THROW_ON_ERROR | JSON_PRESERVE_ZERO_FRACTION | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
         } catch (JsonException $e) {
-            throw new ConversionException($e->getMessage(), $e->getCode(), $e);
+            throw SerializationFailed::new($value, 'json', $e->getMessage(), $e);
         }
     }
 
-    public function convertToPHPValue($value, AbstractPlatform $platform): mixed
+    public function convertToPHPValue(mixed $value, AbstractPlatform $platform): mixed
     {
         if ($value === null || $value === '') {
             return null;
@@ -59,12 +66,7 @@ class JsonTextType extends Type
         try {
             return json_decode($value, true, 512, JSON_THROW_ON_ERROR);
         } catch (JsonException $e) {
-            throw new ConversionException($e->getMessage(), $e->getCode(), $e);
+            throw ValueNotConvertible::new($value, 'json', $e->getMessage(), $e);
         }
-    }
-
-    public function requiresSQLCommentHint(AbstractPlatform $platform): bool
-    {
-        return true;
     }
 }
