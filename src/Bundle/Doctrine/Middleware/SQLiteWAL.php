@@ -29,7 +29,13 @@ class SQLiteWAL implements Middleware
             ): Connection {
                 $connection = parent::connect($params);
 
-                $connection->exec('PRAGMA synchronous = OFF;');
+                $connection->exec('
+                    PRAGMA busy_timeout = 5000;
+                    PRAGMA synchronous = NORMAL;
+                    PRAGMA cache_size = 1000000000;
+                    PRAGMA foreign_keys = true;
+                    PRAGMA temp_store = memory;
+                ');
 
                 return $connection;
             }
