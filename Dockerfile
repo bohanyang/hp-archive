@@ -33,7 +33,6 @@ COPY --link frankenphp/Caddyfile /etc/caddy/Caddyfile
 
 ENTRYPOINT ["docker-entrypoint"]
 
-HEALTHCHECK --start-period=5s CMD curl -f http://localhost:2019/metrics
 CMD ["frankenphp", "run", "--config", "/etc/caddy/Caddyfile"]
 
 FROM node:20 AS assets_builder

@@ -27,8 +27,11 @@ services:
     volumes:
       - caddy_data:/data
       - caddy_config:/config
+    healthcheck:
+      test: ["CMD", "curl", "-f", "-I", "-X", "GET", "http://localhost/"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
   worker:
     <<: *app
     command: ["php", "bin/console", "messenger:consume", "-vv", "scheduler_default", "async"]
-    healthcheck:
-      disable: true
