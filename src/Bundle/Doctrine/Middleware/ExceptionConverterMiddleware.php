@@ -8,6 +8,11 @@ use Doctrine\DBAL\Driver;
 use Doctrine\DBAL\Driver\Middleware;
 use Doctrine\DBAL\Driver\Middleware\AbstractDriverMiddleware;
 
+use function class_exists;
+
+// Help opcache.preload discover always-needed symbols
+class_exists(AbstractDriverMiddleware::class);
+
 class ExceptionConverterMiddleware implements Middleware
 {
     public function wrap(Driver $driver): Driver

@@ -11,6 +11,11 @@ use Doctrine\DBAL\Driver\Middleware\AbstractDriverMiddleware;
 use Doctrine\DBAL\Driver\SQLite3;
 use SensitiveParameter;
 
+use function class_exists;
+
+// Help opcache.preload discover always-needed symbols
+class_exists(AbstractDriverMiddleware::class);
+
 class SQLiteWAL implements Middleware
 {
     public function wrap(Driver $driver): Driver
