@@ -1,4 +1,4 @@
-FROM php:8.3 AS php_base
+FROM dunglas/frankenphp:1-php8.3 AS php_base
 
 SHELL ["/bin/bash", "-eux", "-o", "pipefail", "-c"]
 
@@ -13,7 +13,6 @@ RUN apt-get update; \
 	; \
 	rm -rf /var/lib/apt/lists/*
 
-COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
 RUN install-php-extensions \
 		@composer \
 		apcu \
@@ -32,8 +31,11 @@ RUN install-php-extensions \
 
 ENV COMPOSER_ALLOW_SUPERUSER 1
 
+HEALTHCHECK NONE
+
 COPY --link frankenphp/conf.d/app.ini $PHP_INI_DIR/conf.d/
 COPY --link --chmod=755 frankenphp/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
+COPY --link frankenphp/Caddyfile /etc/caddy/Caddyfile
 
 ENTRYPOINT ["docker-entrypoint"]
 
@@ -58,10 +60,12 @@ RUN --mount=type=bind,source=.,target=/usr/src/app \
 FROM php_base
 
 ENV APP_ENV=prod
+ENV FRANKENPHP_CONFIG "import worker.Caddyfile"
 
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 
 COPY --link frankenphp/conf.d/app.prod.ini $PHP_INI_DIR/conf.d/
+COPY --link frankenphp/worker.Caddyfile /etc/caddy/worker.Caddyfile
 
 COPY --link composer.* symfony.* ./
 RUN --mount=type=cache,target=/root/.composer \

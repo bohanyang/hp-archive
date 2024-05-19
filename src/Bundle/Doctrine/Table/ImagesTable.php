@@ -26,7 +26,7 @@ class ImagesTable implements TableBuilder
         $table->addColumn('urlbase', Types::STRING)->setLength(255);
         $table->addColumn('copyright', Types::TEXT)->setLength(65535);
         $table->addColumn('downloadable', Types::BOOLEAN);
-        $table->addColumn('video', Types::JSON)->setNotnull(false);
+        $table->addColumn('video', Types::JSON)->setNotnull(false)->setPlatformOptions(['jsonb' => true]);
         $table->setPrimaryKey(['id'], 'images_pk');
         $table->addUniqueIndex(['name'], 'images_name_uindex');
         $table->addIndex(['debut_on', 'id'], 'images_debut_on_id_index');

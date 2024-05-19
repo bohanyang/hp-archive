@@ -8,7 +8,7 @@ services:
       context: .
       dockerfile: Dockerfile
     restart: unless-stopped
-    environment:
+    environment: &env
       DATABASE_URL: ${DATABASE_URL}
       LEANCLOUD_API_SERVER: ${LEANCLOUD_API_SERVER}
       LEANCLOUD_APP_ID: ${LEANCLOUD_APP_ID}
@@ -29,13 +29,22 @@ services:
       - caddy_data:/data
       - caddy_config:/config
     command: php bin/console messenger:consume -vv scheduler_default async
-    healthcheck:
-      disable: true
   web:
     <<: *app
     command: ["sh", "-c", "APP_RUNTIME='Runtime\\Swoole\\Runtime' SWOOLE_HOST=0.0.0.0 SWOOLE_PORT=80 exec php -f public/index.php"]
     healthcheck:
-      test: ["CMD", "curl", "-f", "-I", "-X", "GET", "http://localhost/"]
+      test: ["CMD", "curl", "-fI", "http://localhost/"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+  frakenphp:
+    <<: *app
+    command: [ "frankenphp", "run", "--config", "/etc/caddy/Caddyfile" ]
+    environment:
+      <<: *env
+      SERVER_NAME: ":80"
+    healthcheck:
+      test: ["CMD", "curl", "-fI", "http://localhost/"]
       interval: 30s
       timeout: 10s
       retries: 5

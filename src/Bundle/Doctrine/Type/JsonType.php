@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Bundle\Doctrine\Type;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
+use Doctrine\DBAL\Platforms\PostgreSQLPlatform;
 use Doctrine\DBAL\Types\Exception\SerializationFailed;
 use Doctrine\DBAL\Types\Exception\ValueNotConvertible;
 use Doctrine\DBAL\Types\Type;
@@ -30,6 +31,10 @@ class JsonType extends Type
      */
     public function getSQLDeclaration(array $column, AbstractPlatform $platform): string
     {
+        if ($platform instanceof PostgreSQLPlatform) {
+            $column['jsonb'] ??= true;
+        }
+
         return $platform->getJsonTypeDeclarationSQL($column);
     }
 

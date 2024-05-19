@@ -36,6 +36,6 @@ class RecordsTable implements TableBuilder
         $table->setPrimaryKey(['id'], 'records_pk');
         $table->addUniqueIndex(['date', 'market'], 'records_date_market_uindex');
         $table->addIndex(['image_id'], 'records_image_id_index');
-        $table->addForeignKeyConstraint(ImagesTable::NAME, ['image_id'], ['id'], ['onUpdate' => 'RESTRICT', 'onDelete' => 'RESTRICT'], 'records_images_id_fk');
+        $table->addForeignKeyConstraint(ImagesTable::NAME, ['image_id'], ['id'], ['onUpdate' => 'CASCADE', 'onDelete' => 'RESTRICT'], 'records_images_id_fk');
     }
 }
