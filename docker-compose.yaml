@@ -37,6 +37,6 @@ services:
       SERVER_NAME: ":80"
     healthcheck:
       test: ["CMD", "curl", "-fI", "http://localhost/"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
+      timeout: 5s
+      start_period: 30s
+      start_interval: 1s
