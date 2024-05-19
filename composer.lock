@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7b2ebb7d0adfcbee48c93b3805604476",
+    "content-hash": "570b3e268968ab14af49004cd59ff790",
     "packages": [
         {
             "name": "async-aws/core",
@@ -193,6 +193,74 @@
                 }
             ],
             "time": "2023-11-29T23:19:16+00:00"
+        },
+        {
+            "name": "chubbyphp/chubbyphp-workerman-request-handler",
+            "version": "2.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/chubbyphp/chubbyphp-workerman-request-handler.git",
+                "reference": "3732a919d8ab80546fd82d2adf0e72d70f78fb5c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/chubbyphp/chubbyphp-workerman-request-handler/zipball/3732a919d8ab80546fd82d2adf0e72d70f78fb5c",
+                "reference": "3732a919d8ab80546fd82d2adf0e72d70f78fb5c",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.1",
+                "psr/http-factory": "^1.0.2",
+                "psr/http-message": "^1.1|^2.0",
+                "psr/http-server-handler": "^1.0.2",
+                "psr/log": "^2.0|^3.0",
+                "workerman/workerman": "^4.1.13"
+            },
+            "require-dev": {
+                "blackfire/php-sdk": "^2.3.5",
+                "chubbyphp/chubbyphp-dev-helper": "dev-master",
+                "chubbyphp/chubbyphp-mock": "^1.7",
+                "infection/infection": "^0.27.8",
+                "php-coveralls/php-coveralls": "^2.7",
+                "phpstan/extension-installer": "^1.3.1",
+                "phpstan/phpstan": "^1.10.45",
+                "phpunit/phpunit": "^10.4.2"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Chubbyphp\\WorkermanRequestHandler\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dominik Zogg",
+                    "email": "dominik.zogg@gmail.com"
+                }
+            ],
+            "description": "A request handler adapter for workerman, using PSR-7, PSR-15 and PSR-17.",
+            "keywords": [
+                "chubbyphp",
+                "psr-15",
+                "psr-17",
+                "psr-7",
+                "requesthandler",
+                "workerman"
+            ],
+            "support": {
+                "issues": "https://github.com/chubbyphp/chubbyphp-workerman-request-handler/issues",
+                "source": "https://github.com/chubbyphp/chubbyphp-workerman-request-handler/tree/2.1.0"
+            },
+            "time": "2023-12-03T20:11:28+00:00"
         },
         {
             "name": "doctrine/annotations",
@@ -1960,6 +2028,70 @@
             "time": "2024-03-22T07:36:25+00:00"
         },
         {
+            "name": "manyou/workerman-symfony-runtime",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/manyou-io/workerman-symfony-runtime.git",
+                "reference": "3ea1fd86051aefbac05be81012bd12729cc5d647"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/manyou-io/workerman-symfony-runtime/zipball/3ea1fd86051aefbac05be81012bd12729cc5d647",
+                "reference": "3ea1fd86051aefbac05be81012bd12729cc5d647",
+                "shasum": ""
+            },
+            "require": {
+                "chubbyphp/chubbyphp-workerman-request-handler": "^2.0",
+                "nyholm/psr7": "^1.6.1",
+                "php": ">=8.1",
+                "psr/http-factory": "^1.0",
+                "psr/http-message": "^1.0|^2.0",
+                "psr/http-server-handler": "^1.0",
+                "symfony/dependency-injection": "^6.4|^7.0",
+                "symfony/http-foundation": "^6.4|^7.0",
+                "symfony/http-kernel": "^6.4|^7.0",
+                "symfony/psr-http-message-bridge": "^2.3|^6.4|^7.0",
+                "symfony/runtime": "^6.4|^7.0",
+                "workerman/workerman": "^4.0"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "0.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Manyou\\WorkermanSymfonyRuntime\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Brent, Bohan Yang",
+                    "email": "brent@manyou.io"
+                }
+            ],
+            "description": "Run Symfony applications with Workerman",
+            "homepage": "https://github.com/manyou-io/workerman-symfony-runtime",
+            "keywords": [
+                "php-runtime",
+                "runtime",
+                "symfony",
+                "workerman"
+            ],
+            "support": {
+                "issues": "https://github.com/manyou-io/workerman-symfony-runtime/issues",
+                "source": "https://github.com/manyou-io/workerman-symfony-runtime/tree/main"
+            },
+            "time": "2024-05-19T03:11:46+00:00"
+        },
+        {
             "name": "moneyphp/money",
             "version": "v4.5.0",
             "source": {
@@ -3229,6 +3361,62 @@
                 }
             ],
             "time": "2023-12-12T12:06:11+00:00"
+        },
+        {
+            "name": "runtime/swoole",
+            "version": "0.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-runtime/swoole.git",
+                "reference": "d27c224770b16e9ac6a6752ef862fe83cadf87f6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-runtime/swoole/zipball/d27c224770b16e9ac6a6752ef862fe83cadf87f6",
+                "reference": "d27c224770b16e9ac6a6752ef862fe83cadf87f6",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1",
+                "symfony/runtime": "^5.4.26 || ^6.3.2 || ^7.0"
+            },
+            "conflict": {
+                "ext-swoole": "<4.6.0"
+            },
+            "require-dev": {
+                "illuminate/http": "^9.14",
+                "phpunit/phpunit": "^9.6.15",
+                "swoole/ide-helper": "^4.6",
+                "symfony/http-foundation": "^5.4.32 || ^6.3.9 || ^7.0",
+                "symfony/http-kernel": "^5.4.33 || ^6.3.10 || ^7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Runtime\\Swoole\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tobias Nyholm",
+                    "email": "tobias.nyholm@gmail.com"
+                }
+            ],
+            "description": "Swoole runtime",
+            "support": {
+                "source": "https://github.com/php-runtime/swoole/tree/0.4.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/nyholm",
+                    "type": "github"
+                }
+            ],
+            "time": "2023-12-12T11:39:12+00:00"
         },
         {
             "name": "spomky-labs/pki-framework",
@@ -8669,6 +8857,69 @@
                 "source": "https://github.com/webmozarts/assert/tree/1.11.0"
             },
             "time": "2022-06-03T18:03:27+00:00"
+        },
+        {
+            "name": "workerman/workerman",
+            "version": "v4.1.15",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/walkor/workerman.git",
+                "reference": "afc8242fc769ab7cf22eb4ac22b97cb59d465e4e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/walkor/workerman/zipball/afc8242fc769ab7cf22eb4ac22b97cb59d465e4e",
+                "reference": "afc8242fc769ab7cf22eb4ac22b97cb59d465e4e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.0"
+            },
+            "suggest": {
+                "ext-event": "For better performance. "
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Workerman\\": "./"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "walkor",
+                    "email": "walkor@workerman.net",
+                    "homepage": "http://www.workerman.net",
+                    "role": "Developer"
+                }
+            ],
+            "description": "An asynchronous event driven PHP framework for easily building fast, scalable network applications.",
+            "homepage": "http://www.workerman.net",
+            "keywords": [
+                "asynchronous",
+                "event-loop"
+            ],
+            "support": {
+                "email": "walkor@workerman.net",
+                "forum": "http://wenda.workerman.net/",
+                "issues": "https://github.com/walkor/workerman/issues",
+                "source": "https://github.com/walkor/workerman",
+                "wiki": "http://doc.workerman.net/"
+            },
+            "funding": [
+                {
+                    "url": "https://opencollective.com/workerman",
+                    "type": "open_collective"
+                },
+                {
+                    "url": "https://www.patreon.com/walkor",
+                    "type": "patreon"
+                }
+            ],
+            "time": "2024-02-19T02:10:39+00:00"
         }
     ],
     "packages-dev": [
@@ -11535,7 +11786,8 @@
         "manyou/clear-service-tags-bundle": 20,
         "manyou/leanstorage": 20,
         "manyou/mango": 20,
-        "manyou/promise-http-client": 20
+        "manyou/promise-http-client": 20,
+        "manyou/workerman-symfony-runtime": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,

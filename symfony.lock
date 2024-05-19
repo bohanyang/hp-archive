@@ -41,6 +41,9 @@
     "manyou/inertia-bundle": {
         "version": "v2.4.4"
     },
+    "manyou/workerman-symfony-runtime": {
+        "version": "dev-main"
+    },
     "nyholm/psr7": {
         "version": "1.8",
         "recipe": {
