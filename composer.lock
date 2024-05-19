@@ -1903,12 +1903,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/manyou-io/mango.git",
-                "reference": "0975d4714f9957c5112a74b00a0fe5c9911af283"
+                "reference": "4914bb322bc796252ecbc4009daf73d63003a064"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/manyou-io/mango/zipball/0975d4714f9957c5112a74b00a0fe5c9911af283",
-                "reference": "0975d4714f9957c5112a74b00a0fe5c9911af283",
+                "url": "https://api.github.com/repos/manyou-io/mango/zipball/4914bb322bc796252ecbc4009daf73d63003a064",
+                "reference": "4914bb322bc796252ecbc4009daf73d63003a064",
                 "shasum": ""
             },
             "require": {
@@ -1968,7 +1968,7 @@
                 "issues": "https://github.com/manyou-io/mango/issues",
                 "source": "https://github.com/manyou-io/mango/tree/main"
             },
-            "time": "2024-03-22T08:03:33+00:00"
+            "time": "2024-05-19T08:41:25+00:00"
         },
         {
             "name": "manyou/promise-http-client",
