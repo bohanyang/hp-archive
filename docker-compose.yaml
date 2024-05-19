@@ -32,6 +32,9 @@ services:
   web:
     <<: *app
     command: [ "frankenphp", "run", "--config", "/etc/caddy/Caddyfile" ]
+    environment:
+      <<: *env
+      SERVER_NAME: ":80"
     healthcheck:
       test: ["CMD", "curl", "-fI", "http://localhost/"]
       interval: 30s
