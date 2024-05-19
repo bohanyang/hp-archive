@@ -37,14 +37,3 @@ services:
       interval: 30s
       timeout: 10s
       retries: 5
-  frakenphp:
-    <<: *app
-    command: [ "frankenphp", "run", "--config", "/etc/caddy/Caddyfile" ]
-    environment:
-      <<: *env
-      SERVER_NAME: ":80"
-    healthcheck:
-      test: ["CMD", "curl", "-fI", "http://localhost/"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
