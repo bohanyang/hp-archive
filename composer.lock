@@ -1782,12 +1782,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/manyou-io/leanstorage.git",
-                "reference": "1a8b9c22bbf03f51c723fb7a4d6c8f8914db5821"
+                "reference": "f7185273a2f806fe691de02fb23ea827bf179158"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/manyou-io/leanstorage/zipball/1a8b9c22bbf03f51c723fb7a4d6c8f8914db5821",
-                "reference": "1a8b9c22bbf03f51c723fb7a4d6c8f8914db5821",
+                "url": "https://api.github.com/repos/manyou-io/leanstorage/zipball/f7185273a2f806fe691de02fb23ea827bf179158",
+                "reference": "f7185273a2f806fe691de02fb23ea827bf179158",
                 "shasum": ""
             },
             "require": {
@@ -1827,7 +1827,7 @@
                 "issues": "https://github.com/manyou-io/leanstorage/issues",
                 "source": "https://github.com/manyou-io/leanstorage/tree/main"
             },
-            "time": "2024-03-22T07:36:23+00:00"
+            "time": "2024-05-19T01:35:46+00:00"
         },
         {
             "name": "manyou/mango",
