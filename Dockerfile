@@ -36,9 +36,9 @@ ENV COMPOSER_ALLOW_SUPERUSER 1
 RUN curl -fLo /usr/local/bin/frankenphp $(curl -fL https://api.github.com/repos/dunglas/frankenphp/releases/latest | jq '.assets[] | select(.name=="frankenphp-linux-x86_64") | .browser_download_url' -r); \
 	chmod a+rx /usr/local/bin/frankenphp
 
-COPY --link frankenphp/conf.d/app.ini $PHP_INI_DIR/conf.d/
-COPY --link --chmod=755 frankenphp/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
-COPY --link frankenphp/Caddyfile /etc/caddy/Caddyfile
+COPY --link docker/php/conf.d/app.ini $PHP_INI_DIR/conf.d/
+COPY --link --chmod=755 docker/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
+COPY --link docker/Caddyfile /etc/caddy/Caddyfile
 
 ENTRYPOINT ["docker-entrypoint"]
 
@@ -62,13 +62,10 @@ RUN --mount=type=bind,source=.,target=/usr/src/app \
 
 FROM php_base
 
-ENV APP_ENV=prod
-ENV FRANKENPHP_CONFIG "import worker.Caddyfile"
+ENV APP_ENV prod
 
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
-
-COPY --link frankenphp/conf.d/app.prod.ini $PHP_INI_DIR/conf.d/
-COPY --link frankenphp/worker.Caddyfile /etc/caddy/worker.Caddyfile
+COPY --link docker/php/conf.d/app.prod.ini $PHP_INI_DIR/conf.d/
 
 COPY --link composer.* symfony.* ./
 RUN --mount=type=cache,target=/root/.composer \
