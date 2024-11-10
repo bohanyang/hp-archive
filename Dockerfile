@@ -41,7 +41,7 @@ COPY --link --chmod=755 docker/docker-entrypoint.sh /usr/local/bin/docker-entryp
 
 ENTRYPOINT ["docker-entrypoint"]
 
-FROM node:20 AS assets_builder
+FROM node:22 AS assets_builder
 
 SHELL ["/bin/bash", "-eux", "-o", "pipefail", "-c"]
 
