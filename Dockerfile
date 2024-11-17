@@ -53,7 +53,7 @@ RUN --mount=type=cache,target=/root/.local/share/pnpm/store \
 	pnpm install
 
 RUN --mount=type=bind,source=.,target=/usr/src/app \
-	cp -R /usr/src/app/{assets,tsconfig.json,vite.config.js} ./; \
+	cp -R /usr/src/app/{assets,tsconfig.json,vite.config.mjs} ./; \
 	pnpm build
 
 FROM php_base
