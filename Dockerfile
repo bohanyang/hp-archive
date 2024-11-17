@@ -1,4 +1,4 @@
-FROM php:8.3 AS php_base
+FROM dunglas/frankenphp:1.3-php8.3 AS php_base
 
 SHELL ["/bin/bash", "-eux", "-o", "pipefail", "-c"]
 
@@ -14,7 +14,6 @@ RUN apt-get update; \
 	; \
 	rm -rf /var/lib/apt/lists/*
 
-COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
 RUN install-php-extensions \
 		@composer \
 		apcu \
@@ -33,11 +32,9 @@ RUN install-php-extensions \
 
 ENV COMPOSER_ALLOW_SUPERUSER 1
 
-RUN curl -fLo /usr/local/bin/frankenphp $(curl -fL https://api.github.com/repos/dunglas/frankenphp/releases/latest | jq '.assets[] | select(.name=="frankenphp-linux-x86_64") | .browser_download_url' -r); \
-	chmod a+rx /usr/local/bin/frankenphp
-
 COPY --link docker/php/conf.d/app.ini $PHP_INI_DIR/conf.d/
 COPY --link --chmod=755 docker/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
+COPY --link docker/Caddyfile /etc/caddy/Caddyfile
 
 ENTRYPOINT ["docker-entrypoint"]
 
