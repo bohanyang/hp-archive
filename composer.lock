@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "94635f1135893d54d54cb3e756995be7",
+    "content-hash": "4b05fe8f06e0ecacc80721dde9356c54",
     "packages": [
         {
             "name": "async-aws/core",
@@ -2390,16 +2390,16 @@
         },
         {
             "name": "pentatrion/vite-bundle",
-            "version": "v6.5.3",
+            "version": "v7.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/lhapaipai/vite-bundle.git",
-                "reference": "9316e75d82b6c6b912b4ed45c38fc5a735aafcf9"
+                "reference": "d5d94e68a38ddfec857df7edade323e7b81e5d10"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lhapaipai/vite-bundle/zipball/9316e75d82b6c6b912b4ed45c38fc5a735aafcf9",
-                "reference": "9316e75d82b6c6b912b4ed45c38fc5a735aafcf9",
+                "url": "https://api.github.com/repos/lhapaipai/vite-bundle/zipball/d5d94e68a38ddfec857df7edade323e7b81e5d10",
+                "reference": "d5d94e68a38ddfec857df7edade323e7b81e5d10",
                 "shasum": ""
             },
             "require": {
@@ -2445,9 +2445,9 @@
             ],
             "support": {
                 "issues": "https://github.com/lhapaipai/vite-bundle/issues",
-                "source": "https://github.com/lhapaipai/vite-bundle/tree/v6.5.3"
+                "source": "https://github.com/lhapaipai/vite-bundle/tree/v7.0.5"
             },
-            "time": "2024-08-16T08:18:36+00:00"
+            "time": "2024-10-21T19:40:28+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",

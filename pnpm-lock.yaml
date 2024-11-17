@@ -126,8 +126,8 @@ importers:
         specifier: ^0.5.1
         version: 0.5.1(vite@3.2.11(@types/node@18.19.64))
       vite-plugin-symfony:
-        specifier: ^6.5.3
-        version: 6.5.3(vite@3.2.11(@types/node@18.19.64))
+        specifier: ^7.0.5
+        version: 7.0.5(vite@3.2.11(@types/node@18.19.64))
 
 packages:
 
@@ -2697,8 +2697,8 @@ packages:
     peerDependencies:
       vite: '>=2.0.0'
 
-  vite-plugin-symfony@6.5.3:
-    resolution: {integrity: sha512-NGBV+kNJ3AxQzudYvNBpk97BItwetO6Ike+LBcZ9BeKnXK4e2hFfyM6I6gAgxfNbNhvmzIWyzAlO+7QG+OqUEw==}
+  vite-plugin-symfony@7.0.5:
+    resolution: {integrity: sha512-vwIMCeGynYuYTtCciV81GezelWVbsnAJ7EwvPegBVFiO/ODdx0WSA8VSKEPjQgh/KnuiLQLOKCXPoN6497Xulw==}
     peerDependencies:
       vite: ^3.0.0 || ^4.0.0 || ^5.0.0
 
@@ -5723,7 +5723,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  vite-plugin-symfony@6.5.3(vite@3.2.11(@types/node@18.19.64)):
+  vite-plugin-symfony@7.0.5(vite@3.2.11(@types/node@18.19.64)):
     dependencies:
       debug: 4.3.7
       fast-glob: 3.3.2
