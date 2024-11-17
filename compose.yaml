@@ -31,12 +31,9 @@ services:
     command: php bin/console messenger:consume -vv scheduler_default async
   web:
     <<: *app
-    command: php -f public/index.php
+    command: frankenphp run --config /etc/caddy/Caddyfile --adapter caddyfile
     environment:
       <<: *env
-      SWOOLE_HOST: '0.0.0.0'
-      SWOOLE_PORT: '80'
-      APP_RUNTIME: Runtime\Swoole\Runtime
     healthcheck:
       test: ["CMD", "curl", "-fI", "http://localhost/"]
       timeout: 5s
