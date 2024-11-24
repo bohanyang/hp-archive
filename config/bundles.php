@@ -16,5 +16,5 @@ return [
     App\Bundle\AppBundle::class => ['all' => true],
     Pentatrion\ViteBundle\PentatrionViteBundle::class => ['all' => true],
     Rompetomp\InertiaBundle\RompetompInertiaBundle::class => ['all' => true],
-    Jose\Bundle\JoseFramework\JoseFrameworkBundle::class => ['all' => true],
+    // Jose\Bundle\JoseFramework\JoseFrameworkBundle::class => ['all' => true],
 ];

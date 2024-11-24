@@ -8,10 +8,3 @@ services:
       com.caddyserver.http.enable: true
       com.caddyserver.http.upstream.port: 80
       com.caddyserver.http.matchers.host: wp.bohan.co
-  postgres:
-    image: postgres
-    volumes:
-      - postgres16-data:/var/lib/postgresql/data
-    environment:
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-    restart: unless-stopped

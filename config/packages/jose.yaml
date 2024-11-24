@@ -1,16 +1,16 @@
-jose:
-  jku_factory:
-    enabled: true
-    client: 'Psr\Http\Client\ClientInterface'
-    request_factory: 'Psr\Http\Message\RequestFactoryInterface'
-  checkers:
-    claims:
-      access_token:
-        claims: ["exp", "iat", "aud", "iss", "zitadel_org_id"]
-    headers:
-      access_token:
-        headers: ["alg"]
-  jws:
-    verifiers:
-      access_token:
-        signature_algorithms: ["RS256"]
+# jose:
+#   jku_factory:
+#     enabled: true
+#     client: 'Psr\Http\Client\ClientInterface'
+#     request_factory: 'Psr\Http\Message\RequestFactoryInterface'
+#   checkers:
+#     claims:
+#       access_token:
+#         claims: ["exp", "iat", "aud", "iss", "zitadel_org_id"]
+#     headers:
+#       access_token:
+#         headers: ["alg"]
+#   jws:
+#     verifiers:
+#       access_token:
+#         signature_algorithms: ["RS256"]

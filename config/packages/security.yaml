@@ -5,19 +5,18 @@ security:
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
     providers:
         users_in_memory: { memory: null }
-        zitadel:
-            id: App\Bundle\Security\ZitadelUserProvider
+        # zitadel: { id: App\Bundle\Security\ZitadelUserProvider }
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-        main:
-            stateless: true
-            lazy: true
-            provider: zitadel
-            access_token:
-                token_handler: Mango\Jose\JWTHandler
-                token_extractors: ['header']
+        # main:
+        #     stateless: true
+        #     lazy: true
+        #     provider: zitadel
+        #     access_token:
+        #         token_handler: Mango\Jose\JWTHandler
+        #         token_extractors: ['header']
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall

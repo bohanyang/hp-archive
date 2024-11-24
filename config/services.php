@@ -13,23 +13,19 @@ use App\Bundle\Message\ImportFromSqlHandler;
 use App\Bundle\Repository\DoctrineRepository;
 use App\Controller\MainController;
 use Doctrine\DBAL\Connection;
-use Jose\Component\Checker\AudienceChecker;
-use Jose\Component\Checker\IssuerChecker;
 use Mango\Doctrine\SchemaProvider;
-use Mango\Jose\AlgHeaderChecker;
-use Mango\Jose\CustomClaimChecker;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
     $parameters = $containerConfigurator->parameters();
 
-    $parameters->set('jose.access_token.mandatory_claims', [
-        'exp',
-        'iat',
-        'aud',
-        'iss',
-        'urn:zitadel:iam:org:id',
-        'role',
-    ]);
+    // $parameters->set('jose.access_token.mandatory_claims', [
+    //     'exp',
+    //     'iat',
+    //     'aud',
+    //     'iss',
+    //     'urn:zitadel:iam:org:id',
+    //     'role',
+    // ]);
 
     $services = $containerConfigurator->services();
 
@@ -145,19 +141,19 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services->set(MainController::class)
         ->arg('$origin', env('APP_ORIGIN'));
 
-    $services->set('jose.checker.claim.aud', AudienceChecker::class)
-        ->args([env('ZITADEL_PROJECT_ID')])
-        ->tag('jose.checker.claim', ['alias' => 'aud']);
+    // $services->set('jose.checker.claim.aud', AudienceChecker::class)
+    //     ->args([env('ZITADEL_PROJECT_ID')])
+    //     ->tag('jose.checker.claim', ['alias' => 'aud']);
 
-    $services->set('jose.checker.claim.iss', IssuerChecker::class)
-        ->args([[env('OIDC_AUTHORITY')]])
-        ->tag('jose.checker.claim', ['alias' => 'iss']);
+    // $services->set('jose.checker.claim.iss', IssuerChecker::class)
+    //     ->args([[env('OIDC_AUTHORITY')]])
+    //     ->tag('jose.checker.claim', ['alias' => 'iss']);
 
-    $services->set('jose.checker.claim.zitadel_org_id', CustomClaimChecker::class)
-        ->args(['urn:zitadel:iam:org:id', env('ZITADEL_ORGANIZATION_ID')])
-        ->tag('jose.checker.claim', ['alias' => 'zitadel_org_id']);
+    // $services->set('jose.checker.claim.zitadel_org_id', CustomClaimChecker::class)
+    //     ->args(['urn:zitadel:iam:org:id', env('ZITADEL_ORGANIZATION_ID')])
+    //     ->tag('jose.checker.claim', ['alias' => 'zitadel_org_id']);
 
-    $services->set('jose.checker.header.alg', AlgHeaderChecker::class)
-        ->args(['RS256'])
-        ->tag('jose.checker.header', ['alias' => 'alg']);
+    // $services->set('jose.checker.header.alg', AlgHeaderChecker::class)
+    //     ->args(['RS256'])
+    //     ->tag('jose.checker.header', ['alias' => 'alg']);
 };
