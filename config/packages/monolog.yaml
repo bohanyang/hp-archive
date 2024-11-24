@@ -43,12 +43,12 @@ when@prod:
             main:
                 type: fingers_crossed
                 action_level: error
-                handler: grouped
+                handler: streamed
                 excluded_http_codes: [401, 402, 403, 404, 405, 409, 422]
                 buffer_size: 50 # How many messages should be saved? Prevent memory leaks
-            grouped:
-                type: group
-                members: [streamed, deduplicated]
+            # grouped:
+            #     type: group
+            #     members: [streamed, deduplicated]
             streamed:
                 type: stream
                 path: php://stderr
@@ -62,9 +62,9 @@ when@prod:
             #     type: stream
             #     channels: [deprecation]
             #     path: php://stderr
-            deduplicated:
-                type: deduplication
-                handler: symfony_mailer
+            # deduplicated:
+            #     type: deduplication
+            #     handler: symfony_mailer
             symfony_mailer:
                 type: symfony_mailer
                 from_email: "%env(MONOLOG_FROM_EMAIL)%"
