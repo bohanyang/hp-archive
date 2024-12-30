@@ -28,18 +28,11 @@ final class PsrFactoryMessageConverter implements MessageConverter
     public const DEFAULT_FIELD_COUNT_LIMIT = 1000;
     public const DEFAULT_BODY_SIZE_LIMIT   = 2 ** 20; // 1MB
 
-    private FormParser $bodyParser;
-
-    /** @var int */
-    private $bodySizeLimit;
-
     public function __construct(
         private PsrServerRequestFactory $requestFactory,
-        int $fieldCountLimit = self::DEFAULT_FIELD_COUNT_LIMIT,
-        int $bodySizeLimit = self::DEFAULT_BODY_SIZE_LIMIT,
+        private FormParser $bodyParser,
+        private int $bodySizeLimit = self::DEFAULT_BODY_SIZE_LIMIT,
     ) {
-        $this->bodyParser    = new FormParser($fieldCountLimit);
-        $this->bodySizeLimit = $bodySizeLimit;
     }
 
     public function convertRequest(AmpRequest $request): PsrServerRequest

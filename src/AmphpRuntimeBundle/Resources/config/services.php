@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
+use Amp\Http\Server\FormParser\FormParser;
 use Amp\Http\Server\RequestHandler;
 use App\AmphpRuntimeBundle\PsrHttpBridge\MessageConverter;
 use App\AmphpRuntimeBundle\PsrHttpBridge\PsrFactoryMessageConverter;
@@ -21,6 +22,9 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services
         ->defaults()
         ->autowire();
+
+    $services->set(FormParser::class)
+        ->arg('$fieldCountLimit', PsrFactoryMessageConverter::DEFAULT_FIELD_COUNT_LIMIT);
 
     // Symfony HttpFoundation to PSR messages
     $services->set(HttpMessageFactoryInterface::class, PsrHttpFactory::class);

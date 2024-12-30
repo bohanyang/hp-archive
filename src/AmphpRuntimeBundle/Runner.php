@@ -5,58 +5,65 @@ declare(strict_types=1);
 namespace App\AmphpRuntimeBundle;
 
 use Amp\ByteStream;
+use Amp\Cluster\Cluster;
 use Amp\Http\Server\DefaultErrorHandler;
 use Amp\Http\Server\Driver\SocketClientFactory;
+use Amp\Http\Server\Request;
 use Amp\Http\Server\RequestHandler;
+use Amp\Http\Server\RequestHandler\ClosureRequestHandler;
 use Amp\Http\Server\SocketHttpServer;
 use Amp\Http\Server\StaticContent\DocumentRoot;
 use Amp\Log\ConsoleFormatter;
 use Amp\Log\StreamHandler;
-use Amp\Socket;
 use Closure;
 use InvalidArgumentException;
 use Monolog\Logger;
-use Monolog\Processor\PsrLogMessageProcessor;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Runtime\RunnerInterface;
 
-use function Amp\trapSignal;
 use function get_debug_type;
+use function getmypid;
 use function sprintf;
-
-use const SIGHUP;
-use const SIGINT;
-use const SIGQUIT;
-use const SIGTERM;
+use function str_starts_with;
 
 class Runner implements RunnerInterface
 {
     public function __construct(
         private Closure $appFactory,
         private array $sockets,
+        private ?string $documentRoot = null,
     ) {
+    }
+
+    private function createLogHandler(): StreamHandler
+    {
+        // Creating a log handler in this way allows the script to be run in a cluster or standalone.
+        if (Cluster::isWorker()) {
+            return Cluster::createLogHandler();
+        }
+
+        $handler = new StreamHandler(ByteStream\getStdout());
+        $handler->setFormatter(new ConsoleFormatter());
+
+        return $handler;
     }
 
     public function run(): int
     {
-        $logHandler = new StreamHandler(ByteStream\getStdout());
-        $logHandler->pushProcessor(new PsrLogMessageProcessor());
-        $logHandler->setFormatter(new ConsoleFormatter());
-        $logger = new Logger('server');
-        $logger->pushHandler($logHandler);
-        $logger->useLoggingLoopDetection(false);
+        $errorHandler = new DefaultErrorHandler();
 
+        $logger = new Logger('worker-' . (Cluster::getContextId() ?? getmypid()));
+        $logger->pushHandler($this->createLogHandler());
+        $logger->useLoggingLoopDetection(false);
         $server = new SocketHttpServer(
-            $logger,
-            new Socket\ResourceServerSocketFactory(),
-            new SocketClientFactory($logger),
+            logger: $logger,
+            serverSocketFactory: Cluster::getServerSocketFactory(),
+            clientFactory: new SocketClientFactory($logger),
         );
 
         foreach ($this->sockets as $socket) {
             $server->expose($socket);
         }
-
-        $errorHandler = new DefaultErrorHandler();
 
         $kernel = ($this->appFactory)();
 
@@ -71,14 +78,18 @@ class Runner implements RunnerInterface
         $ampRequestHandler = $container->get(RequestHandler::class);
 
         $documentRoot = new DocumentRoot($server, $errorHandler, __DIR__ . '/../../public');
-        $documentRoot->setFallback($ampRequestHandler);
 
-        $server->start($documentRoot, new DefaultErrorHandler());
+        // Start the HTTP server
+        $server->start(new ClosureRequestHandler(static function (Request $request) use ($documentRoot, $ampRequestHandler) {
+            if (str_starts_with($request->getUri()->getPath(), '/build/')) {
+                return $documentRoot->handleRequest($request);
+            }
 
-        // Await a termination signal to be received.
-        $signal = trapSignal([SIGHUP, SIGINT, SIGQUIT, SIGTERM]);
+            return $ampRequestHandler->handleRequest($request);
+        }), new DefaultErrorHandler());
 
-        $logger->info(sprintf('Received signal %d, stopping HTTP server', $signal));
+        // Stop the server when the worker is terminated.
+        Cluster::awaitTermination();
 
         $server->stop();
 
