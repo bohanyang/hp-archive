@@ -6,35 +6,34 @@ WORKDIR /app
 
 RUN apt-get update; \
 	apt-get install -y --no-install-recommends \
-		acl \
-		file \
-		gettext \
-		git \
-		jq \
+	acl \
+	file \
+	gettext \
+	git \
+	jq \
 	; \
 	rm -rf /var/lib/apt/lists/*
 
 RUN install-php-extensions \
-		@composer \
-		apcu \
-		bcmath \
-		event \
-		gmp \
-		intl \
-		opcache \
-		openswoole \
-		pcntl \
-		pdo_mysql \
-		pdo_pgsql \
-		sockets \
-		zip \
+	@composer \
+	apcu \
+	bcmath \
+	event \
+	gmp \
+	intl \
+	opcache \
+	openswoole \
+	pcntl \
+	pdo_mysql \
+	pdo_pgsql \
+	sockets \
+	zip \
 	;
 
 ENV COMPOSER_ALLOW_SUPERUSER 1
 
 COPY --link docker/php/conf.d/app.ini $PHP_INI_DIR/conf.d/
 COPY --link --chmod=755 docker/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
-COPY --link docker/Caddyfile /etc/caddy/Caddyfile
 
 ENTRYPOINT ["docker-entrypoint"]
 

@@ -26,7 +26,7 @@ services:
     command: php bin/console messenger:consume -vv scheduler_default async
   web:
     <<: *app
-    command: frankenphp run --config /etc/caddy/Caddyfile --adapter caddyfile
+    command: sh -c 'APP_RUNTIME=Runtime\\Swoole\\Runtime php -f public/index.php'
     environment:
       <<: *env
     healthcheck:
