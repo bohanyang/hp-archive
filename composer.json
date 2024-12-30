@@ -3,19 +3,14 @@
     "license": "proprietary",
     "authors": [
         {
-            "name": "Brent, Bohan Yang",
-            "email": "brent@manyou.io"
+            "name": "Brent, Yang Bohan",
+            "email": "8384161+bohanyang@users.noreply.github.com"
         }
     ],
     "require": {
         "php": ">=8.1",
         "ext-ctype": "*",
         "ext-iconv": "*",
-        "amphp/cluster": "^2.0",
-        "amphp/http-server": "^3.4",
-        "amphp/http-server-form-parser": "^2.0",
-        "amphp/http-server-router": "^2.0",
-        "amphp/http-server-static-content": "^2.0",
         "async-aws/s3": "^1.12",
         "doctrine/annotations": "^1.0",
         "doctrine/dbal": "^4.0",
@@ -42,7 +37,6 @@
         "psr/http-message": "^1.0",
         "psr/http-server-handler": "^1.0",
         "psr/log": "^2.0 || ^3.0",
-        "runtime/frankenphp-symfony": "^0.2.0",
         "runtime/swoole": "^0.4.0",
         "symfony/config": "^7.0",
         "symfony/console": "^7.0",
@@ -63,7 +57,6 @@
         "symfony/monolog-bundle": "^3.8",
         "symfony/property-access": "^7.0",
         "symfony/property-info": "^7.0",
-        "symfony/psr-http-message-bridge": "7.1.*",
         "symfony/runtime": "^7.0",
         "symfony/scheduler": "^7.0",
         "symfony/security-bundle": "^7.0",
@@ -143,7 +136,7 @@
     "extra": {
         "symfony": {
             "allow-contrib": false,
-            "require": "7.1.*",
+            "require": "7.2.*",
             "docker": true
         }
     },

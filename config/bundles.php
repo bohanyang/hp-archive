@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use App\AmphpRuntimeBundle\AmphpRuntimeBundle;
 use App\Bundle\AppBundle;
 use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
 use Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle;
@@ -35,5 +34,4 @@ return [
     AppBundle::class => ['all' => true],
     PentatrionViteBundle::class => ['all' => true],
     RompetompInertiaBundle::class => ['all' => true],
-    AmphpRuntimeBundle::class => ['all' => true],
 ];
