@@ -11,24 +11,24 @@ RUN apt-packages.sh sury php; \
 	apt-packages.sh fish; \
 	apt-packages.sh postgresql; \
 	apt-get install -y --no-install-recommends \
-		dnsutils \
-		fish \
-		htop \
-		iputils-ping \
-		jq \
-		lsof \
-		mtr-tiny \
-		net-tools \
-		nload \
-		patch \
-		php8.3-{amqp,apcu,bcmath,cli,curl,dev,fpm,gmp,igbinary,intl,mbstring,mysql,opcache,pgsql,readline,redis,sqlite3,xdebug,xml,zip} \
-		postgresql-client-16 \
-		psmisc \
-		rsync \
-		screen \
-		tree \
-		unzip \
-		xz-utils \
+	dnsutils \
+	fish \
+	htop \
+	iputils-ping \
+	jq \
+	lsof \
+	mtr-tiny \
+	net-tools \
+	nload \
+	patch \
+	php8.3-{amqp,apcu,bcmath,cli,curl,dev,fpm,gmp,igbinary,intl,mbstring,mysql,opcache,pgsql,readline,redis,sqlite3,xdebug,xml,zip,swoole} \
+	postgresql-client-16 \
+	psmisc \
+	rsync \
+	screen \
+	tree \
+	unzip \
+	xz-utils \
 	; \
 	rm -rfv /var/lib/apt/lists/*
 

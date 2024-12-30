@@ -14,6 +14,7 @@ use App\Bundle\Repository\DoctrineRepository;
 use App\Controller\MainController;
 use Doctrine\DBAL\Connection;
 use Mango\Doctrine\SchemaProvider;
+use Manyou\BingHomepage\Market;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
     $parameters = $containerConfigurator->parameters();
@@ -26,6 +27,22 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     //     'urn:zitadel:iam:org:id',
     //     'role',
     // ]);
+
+    $parameters->set('app.enabled_markets', [
+        Market::US,
+        Market::BR,
+        Market::CA,
+        Market::QC,
+        Market::UK,
+        Market::FR,
+        Market::DE,
+        Market::IN,
+        Market::CN,
+        Market::JP,
+        Market::ES,
+        Market::IT,
+        Market::AU,
+    ]);
 
     $services = $containerConfigurator->services();
 

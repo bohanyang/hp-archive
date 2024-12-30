@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use App\Bundle\Message\CollectRecords;
 use App\Controller\MainController;
+use Manyou\BingHomepage\Market;
 use Symfony\Bundle\FrameworkBundle\Controller\RedirectController;
 use Symfony\Component\Routing\Loader\Configurator\RouteConfigurator;
 use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
@@ -30,7 +30,23 @@ return static function (RoutingConfigurator $routes) {
     $redirectTo('date', $get('legacy_date_1', '/d/{date}/')->requirements($date));
     $redirectTo('date', $get('legacy_date_2', '/Date/{date}/')->requirements($date));
 
-    $record = $date + ['market' => implode('|', CollectRecords::DEFAULT_MARKETS)];
+    $record = $date + [
+        'market' => implode('|', [
+            Market::US,
+            Market::BR,
+            Market::CA,
+            Market::QC,
+            Market::UK,
+            Market::FR,
+            Market::DE,
+            Market::IN,
+            Market::CN,
+            Market::JP,
+            Market::ES,
+            Market::IT,
+            Market::AU,
+        ]),
+    ];
     $get('record', '/{market?zh-CN}/{date?}')->requirements($record)
     ->controller([MainController::class, 'record']);
 

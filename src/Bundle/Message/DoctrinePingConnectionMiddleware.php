@@ -39,7 +39,7 @@ class DoctrinePingConnectionMiddleware implements MiddlewareInterface
                 $connection->executeQuery($connection->getDatabasePlatform()->getDummySelectSQL());
             } catch (DBALException) {
                 $connection->close();
-                $connection->connect();
+                $connection->getNativeConnection();
             }
         }
 
