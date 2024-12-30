@@ -1,6 +1,10 @@
 {
-    "terminal.integrated.allowChords": false,
-    "intelephense.environment.includePaths": [
-        "vendor/bin/.phpunit/phpunit/vendor"
-    ]
+  "terminal.integrated.allowChords": false,
+  "intelephense.environment.includePaths": [
+    "vendor/bin/.phpunit/phpunit/vendor"
+  ],
+  "editor.formatOnSave": true,
+  "[php]": {
+    "editor.defaultFormatter": "valeryanm.vscode-phpsab"
+  },
 }
