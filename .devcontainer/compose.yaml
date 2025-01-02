@@ -1,0 +1,9 @@
+services:
+  workspace:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    volumes:
+      - ../..:/workspaces:cached
+    env_file: ./workspace.env
+    command: sleep infinity
