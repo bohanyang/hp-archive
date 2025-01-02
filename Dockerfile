@@ -22,7 +22,7 @@ RUN install-php-extensions \
 	gmp \
 	intl \
 	opcache \
-	openswoole \
+	swoole \
 	pcntl \
 	pdo_mysql \
 	pdo_pgsql \
@@ -30,7 +30,7 @@ RUN install-php-extensions \
 	zip \
 	;
 
-ENV COMPOSER_ALLOW_SUPERUSER 1
+ENV COMPOSER_ALLOW_SUPERUSER=1
 
 COPY --link docker/php/conf.d/app.ini $PHP_INI_DIR/conf.d/
 COPY --link --chmod=755 docker/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
@@ -57,12 +57,13 @@ RUN --mount=type=bind,source=.,target=/usr/src/app \
 
 FROM php_base
 
-ENV APP_ENV prod
+ENV APP_ENV=prod
 
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 COPY --link docker/php/conf.d/app.prod.ini $PHP_INI_DIR/conf.d/
 
 COPY --link composer.* symfony.* ./
+COPY --link swoole-runtime-bundle/ ./swoole-runtime-bundle/
 RUN --mount=type=cache,target=/root/.composer \
 	composer install --prefer-dist --no-dev --no-autoloader --no-scripts --no-progress
 

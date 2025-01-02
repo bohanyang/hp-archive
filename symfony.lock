@@ -77,6 +77,9 @@
             "tests/bootstrap.php"
         ]
     },
+    "rainbowedge/swoole-runtime-bundle": {
+        "version": "dev-main"
+    },
     "rompetomp/inertia-bundle": {
         "version": "v2.4.3"
     },

@@ -16,5 +16,5 @@ return [
     App\Bundle\AppBundle::class => ['all' => true],
     Pentatrion\ViteBundle\PentatrionViteBundle::class => ['all' => true],
     Rompetomp\InertiaBundle\RompetompInertiaBundle::class => ['all' => true],
-    Rainbowedge\SwooleRuntime\SwooleBundle::class => ['all' => true],
+    Rainbowedge\SwooleRuntimeBundle\SwooleRuntimeBundle::class => ['all' => true],
 ];

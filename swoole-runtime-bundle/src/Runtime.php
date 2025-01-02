@@ -2,9 +2,8 @@
 
 declare(strict_types=1);
 
-namespace Rainbowedge\SwooleRuntime;
+namespace Rainbowedge\SwooleRuntimeBundle;
 
-use Laminas\HttpHandlerRunner\RequestHandlerRunnerInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Runtime\RunnerInterface;
 use Symfony\Component\Runtime\SymfonyRuntime;
@@ -16,6 +15,8 @@ use Symfony\Component\Runtime\SymfonyRuntime;
  */
 class Runtime extends SymfonyRuntime
 {
+    public const RUNNER_SERVICE = 'mezzio_swoole.runtime_runner';
+
     public function __construct(protected array $options = [])
     {
         parent::__construct($options);
@@ -30,6 +31,6 @@ class Runtime extends SymfonyRuntime
         $application->boot();
         $container = $application->getContainer();
 
-        return new LaminasRunner($container->get(RequestHandlerRunnerInterface::class));
+        return $container->get(self::RUNNER_SERVICE);
     }
 }

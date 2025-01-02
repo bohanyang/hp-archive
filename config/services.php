@@ -61,6 +61,8 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             __DIR__ . '/../src/Kernel.php',
         ]);
 
+    $services->alias('mezzio_swoole.logger', 'monolog.logger.swoole');
+
     $services->alias('mango.scheduler.transport', 'messenger.transport.async');
     $parameters->set('mango.scheduler.transport', 'async');
 

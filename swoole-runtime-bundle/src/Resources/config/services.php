@@ -61,7 +61,9 @@ use Psr\EventDispatcher\EventDispatcherInterface as PsrEventDispatcherInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerInterface;
-use Rainbowedge\SwooleRuntime\SymfonyRequestHandler;
+use Rainbowedge\SwooleRuntimeBundle\LaminasRunner;
+use Rainbowedge\SwooleRuntimeBundle\Runtime;
+use Rainbowedge\SwooleRuntimeBundle\SymfonyRequestHandler;
 use Swoole\Http\Server as SwooleHttpServer;
 use Symfony\Bridge\PsrHttpMessage\Factory\HttpFoundationFactory;
 use Symfony\Bridge\PsrHttpMessage\Factory\PsrHttpFactory;
@@ -71,17 +73,25 @@ use Symfony\Component\DependencyInjection\ServiceLocator;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
     $parameters = $containerConfigurator->parameters();
-    $parameters->set('mezzio.swoole.config', [
+    $parameters->set('mezzio_swoole.config', [
         'application_root'   => '%kernel.project_dir%',
+        'enable_coroutine'   => false,
         'hot-code-reload'    => [
             // Interval, in ms, that the InotifyFileWatcher should use to
             // check for changes.
-            'interval' => 500,
+            'interval' => 1000,
             // Paths to watch for changes. These may be files or
             // directories.
-            'paths' => [],
+            'paths' => [
+                '%kernel.project_dir%/src',
+                '%kernel.project_dir%/composer.lock',
+                '%kernel.project_dir%/symfony.lock',
+                '%kernel.project_dir%/config',
+            ],
         ],
         'swoole-http-server' => [
+            'host' => '::',
+            'port' => 80,
             // A prefix for the process name of the master process and workers.
             // By default the master process will be named `mezzio-master`,
             // each http worker `mezzio-worker-n` and each task worker
@@ -95,7 +105,10 @@ return static function (ContainerConfigurator $containerConfigurator): void {
                 // sane default; users should check their host system, however,
                 // and set a production value to match.
                 'max_conn' => 1024,
-                'worker_num' => 1,
+                'worker_num' => 8,
+                'reload_async' => true,
+                'max_wait_time' => 10,
+                'max_request' => 50000,
             ],
             'static-files' => [
                 'document-root'   => '%kernel.project_dir%/public',
@@ -158,7 +171,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         $services->set($factoryClass);
         $services->set($instanceClass)
             ->factory(service($factoryClass))
-            ->args([service('mezzio.swoole.container')]);
+            ->args([service('mezzio_swoole.container')]);
     }
 
     $invokables = [
@@ -172,7 +185,11 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 
     // Event listeners
     $services->get(ServerStartListener::class)->tag('kernel.event_listener', ['event' => ServerStartEvent::class]);
-    $services->get(HotCodeReloaderWorkerStartListener::class)->tag('kernel.event_listener', ['event' => WorkerStartEvent::class]);
+
+    if ($containerConfigurator->env() === 'dev') {
+        $services->get(HotCodeReloaderWorkerStartListener::class)->tag('kernel.event_listener', ['event' => WorkerStartEvent::class]);
+    }
+
     $services->get(WorkerStartListener::class)->tag('kernel.event_listener', ['event' => WorkerStartEvent::class]);
     $services->get(StaticResourceRequestListener::class)->tag('kernel.event_listener', ['event' => RequestEvent::class, 'priority' => 10]);
     $services->get(RequestHandlerRequestListener::class)->tag('kernel.event_listener', ['event' => RequestEvent::class, 'priority' => 0]);
@@ -190,7 +207,9 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         $services->alias($alias, $serviceId);
     }
 
-    $services->alias(RequestHandlerRunnerInterface::class, RequestHandlerRunner::class)->public();
+    $services->alias(RequestHandlerRunnerInterface::class, RequestHandlerRunner::class);
+
+    $services->set(Runtime::RUNNER_SERVICE, LaminasRunner::class)->public();
 
     $services->set(SymfonyRequestHandler::class);
 
@@ -206,20 +225,23 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services->set(PsrHttpFactory::class);
     $services->alias(HttpMessageFactoryInterface::class, PsrHttpFactory::class);
 
+    $services->alias('mezzio_swoole.logger', LoggerInterface::class);
+
     $scopedContainer = [
-        'config' => ['mezzio-swoole' => param('mezzio.swoole.config')],
+        'config' => ['mezzio-swoole' => param('mezzio_swoole.config')],
         SwooleHttpServer::class => service(SwooleHttpServer::class),
         EventDispatcherInterface::class => service(EventDispatcherInterface::class),
         PidManager::class => service(PidManager::class),
         AccessLogInterface::class => service(AccessLogInterface::class),
         StaticResourceHandlerInterface::class => service(StaticResourceHandlerInterface::class),
         SwooleLoggerFactory::SWOOLE_LOGGER => service(SwooleLoggerFactory::SWOOLE_LOGGER),
-        LoggerInterface::class => service(LoggerInterface::class . ' $swooleLogger'),
+        LoggerInterface::class => service('mezzio_swoole.logger'),
         'Mezzio\ApplicationPipeline' => service(SymfonyRequestHandler::class),
         ServerRequestErrorResponseGenerator::class => service(ServerRequestErrorResponseGenerator::class),
         FileWatcherInterface::class => service(FileWatcherInterface::class),
         ServerRequestInterface::class => service(ServerRequestInterface::class),
     ];
-    $services->set('mezzio.swoole.container', ServiceLocator::class)
+
+    $services->set('mezzio_swoole.container', ServiceLocator::class)
         ->args([$scopedContainer]);
 };

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "240eff786ba1b833bb3912c605727a14",
+    "content-hash": "65e8b40849b5bda327b99b434b0e37c3",
     "packages": [
         {
             "name": "async-aws/core",
@@ -4018,12 +4018,12 @@
             "time": "2024-09-11T13:17:53+00:00"
         },
         {
-            "name": "rainbowedge/swoole-runtime",
+            "name": "rainbowedge/swoole-runtime-bundle",
             "version": "dev-main",
             "dist": {
                 "type": "path",
-                "url": "./swoole-runtime",
-                "reference": "51c784cf66fe89f7776c668f3040708d6be1db46"
+                "url": "./swoole-runtime-bundle",
+                "reference": "5b23c9983ec747f26dd502035ddf6e3a2d54ddce"
             },
             "require": {
                 "mezzio/mezzio-swoole": "^4.0",
@@ -4045,7 +4045,7 @@
             },
             "autoload": {
                 "psr-4": {
-                    "Rainbowedge\\SwooleRuntime\\": "src/"
+                    "Rainbowedge\\SwooleRuntimeBundle\\": "src/"
                 }
             },
             "license": [
@@ -12483,7 +12483,7 @@
         "manyou/leanstorage": 20,
         "manyou/mango": 20,
         "manyou/promise-http-client": 20,
-        "rainbowedge/swoole-runtime": 20
+        "rainbowedge/swoole-runtime-bundle": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,

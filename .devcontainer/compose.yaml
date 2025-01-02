@@ -1,4 +1,22 @@
+volumes:
+  postgres17-data:
+
 services:
+  postgres17:
+    image: docker.io/library/postgres:17
+    healthcheck:
+      test: pg_isready -U postgres -h localhost
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+    environment:
+      POSTGRES_HOST: /var/run/postgresql
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+    volumes:
+      - postgres17-data:/var/lib/postgresql/data
   workspace:
     build:
       context: .

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Rainbowedge\SwooleRuntime;
+namespace Rainbowedge\SwooleRuntimeBundle;
 
 use Laminas\HttpHandlerRunner\RequestHandlerRunnerInterface;
 use Symfony\Component\Runtime\RunnerInterface;

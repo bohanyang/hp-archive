@@ -2,20 +2,20 @@
 
 declare(strict_types=1);
 
-namespace Rainbowedge\SwooleRuntime;
+namespace Rainbowedge\SwooleRuntimeBundle;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Symfony\Bridge\PsrHttpMessage\HttpFoundationFactoryInterface;
 use Symfony\Bridge\PsrHttpMessage\HttpMessageFactoryInterface;
-use Symfony\Component\HttpKernel\HttpKernelInterface;
+use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\HttpKernel\TerminableInterface;
 
 class SymfonyRequestHandler implements RequestHandlerInterface
 {
     public function __construct(
-        private HttpKernelInterface $kernel,
+        private KernelInterface $kernel,
         private HttpFoundationFactoryInterface $httpFoundationFactory,
         private HttpMessageFactoryInterface $httpMessageFactory,
     ) {

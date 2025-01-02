@@ -10,6 +10,7 @@ COPY ./apt-packages.sh /usr/bin/
 RUN apt-packages.sh sury php; \
 	apt-packages.sh fish; \
 	apt-packages.sh postgresql; \
+	apt-packages.sh k6; \
 	apt-get install -y --no-install-recommends \
 	dnsutils \
 	fish \
@@ -29,6 +30,7 @@ RUN apt-packages.sh sury php; \
 	tree \
 	unzip \
 	xz-utils \
+	k6 \
 	; \
 	rm -rfv /var/lib/apt/lists/*
 

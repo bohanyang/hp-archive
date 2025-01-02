@@ -1,5 +1,5 @@
 {
-    "name": "rainbowedge/swoole-runtime",
+    "name": "rainbowedge/swoole-runtime-bundle",
     "type": "library",
     "description": "Run Symfony applications with Swoole",
     "keywords": [
@@ -35,7 +35,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Rainbowedge\\SwooleRuntime\\": "src/"
+            "Rainbowedge\\SwooleRuntimeBundle\\": "src/"
         }
     }
 }

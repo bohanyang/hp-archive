@@ -1,64 +1,65 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/ubuntu
 {
-	"name": "DevContainer",
-	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-	"dockerComposeFile": "./compose.yaml",
-	"service": "workspace",
-	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
-	// Features to add to the dev container. More info: https://containers.dev/features.
-	"features": {
-		"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {}
-	},
-	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	// "forwardPorts": [],
-	// Use 'postCreateCommand' to run commands after the container is created.
-	// "postCreateCommand": "uname -a",
-	// Configure tool-specific properties.
-	"customizations": {
-		"vscode": {
-			"settings": {
-				"files.insertFinalNewline": true,
-				"terminal.integrated.allowChords": false,
-				"intelephense.environment.includePaths": [
-					"vendor/bin/.phpunit/phpunit/vendor"
-				],
-				"[json]": {
-					"editor.defaultFormatter": "vscode.json-language-features",
-					"editor.tabSize": 2
-				},
-				"[jsonc]": {
-					"editor.defaultFormatter": "vscode.json-language-features",
-					"editor.tabSize": 4
-				},
-				"[yaml]": {
-					"editor.defaultFormatter": "redhat.vscode-yaml",
-					"editor.tabSize": 2
-				},
-				"[html]": {
-					"editor.defaultFormatter": "vscode.html-language-features"
-				},
-				"[php]": {
-					"editor.defaultFormatter": "bmewburn.vscode-intelephense-client"
-				},
-				"[shellscript]": {
-					"editor.tabSize": 2
-				}
-			},
-			"extensions": [
-				"redhat.vscode-yaml",
-				"ms-azuretools.vscode-docker",
-				"valeryanm.vscode-phpsab",
-				"bmewburn.vscode-intelephense-client",
-				"damianbal.php-class-generator-composer-psr-4",
-				"yoavbls.pretty-ts-errors",
-				"MehediDracula.php-namespace-resolver",
-				"tamasfe.even-better-toml",
-				"EditorConfig.EditorConfig",
-				"esbenp.prettier-vscode",
-				"GitHub.vscode-github-actions"
-			]
-		}
-	},
-	"remoteUser": "vscode"
+  "name": "DevContainer",
+  // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+  "dockerComposeFile": "./compose.yaml",
+  "service": "workspace",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+  // Features to add to the dev container. More info: https://containers.dev/features.
+  "features": {
+    "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {}
+  },
+  // Use 'forwardPorts' to make a list of ports inside the container available locally.
+  // "forwardPorts": [],
+  // Use 'postCreateCommand' to run commands after the container is created.
+  // "postCreateCommand": "uname -a",
+  // Configure tool-specific properties.
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "files.insertFinalNewline": true,
+        "terminal.integrated.allowChords": false,
+        "intelephense.environment.includePaths": [
+          "vendor/bin/.phpunit/phpunit/vendor"
+        ],
+        "[json]": {
+          "editor.defaultFormatter": "vscode.json-language-features",
+          "editor.tabSize": 2
+        },
+        "[jsonc]": {
+          "editor.defaultFormatter": "vscode.json-language-features",
+          "editor.tabSize": 4
+        },
+        "[yaml]": {
+          "editor.defaultFormatter": "redhat.vscode-yaml",
+          "editor.tabSize": 2
+        },
+        "[html]": {
+          "editor.defaultFormatter": "vscode.html-language-features"
+        },
+        "[php]": {
+          "editor.defaultFormatter": "bmewburn.vscode-intelephense-client"
+        },
+        "[shellscript]": {
+          "editor.tabSize": 2
+        }
+      },
+      "extensions": [
+        "redhat.vscode-yaml",
+        "ms-azuretools.vscode-docker",
+        "valeryanm.vscode-phpsab",
+        "bmewburn.vscode-intelephense-client",
+        "damianbal.php-class-generator-composer-psr-4",
+        "yoavbls.pretty-ts-errors",
+        "MehediDracula.php-namespace-resolver",
+        "tamasfe.even-better-toml",
+        "EditorConfig.EditorConfig",
+        "esbenp.prettier-vscode",
+        "GitHub.vscode-github-actions",
+        "xdebug.php-debug"
+      ]
+    }
+  },
+  "remoteUser": "vscode"
 }

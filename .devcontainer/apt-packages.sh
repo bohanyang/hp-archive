@@ -86,6 +86,11 @@ _mysql() {
     save "mysql-$4" "deb [signed-by=$keyrings/mysql.asc] https://repo.mysql.com/apt/$1 $2 mysql-$4"
 }
 
+_k6() {
+	fetch k6.asc 'https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xc5ad17c747e3415a3642d57d77c6c491d6ac1d69'
+	save k6 "deb [signed-by=$keyrings/k6.asc] https://dl.k6.io/deb stable main"
+}
+
 _mariadb() {
     fetch mariadb.asc https://mariadb.org/mariadb_release_signing_key.asc
     save "mariadb-$4" "deb [signed-by=$keyrings/mariadb.asc] https://ftp.osuosl.org/pub/mariadb/repo/$4/$1 $2 main"

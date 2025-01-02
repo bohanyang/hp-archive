@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Rainbowedge\SwooleRuntime;
+namespace Rainbowedge\SwooleRuntimeBundle;
 
 use Mezzio\Swoole\Exception\ExtensionNotLoadedException;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -11,7 +11,7 @@ use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
 
 use function extension_loaded;
 
-class SwooleBundle extends AbstractBundle
+class SwooleRuntimeBundle extends AbstractBundle
 {
     public function build(ContainerBuilder $container): void
     {

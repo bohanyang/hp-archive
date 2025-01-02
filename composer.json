@@ -37,7 +37,7 @@
         "psr/http-message": "^1.0",
         "psr/http-server-handler": "^1.0",
         "psr/log": "^2.0 || ^3.0",
-        "rainbowedge/swoole-runtime": "@dev",
+        "rainbowedge/swoole-runtime-bundle": "@dev",
         "symfony/config": "^7.0",
         "symfony/console": "^7.0",
         "symfony/dependency-injection": "^7.0",
@@ -145,7 +145,7 @@
     "repositories": [
         {
             "type": "path",
-            "url": "./swoole-runtime"
+            "url": "./swoole-runtime-bundle"
         }
     ]
 }
