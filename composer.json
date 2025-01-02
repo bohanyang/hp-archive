@@ -37,7 +37,7 @@
         "psr/http-message": "^1.0",
         "psr/http-server-handler": "^1.0",
         "psr/log": "^2.0 || ^3.0",
-        "runtime/swoole": "^0.4.0",
+        "rainbowedge/swoole-runtime": "@dev",
         "symfony/config": "^7.0",
         "symfony/console": "^7.0",
         "symfony/dependency-injection": "^7.0",
@@ -141,5 +141,11 @@
         }
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "repositories": [
+        {
+            "type": "path",
+            "url": "./swoole-runtime"
+        }
+    ]
 }

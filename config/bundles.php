@@ -1,37 +1,20 @@
 <?php
 
-declare(strict_types=1);
-
-use App\Bundle\AppBundle;
-use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
-use Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle;
-use Mango\Bundle\MangoBundle;
-use Manyou\ClearServiceTagsBundle\ClearServiceTagsBundle;
-use Pentatrion\ViteBundle\PentatrionViteBundle;
-use Rompetomp\InertiaBundle\RompetompInertiaBundle;
-use Symfony\Bundle\DebugBundle\DebugBundle;
-use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
-use Symfony\Bundle\MakerBundle\MakerBundle;
-use Symfony\Bundle\MonologBundle\MonologBundle;
-use Symfony\Bundle\SecurityBundle\SecurityBundle;
-use Symfony\Bundle\TwigBundle\TwigBundle;
-use Symfony\Bundle\WebProfilerBundle\WebProfilerBundle;
-use Twig\Extra\TwigExtraBundle\TwigExtraBundle;
-
 return [
-    FrameworkBundle::class => ['all' => true],
-    TwigBundle::class => ['all' => true],
-    WebProfilerBundle::class => ['dev' => true, 'test' => true],
-    MonologBundle::class => ['all' => true],
-    DebugBundle::class => ['dev' => true],
-    MakerBundle::class => ['dev' => true],
-    DoctrineBundle::class => ['all' => true],
-    DoctrineMigrationsBundle::class => ['all' => true],
-    SecurityBundle::class => ['all' => true],
-    TwigExtraBundle::class => ['all' => true],
-    ClearServiceTagsBundle::class => ['dev' => true],
-    MangoBundle::class => ['all' => true],
-    AppBundle::class => ['all' => true],
-    PentatrionViteBundle::class => ['all' => true],
-    RompetompInertiaBundle::class => ['all' => true],
+    Symfony\Bundle\FrameworkBundle\FrameworkBundle::class => ['all' => true],
+    Symfony\Bundle\TwigBundle\TwigBundle::class => ['all' => true],
+    Symfony\Bundle\WebProfilerBundle\WebProfilerBundle::class => ['dev' => true, 'test' => true],
+    Symfony\Bundle\MonologBundle\MonologBundle::class => ['all' => true],
+    Symfony\Bundle\DebugBundle\DebugBundle::class => ['dev' => true],
+    Symfony\Bundle\MakerBundle\MakerBundle::class => ['dev' => true],
+    Doctrine\Bundle\DoctrineBundle\DoctrineBundle::class => ['all' => true],
+    Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle::class => ['all' => true],
+    Symfony\Bundle\SecurityBundle\SecurityBundle::class => ['all' => true],
+    Twig\Extra\TwigExtraBundle\TwigExtraBundle::class => ['all' => true],
+    Manyou\ClearServiceTagsBundle\ClearServiceTagsBundle::class => ['dev' => true],
+    Mango\Bundle\MangoBundle::class => ['all' => true],
+    App\Bundle\AppBundle::class => ['all' => true],
+    Pentatrion\ViteBundle\PentatrionViteBundle::class => ['all' => true],
+    Rompetomp\InertiaBundle\RompetompInertiaBundle::class => ['all' => true],
+    Rainbowedge\SwooleRuntime\SwooleBundle::class => ['all' => true],
 ];
