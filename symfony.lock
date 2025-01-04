@@ -35,6 +35,18 @@
             "migrations/.gitignore"
         ]
     },
+    "fluffydiscord/roadrunner-symfony-bundle": {
+        "version": "3.1",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "3.0",
+            "ref": "559a8d4f473eaf3ec50c18b303eddae790479b23"
+        },
+        "files": [
+            "config/packages/fluffy_discord_road_runner.yaml"
+        ]
+    },
     "manyou/clear-service-tags-bundle": {
         "version": "0.1.x-dev"
     },
@@ -76,9 +88,6 @@
             "phpunit.xml.dist",
             "tests/bootstrap.php"
         ]
-    },
-    "rainbowedge/swoole-runtime-bundle": {
-        "version": "dev-main"
     },
     "rompetomp/inertia-bundle": {
         "version": "v2.4.3"
