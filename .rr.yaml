@@ -5,7 +5,7 @@ service:
     command: "php -f bin/console -- messenger:consume -vv scheduler_default async"
     service_name_in_log: true
     timeout_stop_sec: 10
-    remain_after_exit: false
+    remain_after_exit: true
     process_num: 1
     exec_timeout: 0s
     restart_sec: 1
@@ -17,9 +17,12 @@ server:
     APP_ENV: prod
 
 logs:
-  level: debug
+  level: info
   mode: production
   output: [stdout]
+  channels:
+    http:
+      level: warn
 
 rpc:
   listen: tcp://127.0.0.1:6001
