@@ -1811,12 +1811,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/manyou-io/bing-homepage.git",
-                "reference": "b44ac58d394a83b00c7b24c3bffad3919ca690eb"
+                "reference": "5b8eac7fac67250e568581019947765dfed421da"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/manyou-io/bing-homepage/zipball/b44ac58d394a83b00c7b24c3bffad3919ca690eb",
-                "reference": "b44ac58d394a83b00c7b24c3bffad3919ca690eb",
+                "url": "https://api.github.com/repos/manyou-io/bing-homepage/zipball/5b8eac7fac67250e568581019947765dfed421da",
+                "reference": "5b8eac7fac67250e568581019947765dfed421da",
                 "shasum": ""
             },
             "require": {
@@ -1828,7 +1828,7 @@
                 "symfony/http-client-implementation": "^3.0"
             },
             "require-dev": {
-                "symfony/http-client": "^6.4|^7.0"
+                "symfony/http-client": "^7.0"
             },
             "default-branch": true,
             "type": "library",
@@ -1857,7 +1857,7 @@
                 "issues": "https://github.com/manyou-io/bing-homepage/issues",
                 "source": "https://github.com/manyou-io/bing-homepage/tree/main"
             },
-            "time": "2024-03-22T07:36:26+00:00"
+            "time": "2025-01-05T03:57:15+00:00"
         },
         {
             "name": "manyou/clear-service-tags-bundle",
@@ -1865,19 +1865,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/manyou-io/clear-service-tags-bundle.git",
-                "reference": "13615faaa3d8d46df049fa67cd57f769faeb3a83"
+                "reference": "5de9afa850e645843203f1c2aaf5a5fb1e369d0a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/manyou-io/clear-service-tags-bundle/zipball/13615faaa3d8d46df049fa67cd57f769faeb3a83",
-                "reference": "13615faaa3d8d46df049fa67cd57f769faeb3a83",
+                "url": "https://api.github.com/repos/manyou-io/clear-service-tags-bundle/zipball/5de9afa850e645843203f1c2aaf5a5fb1e369d0a",
+                "reference": "5de9afa850e645843203f1c2aaf5a5fb1e369d0a",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.1",
-                "symfony/config": "^6.4|^7.0",
-                "symfony/dependency-injection": "^6.4|^7.0",
-                "symfony/http-kernel": "^6.4|^7.0"
+                "symfony/config": "^7.0",
+                "symfony/dependency-injection": "^7.0",
+                "symfony/http-kernel": "^7.0"
             },
             "default-branch": true,
             "type": "symfony-bundle",
@@ -1906,7 +1906,7 @@
                 "issues": "https://github.com/manyou-io/clear-service-tags-bundle/issues",
                 "source": "https://github.com/manyou-io/clear-service-tags-bundle/tree/main"
             },
-            "time": "2024-03-22T07:36:25+00:00"
+            "time": "2025-01-05T03:57:16+00:00"
         },
         {
             "name": "manyou/inertia-bundle",
@@ -1966,12 +1966,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/manyou-io/leanstorage.git",
-                "reference": "f7185273a2f806fe691de02fb23ea827bf179158"
+                "reference": "7d7d66d1aa8830ed4453273545218609c627f500"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/manyou-io/leanstorage/zipball/f7185273a2f806fe691de02fb23ea827bf179158",
-                "reference": "f7185273a2f806fe691de02fb23ea827bf179158",
+                "url": "https://api.github.com/repos/manyou-io/leanstorage/zipball/7d7d66d1aa8830ed4453273545218609c627f500",
+                "reference": "7d7d66d1aa8830ed4453273545218609c627f500",
                 "shasum": ""
             },
             "require": {
@@ -1982,7 +1982,7 @@
                 "symfony/http-client-implementation": "^3.0"
             },
             "require-dev": {
-                "symfony/http-client": "^6.4|^7.0"
+                "symfony/http-client": "^7.0"
             },
             "default-branch": true,
             "type": "library",
@@ -2011,7 +2011,7 @@
                 "issues": "https://github.com/manyou-io/leanstorage/issues",
                 "source": "https://github.com/manyou-io/leanstorage/tree/main"
             },
-            "time": "2024-05-19T01:35:46+00:00"
+            "time": "2025-01-05T03:57:14+00:00"
         },
         {
             "name": "manyou/mango",
@@ -2019,12 +2019,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/manyou-io/mango.git",
-                "reference": "4914bb322bc796252ecbc4009daf73d63003a064"
+                "reference": "72b6aeb1fb15c87f68bbccd211945409dfb1da22"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/manyou-io/mango/zipball/4914bb322bc796252ecbc4009daf73d63003a064",
-                "reference": "4914bb322bc796252ecbc4009daf73d63003a064",
+                "url": "https://api.github.com/repos/manyou-io/mango/zipball/72b6aeb1fb15c87f68bbccd211945409dfb1da22",
+                "reference": "72b6aeb1fb15c87f68bbccd211945409dfb1da22",
                 "shasum": ""
             },
             "require": {
@@ -2036,22 +2036,22 @@
                 "php": ">=8.1",
                 "psr/container": "^1.1|^2.0",
                 "psr/log": "^2.0|^3.0",
-                "symfony/dependency-injection": "^6.4|^7.0",
-                "symfony/event-dispatcher": "^6.4|^7.0",
-                "symfony/framework-bundle": "^6.4|^7.0",
-                "symfony/http-kernel": "^6.4|^7.0",
+                "symfony/dependency-injection": "^7.0",
+                "symfony/event-dispatcher": "^7.0",
+                "symfony/framework-bundle": "^7.0",
+                "symfony/http-kernel": "^7.0",
                 "symfony/monolog-bundle": "^3.8",
-                "symfony/security-http": "^6.4|^7.0",
-                "symfony/serializer": "^6.4|^7.0",
-                "symfony/uid": "^6.4|^7.0",
+                "symfony/security-http": "^7.0",
+                "symfony/serializer": "^7.0",
+                "symfony/uid": "^7.0",
                 "web-token/jwt-bundle": "^3.3",
                 "web-token/jwt-library": "^3.3"
             },
             "require-dev": {
                 "moneyphp/money": "^4.1",
                 "monolog/monolog": "^3.0",
-                "symfony/validator": "^6.4|^7.0",
-                "symfony/yaml": "^6.4|^7.0",
+                "symfony/validator": "^7.0",
+                "symfony/yaml": "^7.0",
                 "twig/twig": "^3.0"
             },
             "default-branch": true,
@@ -2084,7 +2084,7 @@
                 "issues": "https://github.com/manyou-io/mango/issues",
                 "source": "https://github.com/manyou-io/mango/tree/main"
             },
-            "time": "2024-05-19T08:41:25+00:00"
+            "time": "2025-01-05T03:57:17+00:00"
         },
         {
             "name": "manyou/promise-http-client",
@@ -2092,12 +2092,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/manyou-io/promise-http-client.git",
-                "reference": "39440b209c840790182be2d75995082b320336f8"
+                "reference": "c1f5ae55fde3d99713599d25de7c35e1f77acce2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/manyou-io/promise-http-client/zipball/39440b209c840790182be2d75995082b320336f8",
-                "reference": "39440b209c840790182be2d75995082b320336f8",
+                "url": "https://api.github.com/repos/manyou-io/promise-http-client/zipball/c1f5ae55fde3d99713599d25de7c35e1f77acce2",
+                "reference": "c1f5ae55fde3d99713599d25de7c35e1f77acce2",
                 "shasum": ""
             },
             "require": {
@@ -2108,8 +2108,8 @@
                 "symfony/http-client-implementation": "^3.0"
             },
             "require-dev": {
-                "symfony/http-client": "^6.4|^7.0",
-                "symfony/process": "^6.4|^7.0"
+                "symfony/http-client": "^7.0",
+                "symfony/process": "^7.0"
             },
             "default-branch": true,
             "type": "library",
@@ -2141,7 +2141,7 @@
                 "issues": "https://github.com/manyou-io/promise-http-client/issues",
                 "source": "https://github.com/manyou-io/promise-http-client/tree/main"
             },
-            "time": "2024-03-22T07:36:25+00:00"
+            "time": "2025-01-05T03:57:13+00:00"
         },
         {
             "name": "moneyphp/money",
