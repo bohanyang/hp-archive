@@ -11,6 +11,6 @@ return static function (FrameworkConfig $framework): void {
     $messenger = $framework->messenger();
     $messenger->transport('sync')->dsn('sync://');
     $messenger->transport('failed')->dsn('doctrine://default?queue_name=failed');
-    $messenger->transport('async')->dsn('doctrine://default?queue_name=async')->failureTransport('failed');
+    $messenger->transport('async')->dsn(env('MESSENGER_TRANSPORT_DSN'))->failureTransport('failed');
     $messenger->routing(Request::class)->senders(['async']);
 };
