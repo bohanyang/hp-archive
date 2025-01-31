@@ -185,17 +185,4 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->arg('$appId', env('LEANCLOUD_APP_ID'))
         ->arg('$appKey', env('LEANCLOUD_APP_KEY'))
         ->arg('$sessionToken', env('LEANCLOUD_SESSION_TOKEN'));
-
-    $services->set('doctrine.dbal.import_connection.configuration')
-        ->parent('doctrine.dbal.connection.configuration');
-
-    $services->set('doctrine.dbal.import_connection.event_manager')
-        ->parent('doctrine.dbal.connection.event_manager');
-
-    $services->set('doctrine.dbal.import_connection')->public()
-        ->parent('doctrine.dbal.connection')
-        ->args([
-            ['url' => env('DATABASE_URL')->resolve()],
-            service('doctrine.dbal.import_connection.configuration'),
-        ]);
 };

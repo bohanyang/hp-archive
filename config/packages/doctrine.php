@@ -4,11 +4,19 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
+use App\Doctrine\Type\BingMarketType;
+use App\Doctrine\Type\JsonType;
+use App\Doctrine\Type\ObjectIdType;
+use Doctrine\DBAL\Types\Types;
 use Symfony\Config\DoctrineConfig;
 use Symfony\Config\FrameworkConfig;
 
 return static function (ContainerConfigurator $containerConfigurator, DoctrineConfig $doctrine, FrameworkConfig $framework): void {
     $dbal = $doctrine->dbal();
+
+    $dbal->type(BingMarketType::NAME)->class(BingMarketType::class);
+    $dbal->type(Types::JSON)->class(JsonType::class);
+    $dbal->type(ObjectIdType::NAME)->class(ObjectIdType::class);
 
     $connection = $dbal->connection('default');
     $connection->url(env('DATABASE_URL')->resolve());
@@ -22,6 +30,9 @@ return static function (ContainerConfigurator $containerConfigurator, DoctrineCo
 
     $connection = $dbal->connection('source');
     $connection->url(env('SOURCE_DATABASE_URL')->resolve());
+
+    $connection = $dbal->connection('import');
+    $connection->url(env('DATABASE_URL')->resolve());
 
     if ('test' === $containerConfigurator->env()) {
         $connection
