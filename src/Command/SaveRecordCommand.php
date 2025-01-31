@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Command;
 
-use App\Bundle\Repository\DoctrineRepository;
-use App\Bundle\Repository\LeanCloudRepository;
+use App\Repository\DoctrineRepository;
+use App\Repository\LeanCloudRepository;
 use DateTimeImmutable;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -62,7 +62,7 @@ class SaveRecordCommand extends Command
         //     'date' => $date,
         //     'image' => (array) $image,
         // ]);
-        
+
         // $this->logger->error('TEST ERROR 2', [
         //     'market' => $market,
         //     'date' => $date,
@@ -71,7 +71,7 @@ class SaveRecordCommand extends Command
 
         // $this->logger->error('TEST ERROR 3');
 
-        $record = $this->repository->getRecord('en-AU', new DateTimeImmutable('2024-03-19'));
+        $record  = $this->repository->getRecord('en-AU', new DateTimeImmutable('2024-03-19'));
         $request = $this->leancloud->createRecordRequest($record);
         $this->messageBus->dispatch($request);
 

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Bundle\Repository\DoctrineRepository;
+use App\Repository\DoctrineRepository;
 use DateTimeImmutable;
 use League\Uri\UriString;
 use Manyou\BingHomepage\CurrentTime;

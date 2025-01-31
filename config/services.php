@@ -4,21 +4,30 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-use App\Bundle\Downloader\ImageDownloader;
-use App\Bundle\Downloader\Storage\BunnyCDNStorage;
-use App\Bundle\Downloader\Storage\FilesystemStorage;
-use App\Bundle\Downloader\Storage\S3Storage;
-use App\Bundle\Downloader\Storage\Storage;
-use App\Bundle\Downloader\Storage\StorageFactory;
-use App\Bundle\Downloader\VideoDownloader;
-use App\Bundle\Message\ImportFromLeanCloudHandler;
-use App\Bundle\Message\ImportFromSqlHandler;
-use App\Bundle\Repository\DoctrineRepository;
 use App\Controller\MainController;
+use App\Downloader\ImageDownloader;
+use App\Downloader\Storage\BunnyCDNStorage;
+use App\Downloader\Storage\FilesystemStorage;
+use App\Downloader\Storage\S3Storage;
+use App\Downloader\Storage\Storage;
+use App\Downloader\Storage\StorageFactory;
+use App\Downloader\VideoDownloader;
+use App\Message\ImportFromLeanCloudHandler;
+use App\Message\ImportFromSqlHandler;
+use App\Repository\DoctrineRepository;
 use AsyncAws\S3\S3Client;
 use Doctrine\DBAL\Connection;
 use Mango\Doctrine\SchemaProvider;
+use Manyou\BingHomepage\Client\CalendarUrlBasePrefixStrategy;
+use Manyou\BingHomepage\Client\ClientInterface;
+use Manyou\BingHomepage\Client\ImageArchiveClient;
+use Manyou\BingHomepage\Client\MediaContentClient;
+use Manyou\BingHomepage\Client\UrlBasePrefixStrategy;
 use Manyou\BingHomepage\Market;
+use Manyou\LeanStorage\LeanStorageClient;
+use Manyou\PromiseHttpClient\PromiseHttpClient;
+use Manyou\PromiseHttpClient\PromiseHttpClientInterface;
+use Manyou\PromiseHttpClient\RetryableHttpClient;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
     $parameters = $containerConfigurator->parameters();
@@ -159,4 +168,34 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 
     $services->set(MainController::class)
         ->arg('$origin', env('APP_ORIGIN'));
+
+    $services->set(CalendarUrlBasePrefixStrategy::class);
+    $services->alias(UrlBasePrefixStrategy::class, CalendarUrlBasePrefixStrategy::class);
+
+    $services->set(PromiseHttpClientInterface::class, PromiseHttpClient::class);
+    $services->set(RetryableHttpClient::class)
+        ->decorate(PromiseHttpClientInterface::class)->args([service('.inner')]);
+
+    $services->set(MediaContentClient::class);
+    $services->set(ImageArchiveClient::class);
+    $services->alias(ClientInterface::class, ImageArchiveClient::class);
+
+    $services->set(LeanStorageClient::class)
+        ->arg('$endpoint', env('LEANCLOUD_API_SERVER') . '/1.1/')
+        ->arg('$appId', env('LEANCLOUD_APP_ID'))
+        ->arg('$appKey', env('LEANCLOUD_APP_KEY'))
+        ->arg('$sessionToken', env('LEANCLOUD_SESSION_TOKEN'));
+
+    $services->set('doctrine.dbal.import_connection.configuration')
+        ->parent('doctrine.dbal.connection.configuration');
+
+    $services->set('doctrine.dbal.import_connection.event_manager')
+        ->parent('doctrine.dbal.connection.event_manager');
+
+    $services->set('doctrine.dbal.import_connection')->public()
+        ->parent('doctrine.dbal.connection')
+        ->args([
+            ['url' => env('DATABASE_URL')->resolve()],
+            service('doctrine.dbal.import_connection.configuration'),
+        ]);
 };

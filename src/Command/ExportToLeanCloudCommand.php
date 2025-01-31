@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Command;
 
-use App\Bundle\Repository\DoctrineRepository;
-use App\Bundle\Repository\LeanCloudRepository;
+use App\Repository\DoctrineRepository;
+use App\Repository\LeanCloudRepository;
 use GuzzleHttp\Promise\Utils;
 use Manyou\BingHomepage\Image;
 use Manyou\LeanStorage\Request\Batchable;

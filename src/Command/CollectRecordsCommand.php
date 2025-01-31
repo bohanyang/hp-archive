@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Command;
 
-use App\Bundle\Message\CollectRecords;
+use App\Message\CollectRecords;
 use DateTimeImmutable;
 use InvalidArgumentException;
 use Manyou\BingHomepage\Market;
