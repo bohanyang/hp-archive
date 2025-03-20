@@ -68,7 +68,7 @@ RUN --mount=type=cache,target=/root/.composer \
 	composer install --prefer-dist --no-dev --no-autoloader --no-scripts --no-progress
 
 RUN --mount=type=bind,source=.,target=/usr/src/app \
-	cp -R /usr/src/app/{bin,config,migrations,public,src,templates,.env,.rr.yaml} ./; \
+	cp -R /usr/src/app/{bin,config,migrations,public,src,templates,.env,.rr*.yaml} ./; \
 	mkdir -p var/cache var/log; \
 	composer dump-autoload --classmap-authoritative --no-dev; \
 	composer dump-env prod; \
