@@ -18,7 +18,7 @@ RUN --mount=type=bind,source=.,target=/usr/src/app \
 
 FROM ghcr.io/roadrunner-server/roadrunner:2024 AS roadrunner
 
-FROM php:8.3-cli-bookworm
+FROM php:8.4-cli-bookworm
 
 SHELL ["/bin/bash", "-eux", "-o", "pipefail", "-c"]
 
