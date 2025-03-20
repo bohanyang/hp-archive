@@ -28,7 +28,4 @@ if grep -q ^DATABASE_URL= .env; then
 	fi
 fi
 
-setfacl -R -m u:www-data:rwX -m u:"$(whoami)":rwX var
-setfacl -dR -m u:www-data:rwX -m u:"$(whoami)":rwX var
-
 exec docker-php-entrypoint "$@"

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { Link } from '@inertiajs/inertia-react'
 import SettingsModal from './SettingsModal'
 
-export default function Layout ({ children }: { children: JSX.Element }) {
+export default function Layout({ children }: { children: JSX.Element }) {
   const { t } = useTranslation()
   return (
     <React.StrictMode>
@@ -23,14 +23,6 @@ export default function Layout ({ children }: { children: JSX.Element }) {
                 rel="noreferrer"
               >
                 {t('get_app')}
-              </a>
-              {' / '}
-              <a
-                href="https://chat.daovoice.io/?id=59385141"
-                target="_blank"
-                rel="nofollow noreferrer"
-              >
-                {t('contact')}
               </a>
               {' / '}
               <a
