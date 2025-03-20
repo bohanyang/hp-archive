@@ -1,14 +1,10 @@
 version: "3"
 
-service:
-  messenger_consume:
-    command: "php -f bin/console -- messenger:consume -vv scheduler_default async"
-    service_name_in_log: true
-    timeout_stop_sec: 10
-    remain_after_exit: true
-    process_num: 1
-    exec_timeout: 0s
-    restart_sec: 1
+server:
+  command: php public/index.php
+  env:
+    APP_RUNTIME: FluffyDiscord\RoadRunnerBundle\Runtime\Runtime
+    APP_ENV: prod
 
 logs:
   level: info

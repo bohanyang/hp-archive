@@ -81,4 +81,4 @@ COPY --from=roadrunner /usr/bin/rr /usr/local/bin/rr
 
 EXPOSE 8080/tcp
 
-CMD rr serve -c .rr.yaml
+CMD ["rr", "serve", "-c", ".rr.yaml"]
