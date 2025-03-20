@@ -22,7 +22,7 @@ RUN apt-packages.sh sury php; \
 	net-tools \
 	nload \
 	patch \
-	php8.3-{amqp,apcu,bcmath,cli,curl,dev,fpm,gmp,igbinary,intl,mbstring,mysql,opcache,pgsql,readline,redis,sqlite3,xdebug,xml,zip,swoole,inotify,igbinary} \
+	php8.4-{amqp,apcu,bcmath,cli,curl,dev,fpm,gmp,igbinary,intl,mbstring,mysql,opcache,pgsql,readline,redis,sqlite3,xdebug,xml,zip,swoole,inotify,igbinary} \
 	postgresql-client-17 \
 	psmisc \
 	rsync \
