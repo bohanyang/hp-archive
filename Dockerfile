@@ -16,7 +16,7 @@ RUN --mount=type=bind,source=.,target=/usr/src/app \
 	cp -R /usr/src/app/{assets,tsconfig.json,vite.config.mjs} ./; \
 	pnpm build
 
-FROM ghcr.io/roadrunner-server/roadrunner:2024 AS roadrunner
+FROM ghcr.io/roadrunner-server/roadrunner:2025 AS roadrunner
 
 FROM php:8.4-cli-bookworm
 
