@@ -57,7 +57,8 @@
         "EditorConfig.EditorConfig",
         "esbenp.prettier-vscode",
         "GitHub.vscode-github-actions",
-        "xdebug.php-debug"
+        "xdebug.php-debug",
+        "anthropic.claude-code"
       ]
     }
   },
