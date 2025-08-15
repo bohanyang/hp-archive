@@ -1,4 +1,4 @@
-FROM node:22 AS vite
+FROM node:22-trixie AS vite
 
 SHELL ["/bin/bash", "-eux", "-o", "pipefail", "-c"]
 
@@ -18,7 +18,7 @@ RUN --mount=type=bind,source=.,target=/usr/src/app \
 
 FROM ghcr.io/roadrunner-server/roadrunner:2025 AS roadrunner
 
-FROM php:8.4-cli-bookworm
+FROM php:8.4-cli-trixie
 
 SHELL ["/bin/bash", "-eux", "-o", "pipefail", "-c"]
 
