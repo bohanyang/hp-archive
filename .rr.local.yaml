@@ -220,7 +220,7 @@ http:
       # Maximal worker memory usage in megabytes (soft limit). Zero means no limit.
       #
       # Default: 0
-      max_worker_memory: 0
+      max_worker_memory: 128
 
       # Maximal job lifetime (hard limit). Zero means no limit.
       #

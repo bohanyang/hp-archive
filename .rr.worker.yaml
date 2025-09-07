@@ -2,7 +2,7 @@ version: "3"
 
 service:
   messenger_consume:
-    command: "php -f bin/console -- messenger:consume -vv scheduler_default async"
+    command: "php -f bin/console -- messenger:consume -vv scheduler_default async --limit=100 --time-limit=3600"
     service_name_in_log: true
     timeout_stop_sec: 10
     remain_after_exit: true
@@ -224,7 +224,7 @@ http:
       # Maximal worker memory usage in megabytes (soft limit). Zero means no limit.
       #
       # Default: 0
-      max_worker_memory: 0
+      max_worker_memory: 128
 
       # Maximal job lifetime (hard limit). Zero means no limit.
       #
